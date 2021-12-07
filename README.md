@@ -1,8 +1,7 @@
-# Progetto-PMO-Sessione-Invernale-2021-22
+# Progetto PMO - Sessione Invernale 2021-22
 Repository del progetto di PMO della sessione invernale 2021/22
 <br>
-Studenti
-<br>
+# *Studenti*
 MATRICOLA NOME   COGNOME
 <br>
 305991    Arlind Pecmarkaj
