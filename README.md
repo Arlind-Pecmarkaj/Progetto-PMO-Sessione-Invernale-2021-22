@@ -11,3 +11,5 @@ Repository del progetto di PMO della sessione invernale 2021/22
 | 307283    | Martin   | Berardi |
 <br>
 | 308193    | Bogdan - Andrei | Dragne  |
+<br>
+| 305558    | Tommaso  | Petrelli |
