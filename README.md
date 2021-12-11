@@ -2,10 +2,12 @@
 Repository del progetto di PMO della sessione invernale 2021/22
 <br>
 # *Studenti*
-| MATRICOLA | NOME | COGNOME |
+| MATRICOLA | NOME     | COGNOME |
 <br>
-| 305991 | Arlind | Pecmarkaj |
+| 305991    | Arlind   | Pecmarkaj |
 <br>
-| 307059 | Leonardo | Bigelli |
+| 307059    | Leonardo | Bigelli |
 <br>
-| 307283 | Martin | Berardi |
+| 307283    | Martin   | Berardi |
+<br>
+| 308193    | Bogdan   | Dragne  |
