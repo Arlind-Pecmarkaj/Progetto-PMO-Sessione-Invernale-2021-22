@@ -13,3 +13,4 @@ Repository del progetto di PMO della sessione invernale 2021/22
 | 308193    | Bogdan - Andrei | Dragne  |
 <br>
 | 305558    | Tommaso  | Petrelli |
+![Immagine](https://user-images.githubusercontent.com/76852603/146036911-21319bd6-68b9-4ba8-b453-487dc202aa5a.png)
