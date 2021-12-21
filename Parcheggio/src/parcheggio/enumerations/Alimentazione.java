@@ -1,4 +1,4 @@
-package parcheggio.Enum;
+package parcheggio.enumerations;
 
 /**
  * @author Arlind Pecmarkaj

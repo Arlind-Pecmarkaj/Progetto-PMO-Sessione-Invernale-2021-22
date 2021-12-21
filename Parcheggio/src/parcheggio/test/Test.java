@@ -1,4 +1,4 @@
-package parcheggio.Test;
+package parcheggio.test;
 
 /* Classe riservata ai test delle classi e dei metodi.
  * Specificare nominativo, piccolo commento sul test da effettuare
