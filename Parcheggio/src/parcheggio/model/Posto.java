@@ -1,6 +1,4 @@
-package parcheggio;
-
-import parcheggio.model.*;
+package parcheggio.model;
 import java.time.LocalDateTime;
 
 /**
