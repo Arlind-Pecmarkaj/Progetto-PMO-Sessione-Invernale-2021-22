@@ -1,0 +1,5 @@
+Martin: Veicolo, Moto, Auto
+Leo: Parcheggio, Sensore
+Bogdan: Utente, Abbonamento
+Mr.Arlind: GestioneParcheggio, FileReader
+Tommy: Posto, PostoAuto, PostoMoto
