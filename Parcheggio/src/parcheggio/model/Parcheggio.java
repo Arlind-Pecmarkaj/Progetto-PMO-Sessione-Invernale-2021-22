@@ -36,8 +36,6 @@ public class Parcheggio {
 		}
 	}// end costruttore
 
-	
-
 	public LinkedList<Posto> getPostiDisponibili() {
 		return postiDisponibili;
 	}
@@ -73,7 +71,7 @@ public class Parcheggio {
 		if(tmp.isPresent()) {
 			tmp.get().setVeicoloOccupante(v);
 		} else {
-			throw new PostiFiniti();
+			throw new PostiFiniti();/* DA VEDERE!!! */
 		}
 	}
 	
