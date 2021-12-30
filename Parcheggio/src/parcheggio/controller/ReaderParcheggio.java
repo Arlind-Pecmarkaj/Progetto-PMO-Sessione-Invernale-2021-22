@@ -52,8 +52,7 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 					nrPostiAuto = Integer.parseInt(splittedInput[1]);
 					nrPostiMoto = Integer.parseInt(splittedInput[2]);
 					nrMonopattini = Integer.parseInt(splittedInput[3]);
-					Parcheggio tmp = new Parcheggio(nrPostiAuto, nrPostiMoto, nrMonopattini);
-					gestione.aggiungiParcheggio(tmp);
+					gestione.aggiungiParcheggio(new Parcheggio(nrPostiAuto, nrPostiMoto, nrMonopattini));
 				}
 				
 				input = this.reader.readLine();
@@ -66,6 +65,7 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 					String[] splittedInput = input.split("\\s+");
 					nome = splittedInput[0];
 					targa = splittedInput[1];
+					// gestione.aggiungiAbbonamento(new Abbonamento(nome, targa));
 				}
 			}
 		} catch (IOException e) {
