@@ -3,6 +3,7 @@ package parcheggio.controller;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 
 import parcheggio.model.*;
 
@@ -30,6 +31,29 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 		 * ...
 		 * <Id Utente> <Targa>
 		 */
+		int nrParcheggi = 0;
+		String id;
+		int nrPostiAuto = 0;
+		int nrPostiMoto = 0;
+		
+		try {
+			String input = this.reader.readLine();
+			if (input != null) {
+				nrParcheggi = Integer.parseInt(input);
+				System.out.println("NR PARCHEGGI: " + nrParcheggi);
+				// gestioneParcheggi = new GestioneParcheggi(nrParcheggi);
+				for (int i = 0; i < nrParcheggi; i++) {
+					input = this.reader.readLine();
+					String[] splittedInput = input.split("\\s+");
+					id = splittedInput[0];
+					nrPostiAuto = Integer.parseInt(splittedInput[1]);
+					nrPostiMoto = Integer.parseInt(splittedInput[2]);
+					System.out.println("ID " + id + " | posti auto " + nrPostiAuto + " | posti moto " + nrPostiMoto);
+				}
+			}
+		} catch (IOException e) {
+			System.out.println("Coglione exception!!! " + e);
+		}
 		return null;
 	}
 
