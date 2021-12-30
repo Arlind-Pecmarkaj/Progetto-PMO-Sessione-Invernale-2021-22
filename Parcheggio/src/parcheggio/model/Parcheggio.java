@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import parcheggio.model.monopattino.Monopattino;
 import parcheggio.model.veicolo.Auto;
+import parcheggio.model.veicolo.Moto;
 
 public class Parcheggio {
 	private LinkedList<Posto> postiDisponibili 		 = new LinkedList<Posto>();
@@ -52,7 +53,7 @@ public class Parcheggio {
 		//	tmp = v;
 			tmp = this.filtraPostiLiberi(p -> p instanceof PostiAuto == true);
 			this.aggiungiConEccezione(v, tmp);
-		} else {
+		} else if(v instanceof Moto){
 			// stessa cosa per le moto
 			tmp =	this.filtraPostiLiberi(p -> p instanceof PostiMoto == true);
 			this.aggiungiConEccezione(v, tmp);
