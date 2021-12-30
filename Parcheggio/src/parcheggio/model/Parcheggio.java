@@ -50,7 +50,7 @@ public class Parcheggio {
 		//	tmp = v;
 			Optional<Posto> tmp =this.postiDisponibili.stream()
 								 				      .filter(p -> p.setVeicoloOccupante() == null)
-								 				      .filter(p -> p instanceof PostiAuto)// filtra solo i posti per le auto(?)
+								 				      .filter(p -> p instanceof PostiAuto == true)// filtra solo i posti per le auto(?)
 								 				      .findFirst();
 			if(tmp.isPresent()) {
 				tmp.get().setVeicoloOccupante(v);
@@ -59,7 +59,15 @@ public class Parcheggio {
 			}
 		} else {
 			// stessa cosa per le moto
-			// TODO
+			Optional<Posto> tmp = this.postiDisponibili.stream()
+				      								   .filter(p -> p.setVeicoloOccupante() == null)
+				      								   .filter(p -> p instanceof PostiMoto == true)// filtra solo i posti per le auto(?)
+				      								   .findFirst();
+			if(tmp.isPresent()) {
+				tmp.get().setVeicoloOccupante(v);
+			} else {
+				throw new PostiFiniti();
+			}
 		}
 		
 		/*	if(this.autoParcheggiate < this.postiTotaliAuto) {// stream
@@ -71,6 +79,19 @@ public class Parcheggio {
 					}
 				}
 			}*/
+	}
+	
+	private <X> Optional<Posto> filtraPostiLiberi(X Posto){
+		Optional<Posto> tmp = this.postiDisponibili.stream()
+				   .filter(p -> p.setVeicoloOccupante() == null)
+				   .filter(p -> p instanceof PostiMoto == true)// filtra solo i posti per le auto(?)
+				   .findFirst();
+		if(tmp.isPresent()) {
+			tmp.get().setVeicoloOccupante(v);
+		} else {
+			throw new PostiFiniti();
+		}
+		return null;
 	}
 	
 }// end classe
