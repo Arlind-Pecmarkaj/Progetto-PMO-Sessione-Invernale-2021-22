@@ -2,10 +2,11 @@ package parcheggio.model;
 
 import java.util.ArrayList;
 
-import parcheggio.Parcheggio;
+import parcheggio.model.Parcheggio;
 
 public class GestioneParcheggio {
 	ArrayList<Parcheggio> parcheggi;
+	// ArrayList<Abbonamento> abbonamento;
 	
 	public GestioneParcheggio() {
 		this.parcheggi = new ArrayList<>();

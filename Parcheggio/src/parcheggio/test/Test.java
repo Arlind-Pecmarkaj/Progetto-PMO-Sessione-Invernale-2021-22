@@ -14,7 +14,8 @@ public class Test {
 	public static void main(String[] args) {
 		/* TEST DI ARLIND PECMARKAJ 
 		 * Test del file reader
-		 * Problemi riscontrati: /
+		 * Problemi riscontrati:
+		 *  - 30/12/2021 Il metodo funziona, ma senza l'implementazione finale di Parcheggio e Posto da eccezione.
 		 */
 		try {
 			ReaderParcheggio rP = new ReaderParcheggio("C:\\Users\\arlin\\Documents\\PMO\\Progetto-PMO-Sessione-Invernale-2021-22\\Parcheggio\\salvataggio\\Veicoli.txt");
