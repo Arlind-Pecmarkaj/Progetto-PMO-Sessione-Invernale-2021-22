@@ -2,6 +2,7 @@ package parcheggio.model;
 
 import java.util.LinkedList;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import parcheggio.model.monopattino.Monopattino;
 import parcheggio.model.veicolo.Auto;
@@ -44,54 +45,35 @@ public class Parcheggio {
 		return postiMonopattino;
 	}
 
-	public void aggiungiVeicolo(Veicolo v) throws PostiFiniti{
+	public void aggiungiVeicolo(Veicolo v){
 		//Veicolo tmp = null;
+		Optional<Posto> tmp;
 		if(v instanceof Auto) {
 		//	tmp = v;
-			Optional<Posto> tmp =this.postiDisponibili.stream()
-								 				      .filter(p -> p.setVeicoloOccupante() == null)
-								 				      .filter(p -> p instanceof PostiAuto == true)// filtra solo i posti per le auto(?)
-								 				      .findFirst();
-			if(tmp.isPresent()) {
-				tmp.get().setVeicoloOccupante(v);
-			} else {
-				throw new PostiFiniti();
-			}
+			tmp = this.filtraPostiLiberi(p -> p instanceof PostiAuto == true);
+			this.aggiungiConEccezione(v, tmp);
 		} else {
 			// stessa cosa per le moto
-			Optional<Posto> tmp = this.postiDisponibili.stream()
-				      								   .filter(p -> p.setVeicoloOccupante() == null)
-				      								   .filter(p -> p instanceof PostiMoto == true)// filtra solo i posti per le auto(?)
-				      								   .findFirst();
-			if(tmp.isPresent()) {
-				tmp.get().setVeicoloOccupante(v);
-			} else {
-				throw new PostiFiniti();
-			}
+			tmp =	this.filtraPostiLiberi(p -> p instanceof PostiMoto == true);
+			this.aggiungiConEccezione(v, tmp);
 		}
 		
-		/*	if(this.autoParcheggiate < this.postiTotaliAuto) {// stream
-				for(Posto p: this.postiDisponibili) {// non va bene!!!
-					if(p instanceof PostiAuto) {
-						if(p.getVeicoloOccupante() == null) {
-							p.setVeicoloOccupante(v);
-						}
-					}
-				}
-			}*/
 	}
 	
-	private <X> Optional<Posto> filtraPostiLiberi(X Posto){
+	private Optional<Posto> filtraPostiLiberi(Predicate<Posto> filtro){
 		Optional<Posto> tmp = this.postiDisponibili.stream()
-				   .filter(p -> p.setVeicoloOccupante() == null)
-				   .filter(p -> p instanceof PostiMoto == true)// filtra solo i posti per le auto(?)
-				   .findFirst();
+				   								   .filter(p -> p.setVeicoloOccupante() == null)
+				   								   .filter(filtro)
+				   								   .findFirst();
+		return tmp;
+	}
+	
+	private void aggiungiConEccezione(Veicolo v, Optional<Posto> tmp) {
 		if(tmp.isPresent()) {
 			tmp.get().setVeicoloOccupante(v);
 		} else {
 			throw new PostiFiniti();
 		}
-		return null;
 	}
 	
 }// end classe
