@@ -52,7 +52,7 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 				}
 			}
 		} catch (IOException e) {
-			System.out.println("Coglione exception!!! " + e);
+			System.out.println(e);
 		}
 		return null;
 	}
