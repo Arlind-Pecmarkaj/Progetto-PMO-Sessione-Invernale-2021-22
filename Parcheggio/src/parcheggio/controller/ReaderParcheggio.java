@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import parcheggio.model.*;
+import parcheggio.model.Parcheggio;
 
 public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 	
@@ -35,6 +36,8 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 		String id;
 		int nrPostiAuto = 0;
 		int nrPostiMoto = 0;
+		int nrMonopattini = 0;
+		GestioneParcheggio gestione = new GestioneParcheggio();
 		
 		try {
 			String input = this.reader.readLine();
@@ -48,21 +51,22 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 					id = splittedInput[0];
 					nrPostiAuto = Integer.parseInt(splittedInput[1]);
 					nrPostiMoto = Integer.parseInt(splittedInput[2]);
-					System.out.println("ID " + id + " | posti auto " + nrPostiAuto + " | posti moto " + nrPostiMoto);
+					nrMonopattini = Integer.parseInt(splittedInput[3]);
+					Parcheggio tmp = new Parcheggio(nrPostiAuto, nrPostiMoto, nrMonopattini);
+					gestione.aggiungiParcheggio(tmp);
 				}
+				
 				input = this.reader.readLine();
 				int nrAbbonamenti = Integer.parseInt(input);
 				String nome;
 				String targa;
-				System.out.println("NR ABBONAMENTI: " + nrAbbonamenti);
+				
 				for (int i = 0; i < nrAbbonamenti; i++) {
 					input = this.reader.readLine();
 					String[] splittedInput = input.split("\\s+");
 					nome = splittedInput[0];
 					targa = splittedInput[1];
-					System.out.println("[NOME: " + nome + " | TARGA: " + targa + "]");
 				}
-				
 			}
 		} catch (IOException e) {
 			System.out.println(e);
