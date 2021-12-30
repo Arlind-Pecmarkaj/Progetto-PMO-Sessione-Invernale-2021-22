@@ -1,7 +1,7 @@
 package parcheggio.model;
 
-public class PostiFiniti extends Exception {
-	public PostiFiniti(Throwable err) {
-		super("Eccezione: I posti sono finiti", err);
+public class PostiFiniti extends RuntimeException {
+	public PostiFiniti(String messaggio) {
+		super(messaggio);
 	}
 }
