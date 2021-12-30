@@ -21,10 +21,10 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 	public GestioneParcheggio read() {
 		/* La formattazione del file è
 		 * <NR Parcheggi>
-		 * <Id1> <Nome> <Nr posti auto parcheggio 1> <Nr posti moto parcheggio 1>
-		 * <Id2> <Nome> <Nr Posti auto parcheggio 2> <Nr posti moto parcheggio 2>
+		 * <Id1> <Nome> <Nr posti auto parcheggio 1> <Nr posti moto parcheggio 1> <nr monopattini>
+		 * <Id2> <Nome> <Nr Posti auto parcheggio 2> <Nr posti moto parcheggio 2> <nr monopattini>
 		 * ...
-		 * <Idn> <Nome> <Nr Posti auto parcheggio n> <Nr posti moto parcheggio n>
+		 * <Idn> <Nome> <Nr Posti auto parcheggio n> <Nr posti moto parcheggio n> <nr monopattini>
 		 * <Nr Abbonamenti>
 		 * <Id Utente> <Targa>
 		 * <Id Utente> <Targa>
@@ -50,6 +50,19 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 					nrPostiMoto = Integer.parseInt(splittedInput[2]);
 					System.out.println("ID " + id + " | posti auto " + nrPostiAuto + " | posti moto " + nrPostiMoto);
 				}
+				input = this.reader.readLine();
+				int nrAbbonamenti = Integer.parseInt(input);
+				String nome;
+				String targa;
+				System.out.println("NR ABBONAMENTI: " + nrAbbonamenti);
+				for (int i = 0; i < nrAbbonamenti; i++) {
+					input = this.reader.readLine();
+					String[] splittedInput = input.split("\\s+");
+					nome = splittedInput[0];
+					targa = splittedInput[1];
+					System.out.println("[NOME: " + nome + " | TARGA: " + targa + "]");
+				}
+				
 			}
 		} catch (IOException e) {
 			System.out.println(e);
