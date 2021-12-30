@@ -3,6 +3,7 @@ package parcheggio.controller;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 
 import parcheggio.model.*;
 
@@ -20,16 +21,52 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 	public GestioneParcheggio read() {
 		/* La formattazione del file è
 		 * <NR Parcheggi>
-		 * <Id1> <Nome> <Nr posti auto parcheggio 1> <Nr posti moto parcheggio 1>
-		 * <Id2> <Nome> <Nr Posti auto parcheggio 2> <Nr posti moto parcheggio 2>
+		 * <Id1> <Nome> <Nr posti auto parcheggio 1> <Nr posti moto parcheggio 1> <nr monopattini>
+		 * <Id2> <Nome> <Nr Posti auto parcheggio 2> <Nr posti moto parcheggio 2> <nr monopattini>
 		 * ...
-		 * <Idn> <Nome> <Nr Posti auto parcheggio n> <Nr posti moto parcheggio n>
+		 * <Idn> <Nome> <Nr Posti auto parcheggio n> <Nr posti moto parcheggio n> <nr monopattini>
 		 * <Nr Abbonamenti>
 		 * <Id Utente> <Targa>
 		 * <Id Utente> <Targa>
 		 * ...
 		 * <Id Utente> <Targa>
 		 */
+		int nrParcheggi = 0;
+		String id;
+		int nrPostiAuto = 0;
+		int nrPostiMoto = 0;
+		
+		try {
+			String input = this.reader.readLine();
+			if (input != null) {
+				nrParcheggi = Integer.parseInt(input);
+				System.out.println("NR PARCHEGGI: " + nrParcheggi);
+				// gestioneParcheggi = new GestioneParcheggi(nrParcheggi);
+				for (int i = 0; i < nrParcheggi; i++) {
+					input = this.reader.readLine();
+					String[] splittedInput = input.split("\\s+");
+					id = splittedInput[0];
+					nrPostiAuto = Integer.parseInt(splittedInput[1]);
+					nrPostiMoto = Integer.parseInt(splittedInput[2]);
+					System.out.println("ID " + id + " | posti auto " + nrPostiAuto + " | posti moto " + nrPostiMoto);
+				}
+				input = this.reader.readLine();
+				int nrAbbonamenti = Integer.parseInt(input);
+				String nome;
+				String targa;
+				System.out.println("NR ABBONAMENTI: " + nrAbbonamenti);
+				for (int i = 0; i < nrAbbonamenti; i++) {
+					input = this.reader.readLine();
+					String[] splittedInput = input.split("\\s+");
+					nome = splittedInput[0];
+					targa = splittedInput[1];
+					System.out.println("[NOME: " + nome + " | TARGA: " + targa + "]");
+				}
+				
+			}
+		} catch (IOException e) {
+			System.out.println(e);
+		}
 		return null;
 	}
 
