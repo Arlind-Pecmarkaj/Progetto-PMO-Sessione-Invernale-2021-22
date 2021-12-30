@@ -8,7 +8,7 @@ package parcheggio.model.veicolo;
  *
  * @author marti
  */
-public class Auto extends Veicolo{ /*Oggetto condiviso tra i thread cliente(this is a problem)*/
+public class Auto extends Veicolo{
     private double altezza;
     private int nPosti;
     
