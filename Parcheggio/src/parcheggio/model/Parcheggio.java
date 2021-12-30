@@ -68,10 +68,15 @@ public class Parcheggio {
 	}
 	
 	private void aggiungiConEccezione(Veicolo v, Optional<Posto> tmp) {
+		
 		if(tmp.isPresent()) {
 			tmp.get().setVeicoloOccupante(v);
 		} else {
+<<<<<<< Updated upstream
 			throw new PostiFiniti();/* DA VEDERE!!! */
+=======
+			throw new PostiFiniti("Eccezione: I posti sono finiti");
+>>>>>>> Stashed changes
 		}
 	}
 	
