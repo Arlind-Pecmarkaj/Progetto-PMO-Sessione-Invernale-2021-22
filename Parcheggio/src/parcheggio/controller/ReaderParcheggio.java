@@ -18,7 +18,18 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 	
 	@Override
 	public GestioneParcheggio read() {
-		// TODO Auto-generated method stub
+		/* La formattazione del file è
+		 * <NR Parcheggi>
+		 * <Id1> <Nome> <Nr posti auto parcheggio 1> <Nr posti moto parcheggio 1>
+		 * <Id2> <Nome> <Nr Posti auto parcheggio 2> <Nr posti moto parcheggio 2>
+		 * ...
+		 * <Idn> <Nome> <Nr Posti auto parcheggio n> <Nr posti moto parcheggio n>
+		 * <Nr Abbonamenti>
+		 * <Id Utente> <Targa>
+		 * <Id Utente> <Targa>
+		 * ...
+		 * <Id Utente> <Targa>
+		 */
 		return null;
 	}
 
