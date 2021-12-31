@@ -1,5 +1,5 @@
 Martin: Veicolo, Moto, Auto
-Leo: Parcheggio, Sensore
+Leo: Parcheggio, Sensore(--fatto--)
 Bogdan: Utente, Abbonamento
 Mr.Arlind: GestioneParcheggio, FileReader
 Tommy: Posto, PostoAuto, PostoMoto

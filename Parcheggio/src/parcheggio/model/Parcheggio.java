@@ -2,7 +2,9 @@ package parcheggio.model;
 
 import java.util.LinkedList;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import parcheggio.model.monopattino.Monopattino;
 import parcheggio.model.veicolo.Auto;
@@ -11,8 +13,8 @@ import parcheggio.model.veicolo.Moto;
 public class Parcheggio {
 	private LinkedList<Posto> postiDisponibili 		 = new LinkedList<Posto>();
 	final private int postiTotaliAuto;
-	private int autoParcheggiate = 0; // posti auto occupati
-	private int motoParcheggiate = 0; // posti moto occupati
+//	private int autoParcheggiate = 0; // posti auto occupati
+//	private int motoParcheggiate = 0; // posti moto occupati
 	final private int postiTotaliMoto;
 	private LinkedList<Monopattino> postiMonopattino = new LinkedList<Monopattino>();
 	final private int postiTotaliMonopattini;
@@ -38,46 +40,92 @@ public class Parcheggio {
 
 	public LinkedList<Posto> getPostiDisponibili() {
 		return postiDisponibili;
-	}
+	}// end metodo getPostoDisponibili()
 
 	public LinkedList<Monopattino> getPostiMonopattino() {
 		return postiMonopattino;
-	}
+	}// end metodo getPostiMonopattino()
 
+	/* metodo per aggiungere un veicolo al parcheggio, se è presente un posto libero */
 	public void aggiungiVeicolo(Veicolo v){
-		//Veicolo tmp = null;
-		Optional<Posto> tmp;
 		if(v instanceof Auto) {
-		//	tmp = v;
-			tmp = this.filtraPostiLiberi(p -> p instanceof PostiAuto == true);
-			this.aggiungiConEccezione(v, tmp);
+			this.filtraAggiungi(p -> p instanceof PostiAuto == true, v);
 		} else if(v instanceof Moto){
 			// stessa cosa per le moto
-			tmp =	this.filtraPostiLiberi(p -> p instanceof PostiMoto == true);
-			this.aggiungiConEccezione(v, tmp);
+			this.filtraAggiungi(p -> p instanceof PostiMoto == true, v);
 		}
-		
-	}
+	}// end metodo aggiungiVeicolo
 	
-	private Optional<Posto> filtraPostiLiberi(Predicate<Posto> filtro){
+	/* metodo per liberare un posto del parcheggio
+	 * restituisce il veciolo occupante, se presente
+	 */
+	public Optional<Veicolo> liberaPosto(Posto p) {
+		Optional<Veicolo> v = Optional.empty();
+		Optional<Posto> postoDaLiberare = this.postiDisponibili.stream()
+				             								   .filter(x -> x.equals(p))
+				             								   .findAny();
+		if(postoDaLiberare.isPresent()) {
+			v = postoDaLiberare.get().getVeicoloOccupante();
+			postoDaLiberare.get().setVeicoloOccupante(null);
+		}
+		return v;
+	}// end metodo liberaPosto()
+	
+	/*
+	 * restituisce tutti i veicoli presenti nel parcheggio
+	 */
+	public Set<Veicolo> listaVeicoliPresenti() {
+		return this.postiDisponibili.stream()
+						            .filter(p -> p.getVeicoloOccupante() != null)
+						            .map(p -> p.getVeicoloOccupante())
+						            .collect(Collectors.toSet());
+	}// end metodo listaVeicoliPresenti()
+	
+	/* metodo per controllare se è presente un posto libero, in caso contrario
+	 * lancia un'eccezione (PostiFiniti) 
+	 */
+	private void filtraAggiungi(Predicate<Posto> filtro, Veicolo v){
 		Optional<Posto> tmp = this.postiDisponibili.stream()
 				   								   .filter(p -> p.setVeicoloOccupante() == null)
 				   								   .filter(filtro)
 				   								   .findFirst();
-		return tmp;
-	}
-	
-	private void aggiungiConEccezione(Veicolo v, Optional<Posto> tmp) {
-		
 		if(tmp.isPresent()) {
 			tmp.get().setVeicoloOccupante(v);
 		} else {
-<<<<<<< Updated upstream
-			throw new PostiFiniti();/* DA VEDERE!!! */
-=======
 			throw new PostiFiniti("Eccezione: I posti sono finiti");
->>>>>>> Stashed changes
 		}
+	}// end metodo filtraAggiungi
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + postiTotaliAuto;
+		result = prime * result + postiTotaliMonopattini;
+		result = prime * result + postiTotaliMoto;
+		return result;
+	}
+
+	/*
+	 * un parcheggio è uguale se ha lo stesso numero di posti
+	 * per le auto, per le moto e per i monopattini
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Parcheggio other = (Parcheggio) obj;
+		if (postiTotaliAuto != other.postiTotaliAuto)
+			return false;
+		if (postiTotaliMonopattini != other.postiTotaliMonopattini)
+			return false;
+		if (postiTotaliMoto != other.postiTotaliMoto)
+			return false;
+		return true;
 	}
 	
 }// end classe
