@@ -7,6 +7,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import parcheggio.model.monopattino.Monopattino;
+import parcheggio.model.sensore.Sensore;
+import parcheggio.model.sensore.SensoreAltezza;
 import parcheggio.model.veicolo.Auto;
 import parcheggio.model.veicolo.Moto;
 
@@ -18,6 +20,7 @@ public class Parcheggio {
 	final private int postiTotaliMoto;
 	private LinkedList<Monopattino> postiMonopattino = new LinkedList<Monopattino>();
 	final private int postiTotaliMonopattini;
+	private Sensore sensoreAltezza 					 = new SensoreAltezza();
 	
 	// costruttore
 	public Parcheggio(int nPostiAuto, int nPostiMoto, int nPostiMonopattino) {
@@ -90,7 +93,13 @@ public class Parcheggio {
 				   								   .filter(filtro)
 				   								   .findFirst();
 		if(tmp.isPresent()) {
-			tmp.get().setVeicoloOccupante(v);
+			if(v instanceof Auto) {
+				if((double)this.sensoreAltezza.effettuaRilevamento((Auto)v) <= 4.0) {
+					tmp.get().setVeicoloOccupante(v);
+				} else {
+//					throw new AltezzaMassimaSuperata("Eccezione: L'altezza del veicolo ha superato il limite consentito");
+				}
+			}
 		} else {
 			throw new PostiFiniti("Eccezione: I posti sono finiti");
 		}
