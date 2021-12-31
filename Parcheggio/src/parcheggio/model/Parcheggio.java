@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import parcheggio.exceptions.PostiFiniti;
 import parcheggio.model.monopattino.Monopattino;
 import parcheggio.model.sensore.Sensore;
 import parcheggio.model.sensore.SensoreAltezza;

@@ -76,7 +76,6 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 
 	@Override
 	public void write(GestioneParcheggio t) {
-		// TODO Auto-generated method stub
 		
 	}
 
