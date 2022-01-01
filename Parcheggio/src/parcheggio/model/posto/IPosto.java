@@ -1,6 +1,8 @@
 package parcheggio.model.posto;
 
-import java.time.LocalDateTime;
+import java.time.Duration;
+
+import parcheggio.model.veicolo.Veicolo;
 
 /**
  * 
@@ -11,8 +13,20 @@ import java.time.LocalDateTime;
  * 	funzionalità fondamentali:
  * 		- segnalare se un posto è libero o meno
  * 		- fornire il tempo di permanenza del veicolo nel posto
+ * 
+ * 	@note il carattere I all'inizio del nome dell'interfaccia viene inteso come Interface
  */
 public interface IPosto {
+	
+	/**
+	 * 
+	 */
+	void occupaPosto(Veicolo v);
+	
+	/**
+	 * 
+	 */
+	void liberaPosto();
 
 	/**
 	 * 	Verifica se un posto è libero o occupato.
@@ -26,5 +40,11 @@ public interface IPosto {
 	 * 
 	 * 	@return tempo di occupazione del posto
 	 */
-	LocalDateTime tempoOccupazione();
+	Duration tempoOccupazione();
+	
+	/**
+	 * 	Rileva e fornisce il tipo di carburante del veicolo parcheggiato
+	 * 
+	 * 	@return tipo carburante
+	 */
 }
