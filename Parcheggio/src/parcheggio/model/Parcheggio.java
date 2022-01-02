@@ -128,6 +128,15 @@ public class Parcheggio {
 		}
 		return m;
 	}// end metodo noleggiaMonopattino()
+	
+	public double restituisciMonopattino(Utente u, Monopattino m) {
+		double prezzo = 0;
+		if(!u.possiedeAbbonamentoPremium()) {
+			prezzo = Monopattino.COSTO * (m.getFineNoleggio() - m.getOraNoleggiato());
+		}
+		this.postiMonopattino.add(m);
+		return prezzo;
+	}
 
 	@Override
 	public int hashCode() {
