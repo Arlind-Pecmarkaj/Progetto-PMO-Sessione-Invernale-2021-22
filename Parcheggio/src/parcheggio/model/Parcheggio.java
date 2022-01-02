@@ -22,7 +22,7 @@ public class Parcheggio {
 	private LinkedList<Monopattino> postiMonopattino = new LinkedList<Monopattino>();
 	final private int postiTotaliMonopattini;
 	private Sensore sensoreAltezza = new SensoreAltezza();
-	
+
 	// costruttore
 	public Parcheggio(int nPostiAuto, int nPostiMoto, int nPostiMonopattino) {
 		this.postiTotaliAuto = nPostiAuto;
