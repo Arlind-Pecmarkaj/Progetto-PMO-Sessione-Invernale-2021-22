@@ -112,6 +112,17 @@ public class Parcheggio {
 			throw new PostiFiniti("Eccezione: I posti sono finiti");
 		}
 	}// end metodo filtraAggiungi
+	
+	public Monopattino noleggiaMonopattino(Utente u) {
+		Monopattino m = null;
+		if(this.abbonamenti.contains(u.getAbbonamento()){
+			if(this.postiMonopattino.size() != 0) {
+				m = this.postiMonopattino.getLast();
+				this.postiMonopattino.removeLast();
+			}
+		}
+		return m;
+	}// end metodo noleggiaMonopattino()
 
 	@Override
 	public int hashCode() {
