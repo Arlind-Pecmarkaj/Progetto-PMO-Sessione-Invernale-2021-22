@@ -30,7 +30,7 @@ public class Parcheggio {
 	private Sensore<Double> sensoreAltezza = new SensoreAltezza();
 	private HashSet<Abbonamento> abbonamenti = new Hashset<Abbonamento>();
 
-	// Costruttore
+	// costruttore
 	public Parcheggio(int id, String n, int nPostiAuto, int nPostiMoto, int nPostiMonopattino) {
 		this.id = id;
 		this.name = n;
@@ -97,7 +97,7 @@ public class Parcheggio {
 						            .collect(Collectors.toSet());
 	}// end metodo listaVeicoliPresenti()
 	
-	/* metodo per controllare se è presente un posto libero, in caso contrario
+	/* metodo per controllare se ï¿½ presente un posto libero, in caso contrario
 	 * lancia un'eccezione (PostiFiniti) 
 	 */
 	private void filtraAggiungi(Predicate<AbstractPosto> filtro, Veicolo v){
@@ -140,7 +140,7 @@ public class Parcheggio {
 	}
 
 	/*
-	 * un parcheggio è uguale se ha lo stesso numero di posti
+	 * un parcheggio ï¿½ uguale se ha lo stesso numero di posti
 	 * per le auto, per le moto e per i monopattini
 	 */
 	@Override
