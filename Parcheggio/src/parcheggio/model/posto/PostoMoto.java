@@ -4,6 +4,7 @@ import static parcheggio.enumerations.TassaParcheggio.*;
 
 public class PostoMoto extends AbstractPosto {
 	
+	
 	/**
 	 * 	Compone una parte variabile univoca con il codice "M"
 	 * 	che sta ad indicare che il posto è riservato alle Moto.

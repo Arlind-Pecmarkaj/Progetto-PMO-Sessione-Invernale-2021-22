@@ -15,20 +15,19 @@ import parcheggio.model.veicolo.Veicolo;
  * 	@author tomma
  * 	
  * 	Classe astratta generica che implementa il contratto definito dall'interfaccia IPosto
- * 	e quindi si preoccupa di implementare tutti i metodi che saranno comuni alle sotto-classi
+ * 	e quindi si preoccupa di implementare tutti i metodi che saranno comuni alle sottoclassi
  * 	di APosto. Inoltre, definiamo anche i campi comuni.
  * 	
- * 	@note il carattere A all'inizio del nome della classe viene inteso come Abstract
  */
 
 public abstract class AbstractPosto implements Posto {
 	
-	private Optional<IVeicolo> veicolo;
+	private Optional<Veicolo> veicolo;
 	private Optional<Sensore<Alimentazione>> sensoreCarburante;
 	private Instant orarioArrivo;
 	private Instant orarioUscita;
-	private final String id;
-	private final double costoOrario;
+	private String id = "";
+	private double costoOrario = 0.0;
 	
 	/**
 	 * 	templete method FINAL per le sottoclassi
@@ -59,11 +58,11 @@ public abstract class AbstractPosto implements Posto {
 //		return this.getVeicolo();
 //	}
 	
-	protected Instant getOrarioArrivo() {
+	public Instant getOrarioArrivo() {
 		return orarioArrivo;
 	}
 
-	protected Instant getOrarioUscita() {
+	public Instant getOrarioUscita() {
 		return orarioUscita;
 	}
 
@@ -71,22 +70,22 @@ public abstract class AbstractPosto implements Posto {
 		return this.id;
 	}
 	
-	protected double getCostoOrario() {
+	public double getCostoOrario() {
 		return this.costoOrario;
 	}
 	
 	/**
 	 * 	metodi setters
 	 */
-	protected void setVeicolo(IVeicolo veicolo) {
+	private void setVeicolo(Veicolo veicolo) {
 		this.veicolo = Optional.of(veicolo);
 	}
 	
-	protected void setOrarioArrivo(Instant orarioArrivo) {
+	private void setOrarioArrivo(Instant orarioArrivo) {
 		this.orarioArrivo = orarioArrivo;
 	}
 	
-	protected void setOrarioUscita(Instant orarioUscita) {
+	private void setOrarioUscita(Instant orarioUscita) {
 		this.orarioUscita = orarioUscita;
 	}
 	
@@ -99,7 +98,7 @@ public abstract class AbstractPosto implements Posto {
 	 */
 	public final void occupaPosto(Veicolo v) {
 		setVeicolo(v);
-		this.orarioArrivo = Instant.now();
+		setOrarioArrivo(Instant.now());
 	}
 	
 	/**
@@ -107,7 +106,7 @@ public abstract class AbstractPosto implements Posto {
 	 */
 	public final void liberaPosto() {
 		this.veicolo = Optional.empty();
-		this.orarioUscita = Instant.now();
+		setOrarioUscita(Instant.now());
 	}
 	
 	/**
