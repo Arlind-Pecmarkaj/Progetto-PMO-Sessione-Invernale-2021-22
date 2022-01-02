@@ -10,7 +10,7 @@ import parcheggio.controller.ReaderParcheggio;
  * NOTA: separare ogni fase di test. */
 
 public class Test {
-
+        /* Test Netbeans */
 	public static void main(String[] args) {
 		/* TEST DI ARLIND PECMARKAJ 
 		 * Test del file reader
