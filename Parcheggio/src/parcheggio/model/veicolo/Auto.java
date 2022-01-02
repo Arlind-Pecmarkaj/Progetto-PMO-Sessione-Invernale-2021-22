@@ -35,14 +35,30 @@ public class Auto extends Veicolo{
     public void setNPosti(int np){
         this.nPosti = np;
     }
-    
-    /**
+
+	/*@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Auto other = (Auto) obj;
+		return Double.doubleToLongBits(altezza) == Double.doubleToLongBits(other.altezza) && nPosti == other.nPosti;
+	}*/
+	public boolean equals(Auto v) {
+		return this.getAltezza() == v.getAltezza();
+	}
+	
+
+	/**
      *
      * @return
      */
     @Override
     public String toString(){
         return super.toString() + "\nAltezza: " + this.altezza
-                + "\nNÂ° posti: " + this.nPosti;
+                + "\nN° posti: " + this.nPosti;
     }
 }
