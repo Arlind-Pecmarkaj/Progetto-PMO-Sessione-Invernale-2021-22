@@ -4,7 +4,7 @@ import parcheggio.enumerations.Alimentazione;
 import static parcheggio.enumerations.TassaParcheggio.*;
 import parcheggio.model.sensore.Sensore;
 
-public class PostoAuto extends APosto {
+public class PostoAuto extends AbstractPosto {
 	
 	private Sensore<Alimentazione> sensoreCarburante;
 	

@@ -21,7 +21,7 @@ import parcheggio.model.veicolo.Veicolo;
  * 	@note il carattere A all'inizio del nome della classe viene inteso come Abstract
  */
 
-public abstract class APosto implements IPosto {
+public abstract class AbstractPosto implements Posto {
 	
 	private Optional<IVeicolo> veicolo;
 	private Optional<Sensore<Alimentazione>> sensoreCarburante;

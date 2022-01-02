@@ -12,20 +12,17 @@ package parcheggio.test.posto;
 //import static org.junit.jupiter.api.Assertions.*;
 //import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
-
-import org.graalvm.compiler.lir.phases.PostAllocationOptimizationStage_OptionDescriptors;
 import org.junit.*;
 
 import parcheggio.model.posto.*;
 import parcheggio.enumerations.Alimentazione;
-import parcheggio.model.posto.*;
 import parcheggio.model.sensore.Sensore;
 
 import java.util.*;
 
 public class TestPosto {
 	
-	APosto postoMoto;
+	AbstractPosto postoMoto;
 
 	@Before
 	public void createData() {

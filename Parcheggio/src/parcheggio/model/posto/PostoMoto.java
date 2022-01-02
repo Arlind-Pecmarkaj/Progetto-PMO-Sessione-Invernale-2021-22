@@ -2,7 +2,7 @@ package parcheggio.model.posto;
 
 import static parcheggio.enumerations.TassaParcheggio.*;
 
-public class PostoMoto extends APosto {
+public class PostoMoto extends AbstractPosto {
 	
 	/**
 	 * 	Compone una parte variabile univoca con il codice "M"

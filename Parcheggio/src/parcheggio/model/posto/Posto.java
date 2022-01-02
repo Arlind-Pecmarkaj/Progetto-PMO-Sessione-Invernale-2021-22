@@ -16,7 +16,7 @@ import parcheggio.model.veicolo.Veicolo;
  * 
  * 	@note il carattere I all'inizio del nome dell'interfaccia viene inteso come Interface
  */
-public interface IPosto {
+public interface Posto {
 	
 	/**
 	 * 
