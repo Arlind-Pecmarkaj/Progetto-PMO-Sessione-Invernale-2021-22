@@ -1,4 +1,4 @@
-package parcheggio.test.junit;
+package parcheggio.test.posto;
 
 
 /**

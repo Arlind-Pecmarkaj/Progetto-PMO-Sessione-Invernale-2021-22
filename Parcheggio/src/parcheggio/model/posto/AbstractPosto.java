@@ -22,8 +22,9 @@ import parcheggio.model.veicolo.Veicolo;
 
 public abstract class AbstractPosto implements Posto {
 	
+	private 
+	
 	private Optional<Veicolo> veicolo;
-	private Optional<Sensore<Alimentazione>> sensoreCarburante;
 	private Instant orarioArrivo;
 	private Instant orarioUscita;
 	private String id = "";
@@ -36,17 +37,13 @@ public abstract class AbstractPosto implements Posto {
 		this.id = setId(postoId);
 		this.costoOrario = setCostoOrario(standardTax);
 		this.veicolo = Optional.empty();
-//		if(this instanceof PostoAuto || this instanceof PostoElettrico)
-//			this.sensoreCarburante = Optional.of(setSensoreCarburante());
-//		else
-//			this.sensoreCarburante = Optional.empty();
 	}
 
 	
 	/**
 	 * 	metodi astratti che devono essere implementati dalle sottoclassi
 	 */
-//	protected abstract Sensore<Alimentazione> setSensoreCarburante();
+
 	protected abstract String setId(String postoID);
 	protected abstract double setCostoOrario(double standardTax);
 
@@ -54,9 +51,6 @@ public abstract class AbstractPosto implements Posto {
 	/**
 	 * 	metodi getters
 	 */
-//	protected Optional<IVeicolo> getVeicolo() {
-//		return this.getVeicolo();
-//	}
 	
 	public Instant getOrarioArrivo() {
 		return orarioArrivo;
@@ -74,9 +68,11 @@ public abstract class AbstractPosto implements Posto {
 		return this.costoOrario;
 	}
 	
+	
 	/**
 	 * 	metodi setters
 	 */
+	
 	private void setVeicolo(Veicolo veicolo) {
 		this.veicolo = Optional.of(veicolo);
 	}
@@ -89,12 +85,13 @@ public abstract class AbstractPosto implements Posto {
 		this.orarioUscita = orarioUscita;
 	}
 	
+	
 	/****************************************************
-	 * 	METODI DELL'INTERFACCIA IPosto DA IMPLEMENTARE	*
+	 * 	METODI DELL'INTERFACCIA Posto DA IMPLEMENTARE	*
 	 ****************************************************/
 	
 	/**
-	 * 
+	 * 	Associa un veicolo ad un posto salvando l'orario di arrivo del veicolo
 	 */
 	public final void occupaPosto(Veicolo v) {
 		setVeicolo(v);
@@ -102,7 +99,7 @@ public abstract class AbstractPosto implements Posto {
 	}
 	
 	/**
-	 * 
+	 * 	Il veicolo viene disassociato dal posto che occupava
 	 */
 	public final void liberaPosto() {
 		this.veicolo = Optional.empty();

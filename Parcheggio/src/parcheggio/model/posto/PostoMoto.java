@@ -4,6 +4,8 @@ import static parcheggio.enumerations.TassaParcheggio.*;
 
 public class PostoMoto extends AbstractPosto {
 	
+	public PostoMoto() { }
+	
 	
 	/**
 	 * 	Compone una parte variabile univoca con il codice "M"

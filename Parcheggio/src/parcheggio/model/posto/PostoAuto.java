@@ -1,29 +1,25 @@
 package parcheggio.model.posto;
 
-import parcheggio.enumerations.Alimentazione;
 import static parcheggio.enumerations.TassaParcheggio.*;
-import parcheggio.model.sensore.Sensore;
+import parcheggio.model.sensore.SensoreCarburante;
 
 public class PostoAuto extends AbstractPosto {
 	
-	private Sensore<Alimentazione> sensoreCarburante;
+	private SensoreCarburante sensoreCarburante;
 	
-	public PostoAuto(Sensore<Alimentazione> sensore) {
+	public PostoAuto() { };
+	
+	public PostoAuto(SensoreCarburante sensore) {
 		this.sensoreCarburante = sensore;
 	}
 	
 	/**
 	 * 	metodo getter per accedere al sensore relativo ad un posto
 	 */
-	public Sensore<Alimentazione> getSensoreCarburante() {
+	public SensoreCarburante getSensoreCarburante() {
 		return this.sensoreCarburante;
 	}
 	
-	// SECONDO METODO
-	protected Sensore<Alimentazione> setSensoreCarburante() {
-		return null;
-		
-	}
 	
 	/**
 	 * 	Compone una parte variabile univoca con il codice "A"

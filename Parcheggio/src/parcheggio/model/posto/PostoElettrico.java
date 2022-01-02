@@ -1,21 +1,22 @@
 package parcheggio.model.posto;
 
-import parcheggio.enumerations.Alimentazione;
 import static parcheggio.enumerations.TassaParcheggio.*;
-import parcheggio.model.sensore.Sensore;
+import parcheggio.model.sensore.SensoreCarburante;
 
 public class PostoElettrico extends AbstractPosto {
 
-	private Sensore<Alimentazione> sensoreCarburante;
+	private SensoreCarburante sensoreCarburante;
 	
-	public PostoElettrico(Sensore<Alimentazione> sensore) {
+	public PostoElettrico() { }
+	
+	public PostoElettrico(SensoreCarburante sensore) {
 		this.sensoreCarburante = sensore;
 	}
 	
 	/**
 	 * 	metodo getter per accedere al sensore relativo ad un posto
 	 */
-	public Sensore<Alimentazione> getSensoreCarburante() {
+	public SensoreCarburante getSensoreCarburante() {
 		return this.sensoreCarburante;
 	}
 	
@@ -41,12 +42,6 @@ public class PostoElettrico extends AbstractPosto {
 	@Override
 	protected double setCostoOrario(double standardTax) {
 		return standardTax / TASSA_ELETTRICO.getTaxValue();
-	}
-
-	@Override
-	protected Sensore<Alimentazione> setSensoreCarburante() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
