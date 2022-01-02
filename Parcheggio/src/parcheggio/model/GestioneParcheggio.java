@@ -2,8 +2,6 @@ package parcheggio.model;
 
 import java.util.ArrayList;
 
-import parcheggio.model.Parcheggio;
-
 public class GestioneParcheggio {
 	ArrayList<Parcheggio> parcheggi;
 	// ArrayList<Abbonamento> abbonamento;
@@ -15,5 +13,13 @@ public class GestioneParcheggio {
 	public void aggiungiParcheggio(Parcheggio p) {
 		parcheggi.add(p);
 	}
+        
+        public void aggiungiAbbonamento(/* Abbonamento a */) {
+            //TODO
+        }
+        
+        public void aggiornaAbbonamenti() {
+            // TODO
+        }
 
 }

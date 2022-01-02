@@ -20,7 +20,7 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 	
 	@Override
 	public GestioneParcheggio read() {
-		/* La formattazione del file è
+		/* La formattazione del file ï¿½
 		 * <NR Parcheggi>
 		 * <Id1> <Nome> <Nr posti auto parcheggio 1> <Nr posti moto parcheggio 1> <nr monopattini>
 		 * <Id2> <Nome> <Nr Posti auto parcheggio 2> <Nr posti moto parcheggio 2> <nr monopattini>
@@ -71,11 +71,11 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 		} catch (IOException e) {
 			System.out.println(e);
 		}
-		return null;
+		return gestione;
 	}
 
 	@Override
-	public void write(GestioneParcheggio t) {
+	public void write(GestioneParcheggio g) {
 		
 	}
 

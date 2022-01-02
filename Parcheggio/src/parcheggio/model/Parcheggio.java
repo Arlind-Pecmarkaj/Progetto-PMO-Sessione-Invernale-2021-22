@@ -14,14 +14,14 @@ import parcheggio.model.veicolo.Auto;
 import parcheggio.model.veicolo.Moto;
 
 public class Parcheggio {
-	private LinkedList<Posto> postiDisponibili 		 = new LinkedList<Posto>();
+	private LinkedList<Posto> postiDisponibili = new LinkedList<Posto>();
 	final private int postiTotaliAuto;
 //	private int autoParcheggiate = 0; // posti auto occupati
 //	private int motoParcheggiate = 0; // posti moto occupati
 	final private int postiTotaliMoto;
 	private LinkedList<Monopattino> postiMonopattino = new LinkedList<Monopattino>();
 	final private int postiTotaliMonopattini;
-	private Sensore sensoreAltezza 					 = new SensoreAltezza();
+	private Sensore sensoreAltezza = new SensoreAltezza();
 	
 	// costruttore
 	public Parcheggio(int nPostiAuto, int nPostiMoto, int nPostiMonopattino) {
@@ -50,7 +50,7 @@ public class Parcheggio {
 		return postiMonopattino;
 	}// end metodo getPostiMonopattino()
 
-	/* metodo per aggiungere un veicolo al parcheggio, se è presente un posto libero */
+	/* metodo per aggiungere un veicolo al parcheggio, se ï¿½ presente un posto libero */
 	public void aggiungiVeicolo(Veicolo v){
 		if(v instanceof Auto) {
 			this.filtraAggiungi(p -> p instanceof PostiAuto == true, v);
@@ -85,7 +85,7 @@ public class Parcheggio {
 						            .collect(Collectors.toSet());
 	}// end metodo listaVeicoliPresenti()
 	
-	/* metodo per controllare se è presente un posto libero, in caso contrario
+	/* metodo per controllare se ï¿½ presente un posto libero, in caso contrario
 	 * lancia un'eccezione (PostiFiniti) 
 	 */
 	private void filtraAggiungi(Predicate<Posto> filtro, Veicolo v){
@@ -117,7 +117,7 @@ public class Parcheggio {
 	}
 
 	/*
-	 * un parcheggio è uguale se ha lo stesso numero di posti
+	 * un parcheggio ï¿½ uguale se ha lo stesso numero di posti
 	 * per le auto, per le moto e per i monopattini
 	 */
 	@Override
