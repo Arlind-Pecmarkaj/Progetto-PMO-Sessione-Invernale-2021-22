@@ -11,11 +11,13 @@ import parcheggio.exceptions.PostiFiniti;
 import parcheggio.model.monopattino.Monopattino;
 import parcheggio.model.sensore.Sensore;
 import parcheggio.model.sensore.SensoreAltezza;
+import parcheggio.model.sensore.SensoreCarburante;
 import parcheggio.model.veicolo.Auto;
 import parcheggio.model.veicolo.Moto;
+import parcheggio.model.posto.*;
 
 public class Parcheggio {
-	private LinkedList<Posto> postiDisponibili = new LinkedList<Posto>();
+	private LinkedList<AbstractPosto> postiDisponibili = new LinkedList<AbstractPosto>();
 	final private int postiTotaliAuto;
 //	private int autoParcheggiate = 0; // posti auto occupati
 //	private int motoParcheggiate = 0; // posti moto occupati
@@ -31,7 +33,7 @@ public class Parcheggio {
 		this.postiTotaliMoto = nPostiMoto;
 		
 		for(int i = 0; i < this.postiTotaliAuto; i++)
-			this.postiDisponibili.add(new PostoAuto());
+			this.postiDisponibili.add(new PostoAuto(new SensoreCarburante()));
 		
 		for(int i = 0; i < this.postiTotaliMoto; i++)
 			this.postiDisponibili.add(new PostoMoto());
@@ -44,7 +46,7 @@ public class Parcheggio {
 		}
 	}// end costruttore
 
-	public LinkedList<Posto> getPostiDisponibili() {
+	public LinkedList<AbstractPosto> getPostiDisponibili() {
 		return postiDisponibili;
 	}// end metodo getPostoDisponibili()
 
@@ -55,24 +57,26 @@ public class Parcheggio {
 	/* metodo per aggiungere un veicolo al parcheggio, se ï¿½ presente un posto libero */
 	public void aggiungiVeicolo(Veicolo v){
 		if(v instanceof Auto) {
-			this.filtraAggiungi(p -> p instanceof PostiAuto == true, v);
+			this.filtraAggiungi(p -> p instanceof PostoAuto == true, v);
 		} else if(v instanceof Moto){
 			// stessa cosa per le moto
-			this.filtraAggiungi(p -> p instanceof PostiMoto == true, v);
+			this.filtraAggiungi(p -> p instanceof PostoMoto == true, v);
 		}
 	}// end metodo aggiungiVeicolo
 	
 	/* metodo per liberare un posto del parcheggio
 	 * restituisce il prezzo da pagare
 	 */
-	public double liberaPosto(Posto p) {
+	public double liberaPosto(Posto p, Utente u) {
 		double prezzo = 0;
-		Optional<Posto> postoDaLiberare = this.postiDisponibili.stream()
+		Optional<AbstractPosto> postoDaLiberare = this.postiDisponibili.stream()
 				             								   .filter(x -> x.equals(p))
 				             								   .findAny();
 		if(postoDaLiberare.isPresent()) {
-			prezzo = postoDaLiberare.get().getCostoOrario() * (postoDaLiberare.get().getOraUscita() -
-															   postoDaLiberare.get().getOraArrivo());
+			if(!this.abbonamenti.contains(u.getVeicolo().getAbbonamento())) {
+				prezzo = postoDaLiberare.get().getCostoOrario() * (postoDaLiberare.get().getOrarioUscita().getNano() -
+																   postoDaLiberare.get().getOrarioArrivo().getNano());
+			}
 			postoDaLiberare.get().setVeicoloOccupante(null);
 		}
 		return prezzo;
@@ -88,11 +92,11 @@ public class Parcheggio {
 						            .collect(Collectors.toSet());
 	}// end metodo listaVeicoliPresenti()
 	
-	/* metodo per controllare se ï¿½ presente un posto libero, in caso contrario
+	/* metodo per controllare se è presente un posto libero, in caso contrario
 	 * lancia un'eccezione (PostiFiniti) 
 	 */
-	private void filtraAggiungi(Predicate<Posto> filtro, Veicolo v){
-		Optional<Posto> tmp = this.postiDisponibili.stream()
+	private void filtraAggiungi(Predicate<AbstractPosto> filtro, Veicolo v){
+		Optional<AbstractPosto> tmp = this.postiDisponibili.stream()
 				   								   .filter(p -> p.setVeicoloOccupante() == null)
 				   								   .filter(filtro)
 				   								   .findFirst();
@@ -120,7 +124,7 @@ public class Parcheggio {
 	}
 
 	/*
-	 * un parcheggio ï¿½ uguale se ha lo stesso numero di posti
+	 * un parcheggio è uguale se ha lo stesso numero di posti
 	 * per le auto, per le moto e per i monopattini
 	 */
 	@Override
