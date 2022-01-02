@@ -14,9 +14,12 @@ import parcheggio.model.sensore.SensoreAltezza;
 import parcheggio.model.sensore.SensoreCarburante;
 import parcheggio.model.veicolo.Auto;
 import parcheggio.model.veicolo.Moto;
+import parcheggio.model.veicolo.Veicolo;
 import parcheggio.model.posto.*;
 
 public class Parcheggio {
+	private int id;
+	private String name;
 	private LinkedList<AbstractPosto> postiDisponibili = new LinkedList<AbstractPosto>();
 	final private int postiTotaliAuto;
 //	private int autoParcheggiate = 0; // posti auto occupati
@@ -24,11 +27,13 @@ public class Parcheggio {
 	final private int postiTotaliMoto;
 	private LinkedList<Monopattino> postiMonopattino = new LinkedList<Monopattino>();
 	final private int postiTotaliMonopattini;
-	private Sensore sensoreAltezza = new SensoreAltezza();
+	private Sensore<Double> sensoreAltezza = new SensoreAltezza();
 	private HashSet<Abbonamento> abbonamenti = new Hashset<Abbonamento>();
 
 	// costruttore
-	public Parcheggio(int nPostiAuto, int nPostiMoto, int nPostiMonopattino) {
+	public Parcheggio(int id, String n, int nPostiAuto, int nPostiMoto, int nPostiMonopattino) {
+		this.id = id;
+		this.name = n;
 		this.postiTotaliAuto = nPostiAuto;
 		this.postiTotaliMoto = nPostiMoto;
 		
@@ -77,7 +82,7 @@ public class Parcheggio {
 				prezzo = postoDaLiberare.get().getCostoOrario() * (postoDaLiberare.get().getOrarioUscita().getNano() -
 																   postoDaLiberare.get().getOrarioArrivo().getNano());
 			}
-			postoDaLiberare.get().setVeicoloOccupante(null);
+			postoDaLiberare.get().setVeicolo(null);
 		}
 		return prezzo;
 	}// end metodo liberaPosto()
@@ -87,8 +92,8 @@ public class Parcheggio {
 	 */
 	public Set<Veicolo> listaVeicoliPresenti() {
 		return this.postiDisponibili.stream()
-						            .filter(p -> p.getVeicoloOccupante() != null)
-						            .map(p -> p.getVeicoloOccupante())
+						            .filter(p -> p.getVeicolo() != null)
+						            .map(p -> p.getVeicolo())
 						            .collect(Collectors.toSet());
 	}// end metodo listaVeicoliPresenti()
 	
@@ -97,13 +102,13 @@ public class Parcheggio {
 	 */
 	private void filtraAggiungi(Predicate<AbstractPosto> filtro, Veicolo v){
 		Optional<AbstractPosto> tmp = this.postiDisponibili.stream()
-				   								   .filter(p -> p.setVeicoloOccupante() == null)
+				   								   .filter(p -> p.setVeicolo() == null)
 				   								   .filter(filtro)
 				   								   .findFirst();
 		if(tmp.isPresent()) {
 			if(v instanceof Auto) {
 				if((double)this.sensoreAltezza.effettuaRilevamento((Auto)v) <= 4.0) {
-					tmp.get().setVeicoloOccupante(v);
+					tmp.get().setVeicolo(v);
 				} else {
 //					throw new AltezzaMassimaSuperata("Eccezione: L'altezza del veicolo ha superato il limite consentito");
 				}
