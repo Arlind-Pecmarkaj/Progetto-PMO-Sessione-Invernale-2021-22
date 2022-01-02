@@ -116,7 +116,7 @@ public class Parcheggio {
 	public Monopattino noleggiaMonopattino(Utente u) {
 		Monopattino m = null;
 		if(this.abbonamenti.contains(u.getAbbonamento()){
-			if(this.postiMonopattino.size() != 0) {
+			if(this.postiMonopattino.size() != 0 && this.postiMonopattino.getLast().getDisponibile()) {
 				m = this.postiMonopattino.getLast();
 				this.postiMonopattino.removeLast();
 			}
