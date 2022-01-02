@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package parcheggio.model.veicolo;
 
 /**
@@ -19,6 +15,9 @@ public class UseVeicolo {
         System.out.println(a1);
         System.out.println("\n");
         System.out.println(m1);
+        /*Auto a2 = new Auto("ABC23ABC", 2021, Alimentazione.GPL, "Toyota", "Yaris", "Martin", "Berardi", 1.5, 5);
+        if(a1.equals(a2))
+        	System.out.println("Ok");*/
     }
     
 }
