@@ -10,43 +10,22 @@ package parcheggio.model.veicolo;
  */
 public class Auto extends Veicolo{
     private double altezza;
-    private int nPosti;
     
     public Auto(String targa, int annoImm, Alimentazione carburante,
                     String marca, String modello, String nomeProprietario,
-                    String cognomeProprietario, double altezza, int nPosti){
+                    String cognomeProprietario, double altezza){
         super(targa, annoImm, carburante, marca, modello, nomeProprietario, cognomeProprietario);
         this.altezza = altezza;
-        this.nPosti = nPosti;
     }
     
     public double getAltezza(){
         return this.altezza;
     }
     
-    public int getNPosti(){
-        return this.nPosti;
-    }
-    
     public void setAltezza(double alt){
         this.altezza = alt;
     }
     
-    public void setNPosti(int np){
-        this.nPosti = np;
-    }
-
-	/*@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Auto other = (Auto) obj;
-		return Double.doubleToLongBits(altezza) == Double.doubleToLongBits(other.altezza) && nPosti == other.nPosti;
-	}*/
 	public boolean equals(Auto v) {
 		return this.getAltezza() == v.getAltezza();
 	}
@@ -58,7 +37,6 @@ public class Auto extends Veicolo{
      */
     @Override
     public String toString(){
-        return super.toString() + "\nAltezza: " + this.altezza
-                + "\nN° posti: " + this.nPosti;
+        return super.toString() + "\nAltezza: " + this.altezza;
     }
 }
