@@ -1,13 +1,8 @@
 package parcheggio.model.posto;
 
-import java.time.Instant;
-import java.time.Duration;
+import java.time.*;
+import java.time.format.*;
 import java.util.Optional;
-
-// import per secondo metodo
-import parcheggio.enumerations.Alimentazione;
-import parcheggio.model.sensore.Sensore;
-// FINE IMPORT PER SECONDO METODO
 import parcheggio.model.veicolo.Veicolo;
 
 
@@ -22,11 +17,10 @@ import parcheggio.model.veicolo.Veicolo;
 
 public abstract class AbstractPosto implements Posto {
 	
-	private 
-	
 	private Optional<Veicolo> veicolo;
 	private Instant orarioArrivo;
 	private Instant orarioUscita;
+	private Duration elapsedTime;
 	private String id = "";
 	private double costoOrario = 0.0;
 	
@@ -52,12 +46,16 @@ public abstract class AbstractPosto implements Posto {
 	 * 	metodi getters
 	 */
 	
+	public Optional<Veicolo> getVeicolo() {
+		return this.veicolo;
+	}
+	
 	public Instant getOrarioArrivo() {
-		return orarioArrivo;
+		return this.orarioArrivo;
 	}
 
 	public Instant getOrarioUscita() {
-		return orarioUscita;
+		return this.orarioUscita;
 	}
 
 	public String getId() {
@@ -112,7 +110,7 @@ public abstract class AbstractPosto implements Posto {
 	 * 	@return un valore booleano che mi dice se un posto è libero (true) o occupato (false)
 	 */
 	public final boolean isLibero() {
-		return this.veicolo.isPresent();
+		return !(this.veicolo.isPresent());
 	}
 	
 	/**
@@ -121,10 +119,30 @@ public abstract class AbstractPosto implements Posto {
 	 * 	@return tempo di occupazione del posto
 	 */
 	public final Duration tempoOccupazione() {
-		Duration elapsedTime;
-		
-		elapsedTime = Duration.between(getOrarioArrivo(), getOrarioUscita());
-		
+		elapsedTime = Duration.between(getOrarioArrivo(), getOrarioUscita());		
 		return elapsedTime;
+	}
+	
+	/**
+	 * 	utility methods
+	 */
+	@Override
+	public String toString() {
+		return 	"Posto " + this.getId() 
+				+ " con tariffa " + this.getCostoOrario() 
+				+ (this.veicolo.isPresent() ? 
+						", occupato con orario di arrivo: " + this.getOrarioArrivo() : 
+						", libero con ultimo orario di uscita: " + this.getOrarioUscita());
+	}
+	
+
+	public String orarioToString(boolean option) { // true: orario arrivo; false: orario uscita;
+		DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withZone(ZoneId.systemDefault());
+		if(option) return formatter.format(getOrarioArrivo());
+		else return formatter.format(getOrarioUscita());
+	}
+	
+	public String elapsedToString() {
+		return String.format("%02d:%02d:%02d", this.elapsedTime.toHours(), this.elapsedTime.toMinutes(), this.elapsedTime.toSeconds());
 	}
 }

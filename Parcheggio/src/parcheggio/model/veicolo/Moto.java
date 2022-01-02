@@ -10,6 +10,7 @@ package parcheggio.model.veicolo;
  */
 public class Moto extends Veicolo{
     private double velocita;
+
     
     public Moto(String targa, int annoImm, Alimentazione carburante,
                     String marca, String modello, String nomeProprietario,

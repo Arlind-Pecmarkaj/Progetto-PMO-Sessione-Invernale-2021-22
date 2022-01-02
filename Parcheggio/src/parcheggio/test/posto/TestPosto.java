@@ -13,12 +13,10 @@ package parcheggio.test.posto;
 //import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 import org.junit.*;
-
 import parcheggio.model.posto.*;
-import parcheggio.enumerations.Alimentazione;
-import parcheggio.model.sensore.Sensore;
+import parcheggio.model.veicolo.Alimentazione;
+import parcheggio.model.veicolo.Moto;
 
-import java.util.*;
 
 public class TestPosto {
 	
@@ -34,6 +32,17 @@ public class TestPosto {
 //		postoAuto.setPosto("1", 1.0);
 		postoMoto = new PostoMoto();
 		postoMoto.setPosto("1", 1.0);
+		postoMoto.occupaPosto(new Moto("123", 1999, Alimentazione.BENZINA,
+                "HONDA", "honda", "gianni",
+                "fresca", 200.0));
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		postoMoto.liberaPosto();
+		postoMoto.tempoOccupazione();
 //		IPosto postoMoto = new PostoMoto();
 //		postoMoto.setPosto();
 		
@@ -44,18 +53,24 @@ public class TestPosto {
 		// controllo se viene settato il gisuto ID
 		assertEquals("M1", postoMoto.getId()); 	
 		// controllo se viene settata la giusta tariffa oraria
-		assertEquals(0.5, postoMoto.getId());
+		assertEquals(0.5, postoMoto.getCostoOrario(), 0);
+	}
+	
+	@Test
+	public void testPrintOrari() {
+		System.out.println(postoMoto.getOrarioArrivo());
+		System.out.println(postoMoto.getOrarioUscita());
+//		System.out.println(postoMoto.tempoOccupazione());
+		System.out.println(postoMoto.orarioToString(true));
+		System.out.println(postoMoto.orarioToString(false));
+		System.out.println(postoMoto.elapsedToString());
+		
 	}
 	
 	@Test
 	public void testIsLibero() {
 		// controllo se un parcheggio è libero
 		assertTrue(postoMoto.isLibero());
-	}
-	
-	@Test
-	public void testTempoOccupazione() {
-		// TODO
 	}
 	
 //	@Test(expected = IllegalStateException.class)
