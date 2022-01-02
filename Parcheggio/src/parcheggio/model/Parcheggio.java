@@ -1,5 +1,6 @@
 package parcheggio.model;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Set;
@@ -22,6 +23,7 @@ public class Parcheggio {
 	private LinkedList<Monopattino> postiMonopattino = new LinkedList<Monopattino>();
 	final private int postiTotaliMonopattini;
 	private Sensore sensoreAltezza = new SensoreAltezza();
+	private HashSet<Abbonamento> abbonamenti = new Hashset<Abbonamento>();
 
 	// costruttore
 	public Parcheggio(int nPostiAuto, int nPostiMoto, int nPostiMonopattino) {
@@ -61,18 +63,19 @@ public class Parcheggio {
 	}// end metodo aggiungiVeicolo
 	
 	/* metodo per liberare un posto del parcheggio
-	 * restituisce il veciolo occupante, se presente
+	 * restituisce il prezzo da pagare
 	 */
-	public Optional<Veicolo> liberaPosto(Posto p) {
-		Optional<Veicolo> v = Optional.empty();
+	public double liberaPosto(Posto p) {
+		double prezzo = 0;
 		Optional<Posto> postoDaLiberare = this.postiDisponibili.stream()
 				             								   .filter(x -> x.equals(p))
 				             								   .findAny();
 		if(postoDaLiberare.isPresent()) {
-			v = postoDaLiberare.get().getVeicoloOccupante();
+			prezzo = postoDaLiberare.get().getCostoOrario() * (postoDaLiberare.get().getOraUscita() -
+															   postoDaLiberare.get().getOraArrivo());
 			postoDaLiberare.get().setVeicoloOccupante(null);
 		}
-		return v;
+		return prezzo;
 	}// end metodo liberaPosto()
 	
 	/*
