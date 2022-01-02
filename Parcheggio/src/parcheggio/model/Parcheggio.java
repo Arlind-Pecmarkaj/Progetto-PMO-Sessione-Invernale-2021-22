@@ -8,7 +8,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import parcheggio.exceptions.PostiFiniti;
+import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.monopattino.Monopattino;
+import parcheggio.model.persona.Persona;
 import parcheggio.model.sensore.Sensore;
 import parcheggio.model.sensore.SensoreAltezza;
 import parcheggio.model.sensore.SensoreCarburante;
@@ -28,7 +30,7 @@ public class Parcheggio {
 	private LinkedList<Monopattino> postiMonopattino = new LinkedList<Monopattino>();
 	final private int postiTotaliMonopattini;
 	private Sensore<Double> sensoreAltezza = new SensoreAltezza();
-	private HashSet<Abbonamento> abbonamenti = new Hashset<Abbonamento>();
+	private HashSet<Abbonamento> abbonamenti = new HashSet<Abbonamento>();
 
 	// costruttore
 	public Parcheggio(int id, String n, int nPostiAuto, int nPostiMoto, int nPostiMonopattino) {
@@ -72,13 +74,13 @@ public class Parcheggio {
 	/* metodo per liberare un posto del parcheggio
 	 * restituisce il prezzo da pagare
 	 */
-	public double liberaPosto(Posto p, Utente u) {
+	public double liberaPosto(Posto p/*, Persona pe*/) {
 		double prezzo = 0;
 		Optional<AbstractPosto> postoDaLiberare = this.postiDisponibili.stream()
 				             								   .filter(x -> x.equals(p))
 				             								   .findAny();
 		if(postoDaLiberare.isPresent()) {
-			if(!this.abbonamenti.contains(u.getVeicolo().getAbbonamento())) {
+			if(!this.abbonamenti.contains(((AbstractPosto) p).getVeicolo().getAbbonamento())/*pe.getVeicolo().getAbbonamento())*/) {
 				prezzo = postoDaLiberare.get().getCostoOrario() * (postoDaLiberare.get().getOrarioUscita().getNano() -
 																   postoDaLiberare.get().getOrarioArrivo().getNano());
 			}
@@ -90,7 +92,7 @@ public class Parcheggio {
 	/*
 	 * restituisce tutti i veicoli presenti nel parcheggio
 	 */
-	public Set<Veicolo> listaVeicoliPresenti() {
+	public Set<Optional<Veicolo>> listaVeicoliPresenti() {
 		return this.postiDisponibili.stream()
 						            .filter(p -> p.isLibero() == false)
 						            .map(p -> p.getVeicolo())
@@ -118,9 +120,9 @@ public class Parcheggio {
 		}
 	}// end metodo filtraAggiungi
 	
-	public Monopattino noleggiaMonopattino(Utente u) {
+	public Monopattino noleggiaMonopattino(Persona p) {
 		Monopattino m = null;
-		if(this.abbonamenti.contains(u.getAbbonamento()){
+		if(/*this.abbonamenti.contains(*/p.getAbbonamento() != null)/*)*/{
 			if(this.postiMonopattino.size() != 0 && this.postiMonopattino.getLast().getDisponibile()) {
 				m = this.postiMonopattino.getLast();
 				this.postiMonopattino.removeLast();
@@ -129,9 +131,9 @@ public class Parcheggio {
 		return m;
 	}// end metodo noleggiaMonopattino()
 	
-	public double restituisciMonopattino(Utente u, Monopattino m) {
+	public double restituisciMonopattino(Persona p, Monopattino m) {
 		double prezzo = 0;
-		if(!u.possiedeAbbonamentoPremium()) {
+		if(!p.possiedeAbbonamentoPremium()) {
 			prezzo = Monopattino.COSTO * (m.getFineNoleggio() - m.getOraNoleggiato());
 		}
 		this.postiMonopattino.add(m);
