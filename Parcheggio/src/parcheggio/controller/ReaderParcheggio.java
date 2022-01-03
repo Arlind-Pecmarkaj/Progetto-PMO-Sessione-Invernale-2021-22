@@ -33,7 +33,8 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 		 * <Id Utente> <Targa>
 		 */
 		int nrParcheggi = 0;
-		String id;
+		int id;
+		String nome;
 		int nrPostiAuto = 0;
 		int nrPostiMoto = 0;
 		int nrMonopattini = 0;
@@ -48,22 +49,23 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 				for (int i = 0; i < nrParcheggi; i++) {
 					input = this.reader.readLine();
 					String[] splittedInput = input.split("\\s+");
-					id = splittedInput[0];
-					nrPostiAuto = Integer.parseInt(splittedInput[1]);
-					nrPostiMoto = Integer.parseInt(splittedInput[2]);
-					nrMonopattini = Integer.parseInt(splittedInput[3]);
-					gestione.aggiungiParcheggio(new Parcheggio(nrPostiAuto, nrPostiMoto, nrMonopattini));
+					id = Integer.parseInt(splittedInput[0]);
+					nome = splittedInput[1];
+					nrPostiAuto = Integer.parseInt(splittedInput[2]);
+					nrPostiMoto = Integer.parseInt(splittedInput[3]);
+					nrMonopattini = Integer.parseInt(splittedInput[4]);
+					gestione.aggiungiParcheggio(new Parcheggio(id, nome, nrPostiAuto, nrPostiMoto, nrMonopattini));
 				}
 				
 				input = this.reader.readLine();
 				int nrAbbonamenti = Integer.parseInt(input);
-				String nome;
+				String nomePersona;
 				String targa;
 				
 				for (int i = 0; i < nrAbbonamenti; i++) {
 					input = this.reader.readLine();
 					String[] splittedInput = input.split("\\s+");
-					nome = splittedInput[0];
+					nomePersona = splittedInput[0];
 					targa = splittedInput[1];
 					// gestione.aggiungiAbbonamento(new Abbonamento(nome, targa));
 				}

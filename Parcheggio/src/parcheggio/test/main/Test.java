@@ -1,4 +1,4 @@
-package parcheggio.test.Main;
+package parcheggio.test.main;
 
 import java.util.*;
 
