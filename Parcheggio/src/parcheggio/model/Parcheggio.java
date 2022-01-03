@@ -20,7 +20,7 @@ import parcheggio.model.veicolo.Veicolo;
 import parcheggio.model.posto.*;
 
 public class Parcheggio {
-	private int id;
+	final private int id;
 	private String name;
 	private LinkedList<AbstractPosto> postiDisponibili = new LinkedList<AbstractPosto>();
 	final private int postiTotaliAuto;
@@ -144,16 +144,14 @@ public class Parcheggio {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + postiTotaliAuto;
 		result = prime * result + postiTotaliMonopattini;
 		result = prime * result + postiTotaliMoto;
 		return result;
 	}
 
-	/*
-	 * un parcheggio � uguale se ha lo stesso numero di posti
-	 * per le auto, per le moto e per i monopattini
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -163,6 +161,13 @@ public class Parcheggio {
 		if (getClass() != obj.getClass())
 			return false;
 		Parcheggio other = (Parcheggio) obj;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
 		if (postiTotaliAuto != other.postiTotaliAuto)
 			return false;
 		if (postiTotaliMonopattini != other.postiTotaliMonopattini)
