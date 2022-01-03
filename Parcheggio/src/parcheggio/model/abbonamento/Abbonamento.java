@@ -1,33 +1,58 @@
 package parcheggio.model.abbonamento;
 
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import parcheggio.model.persona.Persona;
 
-public class Abbonamento {
+public class Abbonamento implements abb {
 	
 	/*
 	 * fields 
 	 */
-	private final Set<Persona> abbonati = new HashSet<>();
 	
-	public void aggiungiAbb(final String codFiscale,
-							final String nome,
-							final String cognome,
-							final Date   dataNascita,
-							final String nazione) {
-		this.abbonati.add(new Persona(codFiscale, 
-									  nome, cognome,dataNascita,nazione));
+	private final String  targa;
+	private final Persona persona;
+	private final Date    dataInizio;
+	private final Date	  dataFine;
+	
+	/*
+	 * constructor 
+	 */
+	
+	public Abbonamento(final String  targa,
+					   final Persona pers,
+					   final Date    dataIn,
+					   final Date    dataFine) {
+		this.targa	    = targa;
+		this.persona 	= pers;
+		this.dataInizio = dataIn;
+		this.dataFine   = dataFine;
 	}
 	
-	public void rimuoviAbb(final String codFiscale,
-						   final String nome,
-						   final String cognome,
-						   final Date   dataNascita,
-						   final String nazione) {
-		this.abbonati.remove(new Persona(codFiscale, 
-										 nome, cognome,dataNascita,nazione));
+	/*
+	 * selectors
+	 */
+
+	public String getTarga() {
+		return this.targa;
+	}
+
+	public Persona getPersona() {
+		return this.persona;
+	}
+
+	public Date getDataInizio() {
+		return this.dataInizio;
+	}
+
+	public Date getDataFine() {
+		return this.dataFine;
+	}
+	
+	public String toString() {
+		return "Targa: "        + this.targa +
+				"Persona: "     + this.persona.toString() +
+				"Data inizio: " + this.dataInizio + 
+				"Data fine: "   + this.dataFine;
 	}
 }
