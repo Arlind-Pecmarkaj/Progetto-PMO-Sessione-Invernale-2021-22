@@ -67,7 +67,7 @@ public class Abbonamento implements abb {
 		return this.dataFine;
 	}
 	
-	public static boolean isPremium() {
+	public boolean isPremium() {
 		return premium;
 	}
 	
