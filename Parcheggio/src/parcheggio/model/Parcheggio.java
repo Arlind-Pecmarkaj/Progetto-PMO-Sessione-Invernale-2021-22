@@ -80,7 +80,10 @@ public class Parcheggio {
 				             								   .filter(x -> x.equals(p))
 				             								   .findAny();
 		if(postoDaLiberare.isPresent()) {
-			if(!this.abbonamenti.contains(((AbstractPosto) p).getVeicolo().getAbbonamento())/*pe.getVeicolo().getAbbonamento())*/) {
+			Optional<Abbonamento> ab = this.abbonamenti.stream()
+													   .filter(a -> a.getTarga().equals(((AbstractPosto) p).getVeicolo().get().getTarga()))
+													   .findAny();
+			if(ab.isEmpty()) {
 				prezzo = postoDaLiberare.get().getCostoOrario() * (postoDaLiberare.get().getOrarioUscita().getNano() -
 																   postoDaLiberare.get().getOrarioArrivo().getNano());
 			}
@@ -122,7 +125,10 @@ public class Parcheggio {
 	
 	public Monopattino noleggiaMonopattino(Persona p) {
 		Monopattino m = null;
-		if(/*this.abbonamenti.contains(*/p.getAbbonamento() != null)/*)*/{
+		Optional<Abbonamento> esiste = this.abbonamenti.stream()
+													   .filter(a -> a.getPersona().equals(p))
+													   .findAny();
+		if(esiste.isPresent()){
 			if(this.postiMonopattino.size() != 0 && this.postiMonopattino.getLast().getDisponibile()) {
 				m = this.postiMonopattino.getLast();
 				this.postiMonopattino.removeLast();
