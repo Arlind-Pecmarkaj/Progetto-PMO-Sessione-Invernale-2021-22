@@ -1,6 +1,6 @@
 package parcheggio.model.abbonamento;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import parcheggio.model.persona.Persona;
 
@@ -17,8 +17,8 @@ public interface abb {
 	Persona getPersona();
 	
 	// return della data d'inizio
-	Date getDataInizio();
+	LocalDate getDataInizio();
 	
 	// return della data di scadenza
-	Date getDataFine();
+	LocalDate getDataFine();
 }

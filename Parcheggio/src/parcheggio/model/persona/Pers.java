@@ -1,6 +1,6 @@
 package parcheggio.model.persona;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public interface Pers {
 	
@@ -18,7 +18,7 @@ public interface Pers {
 	String getCognome();
 	
 	// return della data di nascita
-	Date getDataNascita();
+	LocalDate getDataNascita();
 	
 	// return della nazione 
 	String getNazione();

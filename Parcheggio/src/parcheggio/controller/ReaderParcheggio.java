@@ -4,9 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 
 import parcheggio.model.*;
 import parcheggio.model.Parcheggio;
+import parcheggio.model.abbonamento.Abbonamento;
+import parcheggio.model.persona.Persona;
 
 public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 	
@@ -23,24 +26,21 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 		/* La formattazione del file �
 		 * <NR Parcheggi>
 		 * <Id1> <Nome> <Nr posti auto parcheggio 1> <Nr posti moto parcheggio 1> <nr monopattini>
-		 * <Id2> <Nome> <Nr Posti auto parcheggio 2> <Nr posti moto parcheggio 2> <nr monopattini>
 		 * ...
-		 * <Idn> <Nome> <Nr Posti auto parcheggio n> <Nr posti moto parcheggio n> <nr monopattini>
 		 * <Nr Abbonamenti>
-		 * <Id Utente> <Targa>
-		 * <Id Utente> <Targa>
-		 * ...
-		 * <Id Utente> <Targa>
+		 * <Targa> <Codice Fiscale> <Nome> <Cognome> <Data Nascita> <Nazione> <Data Inizio> <Data Fine>
+         * ...
 		 */
-		int nrParcheggi = 0;
-		int id;
-		String nome;
-		int nrPostiAuto = 0;
-		int nrPostiMoto = 0;
-		int nrMonopattini = 0;
 		GestioneParcheggio gestione = new GestioneParcheggio();
-		
 		try {
+			
+			int nrParcheggi = 0;
+			int id;
+			String nome;
+			int nrPostiAuto = 0;
+			int nrPostiMoto = 0;
+			int nrMonopattini = 0;
+			
 			String input = this.reader.readLine();
 			if (input != null) {
 				nrParcheggi = Integer.parseInt(input);
@@ -57,17 +57,35 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 					gestione.aggiungiParcheggio(new Parcheggio(id, nome, nrPostiAuto, nrPostiMoto, nrMonopattini));
 				}
 				
+				// Leggo il numero di abbonamenti;
 				input = this.reader.readLine();
 				int nrAbbonamenti = Integer.parseInt(input);
-				String nomePersona;
-				String targa;
+				
+				// Variabili temporanee per la memorizzazione di una riga e per la creazione di un abbonamento
+				String    targa;
+				String    codiceFiscale;
+				String    nomePers;
+				String    cognome;
+				LocalDate dataNascita;
+				String    nazione;
+				LocalDate dataInizio;
+				LocalDate dataFine;
 				
 				for (int i = 0; i < nrAbbonamenti; i++) {
+					// Leggo la riga e separo i campi che mi servono.
 					input = this.reader.readLine();
 					String[] splittedInput = input.split("\\s+");
-					nomePersona = splittedInput[0];
-					targa = splittedInput[1];
-					// gestione.aggiungiAbbonamento(new Abbonamento(nome, targa));
+					
+					targa         = splittedInput[0];
+					codiceFiscale = splittedInput[1];
+					nomePers      = splittedInput[2];
+					cognome       = splittedInput[3];
+					dataNascita   = LocalDate.parse(splittedInput[4]);
+					nazione       = splittedInput[5];
+					dataInizio    = LocalDate.parse(splittedInput[6]);
+					dataFine      = LocalDate.parse(splittedInput[7]);
+					Abbonamento a = new Abbonamento(targa, new Persona(codiceFiscale, nomePers, cognome, dataNascita, nazione), dataInizio, dataFine);
+					gestione.aggiungiAbbonamento(a);
 				}
 			}
 		} catch (IOException e) {
@@ -78,7 +96,7 @@ public class ReaderParcheggio implements Reader<GestioneParcheggio> {
 
 	@Override
 	public void write(GestioneParcheggio g) {
-		
+		// TODO
 	}
 
 }

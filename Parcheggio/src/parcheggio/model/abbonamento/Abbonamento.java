@@ -1,6 +1,6 @@
 package parcheggio.model.abbonamento;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import parcheggio.model.persona.Persona;
 
@@ -10,19 +10,19 @@ public class Abbonamento implements abb {
 	 * fields 
 	 */
 	
-	private final String  targa;
-	private final Persona persona;
-	private final Date    dataInizio;
-	private final Date	  dataFine;
+	private final String    targa;
+	private final Persona   persona;
+	private final LocalDate dataInizio;
+	private final LocalDate	dataFine;
 	
 	/*
 	 * constructor 
 	 */
 	
-	public Abbonamento(final String  targa,
-					   final Persona pers,
-					   final Date    dataIn,
-					   final Date    dataFine) {
+	public Abbonamento(final String    targa,
+					   final Persona   pers,
+					   final LocalDate dataIn,
+					   final LocalDate dataFine) {
 		this.targa	    = targa;
 		this.persona 	= pers;
 		this.dataInizio = dataIn;
@@ -41,11 +41,11 @@ public class Abbonamento implements abb {
 		return this.persona;
 	}
 
-	public Date getDataInizio() {
+	public LocalDate getDataInizio() {
 		return this.dataInizio;
 	}
 
-	public Date getDataFine() {
+	public LocalDate getDataFine() {
 		return this.dataFine;
 	}
 	

@@ -1,6 +1,6 @@
 package parcheggio.model.persona;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Persona implements Pers {
 	
@@ -8,21 +8,21 @@ public class Persona implements Pers {
 	 * fields 
 	 */
 	
-	private final String codFiscale;
-	private final String nome;
-	private final String cognome;
-	private final Date   dataNascita;
-	private final String nazione;
+	private final String    codFiscale;
+	private final String    nome;
+	private final String    cognome;
+	private final LocalDate dataNascita;
+	private final String    nazione;
 	
 	/*
 	 * constructor 
 	 */
 	
-	public Persona(final String codFiscale,
-				   final String nome,
-				   final String cognome,
-				   final Date   dataNascita,
-				   final String nazione) {
+	public Persona(final String    codFiscale,
+				   final String    nome,
+				   final String    cognome,
+				   final LocalDate dataNascita,
+				   final String    nazione) {
 		this.codFiscale  = codFiscale;
 		this.nome        = nome;
 		this.cognome	 = cognome;
@@ -46,7 +46,7 @@ public class Persona implements Pers {
 		return this.cognome;
 	}
 	
-	public Date getDataNascita() {
+	public LocalDate getDataNascita() {
 		return this.dataNascita;
 	}
 	
