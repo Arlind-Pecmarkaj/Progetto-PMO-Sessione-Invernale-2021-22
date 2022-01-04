@@ -146,6 +146,10 @@ public class Parcheggio {
 		return prezzo;
 	}
 
+	public void aggiungiAbbonamento(Abbonamento a) {
+		this.abbonamenti.add(a);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
