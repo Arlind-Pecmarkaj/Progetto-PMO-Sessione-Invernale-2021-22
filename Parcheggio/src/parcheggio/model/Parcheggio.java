@@ -2,6 +2,7 @@ package parcheggio.model;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -20,7 +21,7 @@ import parcheggio.model.veicolo.Veicolo;
 import parcheggio.model.posto.*;
 
 public class Parcheggio {
-	final private int id;
+	final private String id;
 	private String name;
 	private LinkedList<AbstractPosto> postiDisponibili = new LinkedList<AbstractPosto>();
 	final private int postiTotaliAuto;
@@ -33,7 +34,7 @@ public class Parcheggio {
 	private HashSet<Abbonamento> abbonamenti = new HashSet<Abbonamento>();
 
 	// costruttore
-	public Parcheggio(int id, String n, int nPostiAuto, int nPostiMoto, int nPostiMonopattino) {
+	public Parcheggio(String id, String n, int nPostiAuto, int nPostiMoto, int nPostiMonopattino) {
 		this.id = id;
 		this.name = n;
 		this.postiTotaliAuto = nPostiAuto;
@@ -139,7 +140,10 @@ public class Parcheggio {
 	
 	public double restituisciMonopattino(Persona p, Monopattino m) {
 		double prezzo = 0;
-		if(!p.possiedeAbbonamentoPremium()) {
+		if(this.abbonamenti.stream()
+				.filter(a -> (a.getPersona().equals(p) && a.isPremium()))
+				.findAny()
+				.isEmpty()) {
 			prezzo = Monopattino.COSTO * (m.getFineNoleggio() - m.getOraNoleggiato());
 		}
 		this.postiMonopattino.add(m);
@@ -150,11 +154,15 @@ public class Parcheggio {
 		this.abbonamenti.add(a);
 	}
 	
+	public void setAbbonamenti(List<Abbonamento> lista) {
+		this.abbonamenti = new HashSet<Abbonamento>(lista);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + postiTotaliAuto;
 		result = prime * result + postiTotaliMonopattini;
@@ -171,7 +179,10 @@ public class Parcheggio {
 		if (getClass() != obj.getClass())
 			return false;
 		Parcheggio other = (Parcheggio) obj;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)
