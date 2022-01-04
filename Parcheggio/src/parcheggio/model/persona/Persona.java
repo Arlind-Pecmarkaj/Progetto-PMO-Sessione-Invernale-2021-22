@@ -65,16 +65,13 @@ public class Persona implements Pers {
 	/*
 	 * hash code and equals 
 	 */
-
+	
+	// il codice fiscale e' univoco
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codFiscale == null) ? 0 : codFiscale.hashCode());
-		result = prime * result + ((cognome == null) ? 0 : cognome.hashCode());
-		result = prime * result + ((dataNascita == null) ? 0 : dataNascita.hashCode());
-		result = prime * result + ((nazione == null) ? 0 : nazione.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
 	}
 
@@ -91,26 +88,6 @@ public class Persona implements Pers {
 			if (other.codFiscale != null)
 				return false;
 		} else if (!codFiscale.equals(other.codFiscale))
-			return false;
-		if (cognome == null) {
-			if (other.cognome != null)
-				return false;
-		} else if (!cognome.equals(other.cognome))
-			return false;
-		if (dataNascita == null) {
-			if (other.dataNascita != null)
-				return false;
-		} else if (!dataNascita.equals(other.dataNascita))
-			return false;
-		if (nazione == null) {
-			if (other.nazione != null)
-				return false;
-		} else if (!nazione.equals(other.nazione))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
 	}

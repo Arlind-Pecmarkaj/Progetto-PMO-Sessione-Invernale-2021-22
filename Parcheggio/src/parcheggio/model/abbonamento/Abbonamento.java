@@ -10,21 +10,24 @@ public class Abbonamento implements abb {
 	 * fields 
 	 */
 	
+	private final int              id;
 	private final String           targa;
 	private final Persona          persona;
 	private final LocalDate        dataInizio;
 	private final LocalDate	       dataFine;
-	private final static boolean   premium = false;
+	private       static boolean   premium = false;
 	
 	/*
 	 * constructor 
 	 */
 	
-	public Abbonamento(final String    targa,
+	public Abbonamento(final int       id,
+					   final String    targa,
 					   final Persona   pers,
 					   final LocalDate dataIn,
 					   final LocalDate dataFine,
 					         boolean   premium) {
+		this.id         = id;
 		this.targa	    = targa;
 		this.persona 	= pers;
 		this.dataInizio = dataIn;
@@ -32,16 +35,21 @@ public class Abbonamento implements abb {
 		     premium    = true;
 	}
 	
-	public Abbonamento(final String    targa,
+	public Abbonamento(final int       id,
+					   final String    targa,
 					   final Persona   pers,
 					   final LocalDate dataIn,
 					   final LocalDate dataFine) {
-		this(targa, pers, dataIn, dataFine, premium);
+		this(id,targa, pers, dataIn, dataFine, premium);
 	}
 	
 	/*
 	 * selectors
 	 */
+	
+	public int getId() {
+		return this.id;
+	}
 
 	public String getTarga() {
 		return this.targa;
@@ -62,11 +70,43 @@ public class Abbonamento implements abb {
 	public static boolean isPremium() {
 		return premium;
 	}
-
+	
+	public void setPremium(boolean update) {
+		premium = update;
+	}
+	
 	public String toString() {
-		return "Targa: "        + this.targa +
-				"Persona: "     + this.persona.toString() +
-				"Data inizio: " + this.dataInizio + 
-				"Data fine: "   + this.dataFine;
+		return 	"Id: "           + this.id + 
+				" Targa: "       + this.targa +
+				" Persona: "     + this.persona.toString() +
+				" Data inizio: " + this.dataInizio + 
+				" Data fine: "   + this.dataFine;
+	}
+	
+	/*
+	 * hash code and equals 
+	 */
+	
+	// l'id dell'abbonamento e' univoco 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Abbonamento other = (Abbonamento) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 }
