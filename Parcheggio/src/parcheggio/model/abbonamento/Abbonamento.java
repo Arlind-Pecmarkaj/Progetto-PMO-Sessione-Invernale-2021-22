@@ -10,10 +10,11 @@ public class Abbonamento implements abb {
 	 * fields 
 	 */
 	
-	private final String    targa;
-	private final Persona   persona;
-	private final LocalDate dataInizio;
-	private final LocalDate	dataFine;
+	private final String           targa;
+	private final Persona          persona;
+	private final LocalDate        dataInizio;
+	private final LocalDate	       dataFine;
+	private final static boolean   premium = false;
 	
 	/*
 	 * constructor 
@@ -22,11 +23,20 @@ public class Abbonamento implements abb {
 	public Abbonamento(final String    targa,
 					   final Persona   pers,
 					   final LocalDate dataIn,
-					   final LocalDate dataFine) {
+					   final LocalDate dataFine,
+					         boolean   premium) {
 		this.targa	    = targa;
 		this.persona 	= pers;
 		this.dataInizio = dataIn;
 		this.dataFine   = dataFine;
+		     premium    = true;
+	}
+	
+	public Abbonamento(final String    targa,
+					   final Persona   pers,
+					   final LocalDate dataIn,
+					   final LocalDate dataFine) {
+		this(targa, pers, dataIn, dataFine, premium);
 	}
 	
 	/*
@@ -49,6 +59,10 @@ public class Abbonamento implements abb {
 		return this.dataFine;
 	}
 	
+	public static boolean isPremium() {
+		return premium;
+	}
+
 	public String toString() {
 		return "Targa: "        + this.targa +
 				"Persona: "     + this.persona.toString() +
