@@ -66,7 +66,9 @@ public class Parcheggio {
 	public void aggiungiVeicolo(Veicolo v){
 		if(v instanceof Auto) {
 			this.filtraAggiungi(p -> p instanceof PostoAuto == true, v);
+			System.out.println("Ramo auto");
 		} else if(v instanceof Moto){
+			System.out.println("Ramo moto");
 			// stessa cosa per le moto
 			this.filtraAggiungi(p -> p instanceof PostoMoto == true, v);
 		}
@@ -118,6 +120,9 @@ public class Parcheggio {
 				} else {
 //					throw new AltezzaMassimaSuperata("Eccezione: L'altezza del veicolo ha superato il limite consentito");
 				}
+			} else {
+				/* il veicolo e' una moto e non effettua il controllo dell'altezza */
+				tmp.get().occupaPosto(v);
 			}
 		} else {
 			throw new PostiFiniti("Eccezione: I posti sono finiti");
@@ -133,17 +138,23 @@ public class Parcheggio {
 			if(this.postiMonopattino.size() != 0 && this.postiMonopattino.getLast().getDisponibile()) {
 				m = this.postiMonopattino.getLast();
 				this.postiMonopattino.removeLast();
+			} else {
+				// lancia eccezione per mancanza di monopattini!!!
 			}
+		} else {
+			// lancia eccezione: la persona non ha l'abbonamento
 		}
+		m.setOraNoleggiato(System.currentTimeMillis());
 		return m;
 	}// end metodo noleggiaMonopattino()
 	
 	public double restituisciMonopattino(Persona p, Monopattino m) {
 		double prezzo = 0;
+		m.setFineNoleggio(System.currentTimeMillis());
 		if(this.abbonamenti.stream()
-				.filter(a -> (a.getPersona().equals(p) && a.isPremium()))
-				.findAny()
-				.isEmpty()) {
+						   .filter(a -> (a.getPersona().equals(p) && a.isPremium()))
+						   .findAny()
+						   .isEmpty()) {
 			prezzo = Monopattino.COSTO * (m.getFineNoleggio() - m.getOraNoleggiato());
 		}
 		this.postiMonopattino.add(m);

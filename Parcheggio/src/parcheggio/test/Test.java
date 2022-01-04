@@ -1,8 +1,9 @@
-package parcheggio.test.main;
+package parcheggio.test;
 
 import java.util.*;
 
 import parcheggio.controller.ReaderParcheggio;
+import parcheggio.model.Parcheggio;
 import parcheggio.model.veicolo.Alimentazione;
 import parcheggio.model.veicolo.Auto;
 import parcheggio.model.veicolo.Moto;
@@ -33,7 +34,7 @@ public class Test {
         System.out.println("\n");
         
         if(a1.equals(a2)) /*Il metodo equals confronta le altezze delle auto*/
-        	System.out.println("Ok Auto");
+       	System.out.println("Ok Auto");
         
         Moto m2 = new Moto("AAA999ZZZ", 1999, Alimentazione.BENZINA, "Honda", "SuHonda", "Radja", "Nainggolan", 300.0);
         
@@ -66,7 +67,22 @@ public class Test {
 			System.out.println(e);
 		}
 		
-
+		/* TEST DI Leonardo Bigelli 
+		 * Test del file Parcheggio.java
+		 * Problemi riscontrati:
+		 *  -impossibile effettuare il test di liberaPosto();
+		 *  -rimane da effettuare il test ai due metodi per gestire il noleggio di monopattini;
+		 */
+		Parcheggio p = new Parcheggio("prova", "parcehggio_prova", 5,3,1);//parcheggio senza monopattini
+		System.out.println(p.getPostiDisponibili()); /* OK */
+		System.out.println(p.getPostiDisponibili().size());	/* OK */
+		p.aggiungiVeicolo(new Auto("ABC123ABC", 2021, Alimentazione.GPL, "Toyota", "Yaris", "Martin", "Berardi", 1.5)); /* OK */
+		System.out.println(p.getPostiDisponibili()); /* problema con la tariffa(?) */
+		/* p.liberaPosto(posto), NON E' POSSIBILE DA PROVARE */
+		p.aggiungiVeicolo(new Moto("AAA999ZZZ", 1999, Alimentazione.BENZINA, "Honda", "SuHonda", "Radja", "Nainggolan", 300.0)); /* OK */
+		System.out.println(p.getPostiDisponibili()); /* OK */
+		System.out.println(p.listaVeicoliPresenti()); /* OK */
+		
 	}
 
 }
