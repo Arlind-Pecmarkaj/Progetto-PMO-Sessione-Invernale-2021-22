@@ -21,35 +21,34 @@ import parcheggio.model.veicolo.Veicolo;
 import parcheggio.model.posto.*;
 
 public class Parcheggio {
+	/* Campi della classe */
 	final private String id;
 	private String name;
 	private LinkedList<AbstractPosto> postiDisponibili = new LinkedList<AbstractPosto>();
-	final private int postiTotaliAuto;
-//	private int autoParcheggiate = 0; // posti auto occupati
-//	private int motoParcheggiate = 0; // posti moto occupati
-	final private int postiTotaliMoto;
 	private LinkedList<Monopattino> postiMonopattino = new LinkedList<Monopattino>();
-	final private int postiTotaliMonopattini;
 	private Sensore<Double> sensoreAltezza = new SensoreAltezza();
 	private HashSet<Abbonamento> abbonamenti = new HashSet<Abbonamento>();
+	final private double altezzaMassimaConsentita;
 
 	// costruttore
-	public Parcheggio(String id, String n, int nPostiAuto, int nPostiMoto, int nPostiMonopattino) {
+	public Parcheggio(String id, String n, int nPostiAuto, int nPostiMoto, int nPostiMonopattino, double a) {
 		this.id = id;
 		this.name = n;
-		this.postiTotaliAuto = nPostiAuto;
-		this.postiTotaliMoto = nPostiMoto;
+		this.altezzaMassimaConsentita = a;
 		
-		for(int i = 0; i < this.postiTotaliAuto; i++)
+		/* istanzio gli oggetto di tipo PostoAuto */
+		for(int i = 0; i < nPostiAuto; i++)
 			this.postiDisponibili.add(new PostoAuto(new SensoreCarburante()));
 		
-		for(int i = 0; i < this.postiTotaliMoto; i++)
+		/* istanzio gli oggetti di tipo PostoMoto */
+		for(int i = 0; i < nPostiMoto; i++)
 			this.postiDisponibili.add(new PostoMoto());
 		
+		/* istanzio gli oggetti di tipo Monopattino */
 		if(nPostiMonopattino != 0) {
-			this.postiTotaliMonopattini = nPostiMonopattino;
+			for(int i = 0; i < nPostiMonopattino; i++)
+				this.postiMonopattino.add(new Monopattino());
 		} else {
-			this.postiTotaliMonopattini = 0;
 			this.postiMonopattino = null;
 		}
 	}// end costruttore
@@ -61,15 +60,19 @@ public class Parcheggio {
 	public LinkedList<Monopattino> getPostiMonopattino() {
 		return postiMonopattino;
 	}// end metodo getPostiMonopattino()
+	
+	public void setAbbonamenti(List<Abbonamento> lista) {
+		this.abbonamenti = new HashSet<Abbonamento>(lista);
+	}// end metodo setAbbonamenti()
 
-	/* metodo per aggiungere un veicolo al parcheggio, se � presente un posto libero */
+	/* metodo per aggiungere un veicolo al parcheggio, se e' presente un posto libero
+	 * altrimenti viene lanciata un'eccezione.
+	 */
 	public void aggiungiVeicolo(Veicolo v){
+		/* controllo se il veicolo e' un auto o una moto */
 		if(v instanceof Auto) {
 			this.filtraAggiungi(p -> p instanceof PostoAuto == true, v);
-			System.out.println("Ramo auto");
 		} else if(v instanceof Moto){
-			System.out.println("Ramo moto");
-			// stessa cosa per le moto
 			this.filtraAggiungi(p -> p instanceof PostoMoto == true, v);
 		}
 	}// end metodo aggiungiVeicolo
@@ -77,12 +80,17 @@ public class Parcheggio {
 	/* metodo per liberare un posto del parcheggio
 	 * restituisce il prezzo da pagare
 	 */
-	public double liberaPosto(Posto p/*, Persona pe*/) {
+	public double liberaPosto(Posto p) {
 		double prezzo = 0;
+		/* controllo se e' presente o meno il posto da liberare */
 		Optional<AbstractPosto> postoDaLiberare = this.postiDisponibili.stream()
-				             								   .filter(x -> x.equals(p))
-				             								   .findAny();
+																	   .filter(x -> x.equals(p))
+																	   .findAny();
 		if(postoDaLiberare.isPresent()) {
+			/* controllo se il veicolo parcheggiato nel posto da liberare
+			 * abbia o meno un abbonamento, se cosi' non fosse
+			 * paga il parcheggio
+			 */
 			Optional<Abbonamento> ab = this.abbonamenti.stream()
 													   .filter(a -> a.getTarga().equals(((AbstractPosto) p).getVeicolo().get().getTarga()))
 													   .findAny();
@@ -105,32 +113,14 @@ public class Parcheggio {
 						            .collect(Collectors.toSet());
 	}// end metodo listaVeicoliPresenti()
 	
-	/* metodo per controllare se � presente un posto libero, in caso contrario
-	 * lancia un'eccezione (PostiFiniti) 
+	/*
+	 * metodo per noleggiare un monopattino
 	 */
-	private void filtraAggiungi(Predicate<AbstractPosto> filtro, Veicolo v){
-		Optional<AbstractPosto> tmp = this.postiDisponibili.stream()
-				   								   		   .filter(p -> p.isLibero() == true)
-				   								           .filter(filtro)
-				   								           .findFirst();
-		if(tmp.isPresent()) {
-			if(v instanceof Auto) {
-				if((double)this.sensoreAltezza.effettuaRilevamento((Auto)v) <= 4.0) {
-					tmp.get().occupaPosto(v);
-				} else {
-//					throw new AltezzaMassimaSuperata("Eccezione: L'altezza del veicolo ha superato il limite consentito");
-				}
-			} else {
-				/* il veicolo e' una moto e non effettua il controllo dell'altezza */
-				tmp.get().occupaPosto(v);
-			}
-		} else {
-			throw new PostiFiniti("Eccezione: I posti sono finiti");
-		}
-	}// end metodo filtraAggiungi
-	
 	public Monopattino noleggiaMonopattino(Persona p) {
 		Monopattino m = null;
+		/* i monopattini possono essere noleggiati solo da una persona
+		 * munita di abbonamento
+		 */
 		Optional<Abbonamento> esiste = this.abbonamenti.stream()
 													   .filter(a -> a.getPersona().equals(p))
 													   .findAny();
@@ -145,12 +135,19 @@ public class Parcheggio {
 			// lancia eccezione: la persona non ha l'abbonamento
 		}
 		m.setOraNoleggiato(System.currentTimeMillis());
+		
 		return m;
 	}// end metodo noleggiaMonopattino()
 	
+	/*
+	 * metodo per restituire un monopattino, precedentemente noleggiato
+	 */
 	public double restituisciMonopattino(Persona p, Monopattino m) {
 		double prezzo = 0;
 		m.setFineNoleggio(System.currentTimeMillis());
+		/* se la persona e' munita di un abbonamento premium non paga
+		 * l'utilizzo del monopattino
+		 */
 		if(this.abbonamenti.stream()
 						   .filter(a -> (a.getPersona().equals(p) && a.isPremium()))
 						   .findAny()
@@ -158,15 +155,15 @@ public class Parcheggio {
 			prezzo = Monopattino.COSTO * (m.getFineNoleggio() - m.getOraNoleggiato());
 		}
 		this.postiMonopattino.add(m);
+		
 		return prezzo;
 	}
 
+	/*
+	 * metodo per aggiungere un abbonamento
+	 */
 	public void aggiungiAbbonamento(Abbonamento a) {
 		this.abbonamenti.add(a);
-	}
-	
-	public void setAbbonamenti(List<Abbonamento> lista) {
-		this.abbonamenti = new HashSet<Abbonamento>(lista);
 	}
 
 	@Override
@@ -175,9 +172,8 @@ public class Parcheggio {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + postiTotaliAuto;
-		result = prime * result + postiTotaliMonopattini;
-		result = prime * result + postiTotaliMoto;
+		result = prime * result + ((postiDisponibili == null) ? 0 : postiDisponibili.hashCode());
+		result = prime * result + ((postiMonopattino == null) ? 0 : postiMonopattino.hashCode());
 		return result;
 	}
 
@@ -200,13 +196,46 @@ public class Parcheggio {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (postiTotaliAuto != other.postiTotaliAuto)
+		if (postiDisponibili == null) {
+			if (other.postiDisponibili != null)
+				return false;
+		} else if (!postiDisponibili.equals(other.postiDisponibili))
 			return false;
-		if (postiTotaliMonopattini != other.postiTotaliMonopattini)
-			return false;
-		if (postiTotaliMoto != other.postiTotaliMoto)
+		if (postiMonopattino == null) {
+			if (other.postiMonopattino != null)
+				return false;
+		} else if (!postiMonopattino.equals(other.postiMonopattino))
 			return false;
 		return true;
 	}
+	
+	/* metodo per controllare se e' presente un posto libero, in caso contrario
+	 * lancia un'eccezione (PostiFiniti). Se il veicolo ha un'altezza maggiore
+	 * rispetto al limite consentito, viene lanciata un'eccezione (ALtezzaMassimaSuperata)
+	 */
+	private void filtraAggiungi(Predicate<AbstractPosto> filtro, Veicolo v){
+		/* ottengo un posto libero presente nel parcheggio */
+		Optional<AbstractPosto> tmp = this.postiDisponibili.stream()
+				   								   		   .filter(p -> p.isLibero() == true)
+				   								           .filter(filtro)
+				   								           .findFirst();
+		if(tmp.isPresent()) {
+			/* se il veicolo e' un auto e' necessario controllare che l'altezza 
+			 * di quest'ultima non superi il limite massimo consentito
+			 */
+			if(v instanceof Auto) {
+				if((double)this.sensoreAltezza.effettuaRilevamento((Auto)v) <= this.altezzaMassimaConsentita) {
+					tmp.get().occupaPosto(v);
+				} else {
+//					throw new AltezzaMassimaSuperata("Eccezione: L'altezza del veicolo ha superato il limite consentito");
+				}
+			} else {
+				/* il veicolo e' una moto e non effettua il controllo dell'altezza */
+				tmp.get().occupaPosto(v);
+			}
+		} else {
+			throw new PostiFiniti("Eccezione: I posti sono finiti");
+		}
+	}// end metodo filtraAggiungi
 	
 }// end classe
