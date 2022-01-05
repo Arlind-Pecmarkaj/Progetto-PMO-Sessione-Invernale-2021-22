@@ -1,16 +1,25 @@
 package parcheggio.model.posto;
 
 import static parcheggio.enumerations.TassaParcheggio.*;
+
+import java.util.Optional;
+
+import parcheggio.enumerations.Alimentazione;
 import parcheggio.model.sensore.SensoreCarburante;
+import parcheggio.model.veicolo.Auto;
 
 public class PostoElettrico extends AbstractPosto {
 
 	private SensoreCarburante sensoreCarburante;
+	private ColonnaSupercharger colonnaSupercharger;
 	
-	public PostoElettrico() { }
+	public PostoElettrico() { 
+		this(new SensoreCarburante());
+	}
 	
 	public PostoElettrico(SensoreCarburante sensore) {
 		this.sensoreCarburante = sensore;
+		this.colonnaSupercharger = new ColonnaSupercharger();
 	}
 	
 	/**
@@ -18,6 +27,12 @@ public class PostoElettrico extends AbstractPosto {
 	 */
 	public SensoreCarburante getSensoreCarburante() {
 		return this.sensoreCarburante;
+	}
+	
+	public void ricaricaAuto(int percentualeRaggiungere) {
+		int daRicaricare = percentualeRaggiungere - super.getVeicolo().get().getSerbatoio(); // 70% - 10% => ricarico 60%
+		double daRicaricarekWh = (super.getVeicolo().get().getCapacitaSerbatoio() * daRicaricare) / 100;
+		this.colonnaSupercharger.setTempoRicarica(daRicaricarekWh / this.colonnaSupercharger.getkWh()); // numero di ore di ricarica: 0,5 => 30 minuti
 	}
 	
 	/**
