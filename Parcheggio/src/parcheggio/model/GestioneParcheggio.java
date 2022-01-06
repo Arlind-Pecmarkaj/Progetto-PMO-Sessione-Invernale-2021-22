@@ -21,11 +21,13 @@ public class GestioneParcheggio {
 	}
 	
 	public void aggiungiParcheggio(Parcheggio p) {
-		parcheggi.add(p);
+		if(!parcheggi.contains(p))
+			parcheggi.add(p);
 	}
         
     public void aggiungiAbbonamento(Abbonamento a) {
-         this.abbonamenti.add(a);
+    	if(!abbonamenti.contains(a))
+    		this.abbonamenti.add(a);
     }
     
     public Abbonamento getAbbonamento(Persona p) {

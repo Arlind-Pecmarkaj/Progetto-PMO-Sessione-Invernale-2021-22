@@ -1,10 +1,13 @@
 package parcheggio.test;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import parcheggio.controller.ReaderWriterFromFile;
 import parcheggio.model.GestioneParcheggio;
 import parcheggio.model.Parcheggio;
+import parcheggio.model.abbonamento.Abbonamento;
+import parcheggio.model.persona.Persona;
 import parcheggio.model.veicolo.Alimentazione;
 import parcheggio.model.veicolo.Auto;
 import parcheggio.model.veicolo.Moto;
@@ -54,12 +57,13 @@ public class Test {
         		.map(Auto::getTarga)
         		.forEach(System.out::println);
         
-        
+        System.out.println("-------------------------------------------------------------------------------------------");
         
 		/* TEST DI ARLIND PECMARKAJ 
 		 * Test del file reader
 		 * Problemi riscontrati:
 		 *  - 30/12/2021 Il metodo funziona, ma senza l'implementazione finale di Parcheggio e Posto da eccezione.
+		 *  - 06/01/2022 Il metodo funziona.
 		 */
         GestioneParcheggio g = new GestioneParcheggio();
         ReaderWriterFromFile rP = new ReaderWriterFromFile("C:\\Users\\arlin\\Documents\\PMO\\Progetto-PMO-Sessione-Invernale-2021-22\\Parcheggio\\salvataggio\\Veicoli.txt");
@@ -67,9 +71,10 @@ public class Test {
 			g = rP.read();
 		} catch (Exception e) {
 			System.out.println("Errore reader: " + e);
-		}
-		
+		}		
 		System.out.println("Situazione con gestionale: " + g);
+		
+		System.out.println("-------------------------------------------------------------------------------------------");
 		
 		/* TEST DI Leonardo Bigelli 
 		 * Test del file Parcheggio.java
@@ -87,7 +92,17 @@ public class Test {
 		System.out.println(p.getPostiDisponibili()); /* OK */
 		System.out.println(p.listaVeicoliPresenti()); /* OK */
 		
+		/* TEST DI ARLIND PECMARKAJ
+		 * Test del file writer
+		 * Problemi: al 06/01/2022 nessuno.
+		 */
+		System.out.println("-------------------------------------------------------------------------------------------");
+		Persona pers = new Persona("PRRRR0001038", "Mario", "Verdi", LocalDate.of(1976, 4, 3), "Italia");
+		Abbonamento ab  = new Abbonamento(20221, "CC532FD", pers, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 12, 31));
+		Abbonamento ab2 = new Abbonamento(20222, "FG554AB", pers, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 12, 31), true);
 		g.aggiungiParcheggio(p);
+		g.aggiungiAbbonamento(ab);
+		g.aggiungiAbbonamento(ab2);
 		
 		try {
 			rP.write(g);

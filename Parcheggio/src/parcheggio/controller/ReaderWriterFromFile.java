@@ -116,10 +116,10 @@ public class ReaderWriterFromFile implements ReaderWriter<GestioneParcheggio> {
 			for (Parcheggio p : g.getParcheggi()) {
 				writer.write(p.getId() 
 						     + " " + p.getName() 
-						     + " " + p.getNrPostiAuto() 
-						     + " " + p.getNrPostiMoto() 
+						     + " " + p.getNPostiAuto() 
+						     + " " + p.getNPostiMoto()
 						     + " " + p.getPostiMonopattino().size()
-						     + " " + p.getAltezzaMax()
+						     + " " + p.getAltezzaMassimaConsentita()
 						     + "\n");
 			}
 			writer.write(g.getAbbonamenti().size() + "\n");
@@ -129,8 +129,8 @@ public class ReaderWriterFromFile implements ReaderWriter<GestioneParcheggio> {
 						     + " " + a.getPersona().getCodFiscale()
 						     + " " + a.getPersona().getNome()
 						     + " " + a.getPersona().getCognome()
-						     + " " + a.getPersona().getNazione()
 						     + " " + a.getPersona().getDataNascita()
+						     + " " + a.getPersona().getNazione()
 						     + " " + a.getDataInizio()
 						     + " " + a.getDataFine()
 							 + " " + a.isPremium()
