@@ -1,9 +1,6 @@
 4
-AA32 40 15 5
-S988 100 10 0
-AA99 10 2 4
-Martin 34 33 2
-3
-Arlind CE531FP
-Leo FG331PP
-Martin FA111AV
+DBTR01 parcheggio_via_debitori 10 0 2 9999.9
+MNT002 parcheggio_Albornoz 40 10 2 1000.0
+prova parcehggio_prova 5 3 1 1000.0
+prova parcehggio_prova 5 3 1 1000.0
+0

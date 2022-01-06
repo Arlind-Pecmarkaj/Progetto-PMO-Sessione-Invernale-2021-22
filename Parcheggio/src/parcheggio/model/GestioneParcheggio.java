@@ -12,7 +12,8 @@ public class GestioneParcheggio {
 	ArrayList<Abbonamento> abbonamenti;
 	
 	public GestioneParcheggio() {
-		this.parcheggi = new ArrayList<>();
+		this.parcheggi   = new ArrayList<>();
+		this.abbonamenti = new ArrayList<>();
 	}
 	
 	public Parcheggio getParcheggio(int index) {
@@ -48,6 +49,11 @@ public class GestioneParcheggio {
     		if (a.getDataFine().isBefore(LocalDate.now()))
     			this.abbonamenti.remove(a);
     	}
+    }
+    
+    @Override
+    public String toString() {
+		return "NR PARCHEGGI: " + this.parcheggi.size() + " : NR ABBONAMENTI " + this.abbonamenti.size();
     }
 
 }

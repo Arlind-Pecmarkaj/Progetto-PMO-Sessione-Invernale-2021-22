@@ -2,7 +2,8 @@ package parcheggio.test;
 
 import java.util.*;
 
-import parcheggio.controller.ReaderParcheggio;
+import parcheggio.controller.ReaderWriterFromFile;
+import parcheggio.model.GestioneParcheggio;
 import parcheggio.model.Parcheggio;
 import parcheggio.model.veicolo.Alimentazione;
 import parcheggio.model.veicolo.Auto;
@@ -60,12 +61,15 @@ public class Test {
 		 * Problemi riscontrati:
 		 *  - 30/12/2021 Il metodo funziona, ma senza l'implementazione finale di Parcheggio e Posto da eccezione.
 		 */
-		try {
-			ReaderParcheggio rP = new ReaderParcheggio("C:\\Users\\arlin\\Documents\\PMO\\Progetto-PMO-Sessione-Invernale-2021-22\\Parcheggio\\salvataggio\\Veicoli.txt");
-			//rP.read();
+        GestioneParcheggio g = new GestioneParcheggio();
+        ReaderWriterFromFile rP = new ReaderWriterFromFile("C:\\Users\\arlin\\Documents\\PMO\\Progetto-PMO-Sessione-Invernale-2021-22\\Parcheggio\\salvataggio\\Veicoli.txt");
+		try {	
+			g = rP.read();
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("Errore reader: " + e);
 		}
+		
+		System.out.println("Situazione con gestionale: " + g);
 		
 		/* TEST DI Leonardo Bigelli 
 		 * Test del file Parcheggio.java
@@ -73,7 +77,7 @@ public class Test {
 		 *  -impossibile effettuare il test di liberaPosto();
 		 *  -rimane da effettuare il test ai due metodi per gestire il noleggio di monopattini;
 		 */
-		Parcheggio p = new Parcheggio("prova", "parcehggio_prova", 5,3,1);//parcheggio senza monopattini
+		Parcheggio p = new Parcheggio("prova", "parcehggio_prova", 5,3,1, 1000);//parcheggio senza monopattini
 		System.out.println(p.getPostiDisponibili()); /* OK */
 		System.out.println(p.getPostiDisponibili().size());	/* OK */
 		p.aggiungiVeicolo(new Auto("ABC123ABC", 2021, Alimentazione.GPL, "Toyota", "Yaris", "Martin", "Berardi", 1.5)); /* OK */
@@ -82,6 +86,14 @@ public class Test {
 		p.aggiungiVeicolo(new Moto("AAA999ZZZ", 1999, Alimentazione.BENZINA, "Honda", "SuHonda", "Radja", "Nainggolan", 300.0)); /* OK */
 		System.out.println(p.getPostiDisponibili()); /* OK */
 		System.out.println(p.listaVeicoliPresenti()); /* OK */
+		
+		g.aggiungiParcheggio(p);
+		
+		try {
+			rP.write(g);
+		} catch (Exception e) {
+			System.out.println("Errore con il writer: " + e);
+		}
 		
 	}
 

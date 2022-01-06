@@ -15,7 +15,7 @@ public class Abbonamento implements abb {
 	private final Persona          persona;
 	private final LocalDate        dataInizio;
 	private final LocalDate	       dataFine;
-	private       static boolean   premium = false;
+	private boolean                premium;
 	
 	/*
 	 * constructor 
@@ -26,13 +26,13 @@ public class Abbonamento implements abb {
 					   final Persona   pers,
 					   final LocalDate dataIn,
 					   final LocalDate dataFine,
-					         boolean   premium) {
+					   final boolean   premium) {
 		this.id         = id;
 		this.targa	    = targa;
 		this.persona 	= pers;
 		this.dataInizio = dataIn;
 		this.dataFine   = dataFine;
-		     premium    = true;
+		this.premium    = premium;
 	}
 	
 	public Abbonamento(final int       id,
@@ -40,7 +40,7 @@ public class Abbonamento implements abb {
 					   final Persona   pers,
 					   final LocalDate dataIn,
 					   final LocalDate dataFine) {
-		this(id,targa, pers, dataIn, dataFine, premium);
+		this(id,targa, pers, dataIn, dataFine, false);
 	}
 	
 	/*
@@ -72,7 +72,7 @@ public class Abbonamento implements abb {
 	}
 	
 	public void setPremium(boolean update) {
-		premium = update;
+		this.premium = update;
 	}
 	
 	public String toString() {
