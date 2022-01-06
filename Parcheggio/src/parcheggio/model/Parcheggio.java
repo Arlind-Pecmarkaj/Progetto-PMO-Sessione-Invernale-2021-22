@@ -51,15 +51,57 @@ public class Parcheggio {
 		if(nPostiMonopattino != 0) {
 			for(int i = 0; i < nPostiMonopattino; i++)
 				this.postiMonopattino.add(new Monopattino());
-		} else {
-			this.postiMonopattino = null;
 		}
-	}// end costruttore
+	}// end costruttore	
+	
+	/*
+	 * restituisce l'id del parcheggio
+	 */
+	public String getId() {
+		return this.id;
+	}// end metodo getId()
 
+	/*
+	 * restituisce il nome del parcheggio
+	 */
+	public String getName() {
+		return this.name;
+	}// end metodo getName()
+
+	/*
+	 * restituisce l'altezza massima consentita per le auto
+	 */
+	public double getAltezzaMassimaConsentita() {
+		return this.altezzaMassimaConsentita;
+	}// end metodo getAltezzaMassimaConsentita()
+
+	/*
+	 * restituisce tutti i posti del parcheggio
+	 */
 	public LinkedList<AbstractPosto> getPostiDisponibili() {
-		return postiDisponibili;
+		return this.postiDisponibili;
 	}// end metodo getPostoDisponibili()
 
+	/*
+	 * restituisce il numero di posti per le auto presenti nel parcheggio
+	 */
+	public int getNPostiAuto() {
+		return this.postiDisponibili.stream()
+								    .filter(p -> p instanceof PostoAuto)
+								    .collect(Collectors.toList())
+								    .size();
+	}// end metodo getNPostiAuto()
+	
+	/*
+	 * restituisce il numero di posti per le moto presenti nel parcheggio
+	 */
+	public int getNPostiMoto() {
+		return this.postiDisponibili.stream()
+								    .filter(p -> p instanceof PostoMoto)
+								    .collect(Collectors.toList())
+								    .size();
+	}// end metodo getNPostiMoto()
+	
 	public LinkedList<Monopattino> getPostiMonopattino() {
 		return postiMonopattino;
 	}// end metodo getPostiMonopattino()
@@ -74,9 +116,9 @@ public class Parcheggio {
 	public void aggiungiVeicolo(Veicolo v){
 		/* controllo se il veicolo e' un auto o una moto */
 		if(v instanceof Auto) {
-			this.filtraAggiungi(p -> p instanceof PostoAuto == true, v);
+			this.filtraAggiungi(p -> p instanceof PostoAuto, v);
 		} else if(v instanceof Moto){
-			this.filtraAggiungi(p -> p instanceof PostoMoto == true, v);
+			this.filtraAggiungi(p -> p instanceof PostoMoto, v);
 		}
 	}// end metodo aggiungiVeicolo
 	
