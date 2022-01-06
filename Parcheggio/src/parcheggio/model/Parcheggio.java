@@ -8,7 +8,10 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import parcheggio.exceptions.PostiFiniti;
+import parcheggio.exceptions.AltezzaMassimaConsentitaException;
+import parcheggio.exceptions.PersonaSenzaAbbonamentoException;
+import parcheggio.exceptions.PostiFinitiException;
+import parcheggio.exceptions.MonopattiniEsauritiException;
 import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.monopattino.Monopattino;
 import parcheggio.model.persona.Persona;
@@ -130,9 +133,11 @@ public class Parcheggio {
 				this.postiMonopattino.removeLast();
 			} else {
 				// lancia eccezione per mancanza di monopattini!!!
+				throw new MonopattiniEsauritiException("Eccezione: Monopattini esauriti!");
 			}
 		} else {
 			// lancia eccezione: la persona non ha l'abbonamento
+			throw new PersonaSenzaAbbonamentoException("Eccezione: L'utente e' senza abbonamento!");
 		}
 		m.setOraNoleggiato(System.currentTimeMillis());
 		
@@ -227,14 +232,16 @@ public class Parcheggio {
 				if((double)this.sensoreAltezza.effettuaRilevamento((Auto)v) <= this.altezzaMassimaConsentita) {
 					tmp.get().occupaPosto(v);
 				} else {
-//					throw new AltezzaMassimaSuperata("Eccezione: L'altezza del veicolo ha superato il limite consentito");
+					//lancia eccezione
+					throw new AltezzaMassimaConsentitaException("Eccezione: L'altezza del veicolo ha superato il limite massimo consentito!");
 				}
 			} else {
 				/* il veicolo e' una moto e non effettua il controllo dell'altezza */
 				tmp.get().occupaPosto(v);
 			}
 		} else {
-			throw new PostiFiniti("Eccezione: I posti sono finiti");
+			//lancia eccezione
+			throw new PostiFinitiException("Eccezione: I posti sono finiti");
 		}
 	}// end metodo filtraAggiungi
 	
