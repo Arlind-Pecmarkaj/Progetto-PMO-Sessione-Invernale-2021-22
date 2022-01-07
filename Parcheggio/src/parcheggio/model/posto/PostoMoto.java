@@ -4,7 +4,14 @@ import static parcheggio.enumerations.TassaParcheggio.*;
 
 public class PostoMoto extends AbstractPosto {
 	
-	public PostoMoto() { }
+	
+	public PostoMoto() {
+		this("E0000", 0.0);
+	}
+	
+	public PostoMoto(String postoId, double standardTax) {
+		super.setPosto(postoId, standardTax);
+	}
 	
 	
 	/**

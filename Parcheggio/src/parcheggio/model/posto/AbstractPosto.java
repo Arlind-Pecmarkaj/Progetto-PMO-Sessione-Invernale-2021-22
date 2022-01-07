@@ -17,7 +17,7 @@ import parcheggio.model.veicolo.Veicolo;
 
 public abstract class AbstractPosto implements Posto {
 	
-	private Optional<Veicolo> veicolo/**/ = Optional.empty();/**/
+	private Optional<Veicolo> veicolo;
 	private Instant orarioArrivo;
 	private Instant orarioUscita;
 	private Duration elapsedTime;

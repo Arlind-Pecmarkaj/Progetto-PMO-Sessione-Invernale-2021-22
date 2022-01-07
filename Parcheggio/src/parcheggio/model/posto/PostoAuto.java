@@ -7,9 +7,12 @@ public class PostoAuto extends AbstractPosto {
 	
 	private SensoreCarburante sensoreCarburante;
 	
-	public PostoAuto() { };
+	public PostoAuto() {
+		super.setPosto("A0000", 0.0);
+	};
 	
-	public PostoAuto(SensoreCarburante sensore) {
+	public PostoAuto(String postoId, double standardTax, SensoreCarburante sensore) {
+		super.setPosto(postoId, standardTax);
 		this.sensoreCarburante = sensore;
 	}
 	
