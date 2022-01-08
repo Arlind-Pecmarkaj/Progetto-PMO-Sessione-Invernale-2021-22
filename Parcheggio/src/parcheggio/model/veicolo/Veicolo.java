@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package parcheggio.model.veicolo;
 
 /**
@@ -17,11 +13,14 @@ public class Veicolo {
     private String modello;             //modello del veicolo
     private String nomeProprietario;    //nome del proprietario del veicolo
     private String cognomeProprietario; //cognome del proprietario del veicolo
+    private double capienzaMassima;		//capienza massima del serbatoio
+    private double carburanteAttuale;	//quantita' di carburante al momento
     
     /*--- Costruttore ---*/
     public Veicolo(String targa, int annoImm, Alimentazione carburante,
                     String marca, String modello, String nomeProprietario,
-                    String cognomeProprietario){
+                    String cognomeProprietario, double capienzaMassima,
+                    double carburanteAttuale){
         super();
         this.targa = targa;
         this.annoImm = annoImm;
@@ -30,6 +29,8 @@ public class Veicolo {
         this.modello = modello;
         this.nomeProprietario = nomeProprietario;
         this.cognomeProprietario = cognomeProprietario;
+        this.capienzaMassima = capienzaMassima;
+        this.carburanteAttuale = carburanteAttuale;
     }
     
     /*--- Metodi get ---*/
@@ -59,6 +60,14 @@ public class Veicolo {
     
     public String getCognomeProprietario(){
         return this.cognomeProprietario;
+    }
+    
+    public double getCapienzaMassima() {
+    	return this.capienzaMassima;
+    }
+    
+    public double getCarburanteAttuale() {
+    	return this.carburanteAttuale;
     }
     
     
@@ -91,17 +100,30 @@ public class Veicolo {
         this.cognomeProprietario = cognome;
     }
     
+    public void setCapienzaMassima(double capienzaMassima) {
+    	this.capienzaMassima = capienzaMassima;
+    }
     
-    /**
+    public void setCarburanteAttuale(double carburanteAttuale) {
+    	this.carburanteAttuale = carburanteAttuale;
+    }
+    
+
+	/**
      *
      * @return
      */
     @Override
     public String toString(){
-        return "Targa: " + this.targa + "\nAnno di Immatricolazione: " + this.annoImm
-                + "\nCarburante: " + this.carburante + "\nMarca: " + this.marca
-                + "\nModello: " + this.modello + "\nNome proprietario: " + this.nomeProprietario
-                + "\nCognome proprietario: " + this.cognomeProprietario;
+        return "Targa: " + this.targa
+        		+ "\nAnno di Immatricolazione: " + this.annoImm
+                + "\nCarburante: " + this.carburante
+                + "\nMarca: " + this.marca
+                + "\nModello: " + this.modello
+                + "\nNome proprietario: " + this.nomeProprietario
+                + "\nCognome proprietario: " + this.cognomeProprietario
+                + "\nCapienza massima serbatoio: " + this.capienzaMassima
+                + "\nQuantita' di carburante presente al momento: " + this.carburanteAttuale;
     }
 }
 
