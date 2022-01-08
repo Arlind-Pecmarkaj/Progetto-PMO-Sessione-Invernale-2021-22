@@ -23,6 +23,9 @@ public class Test {
 		/* TEST DI MARTIN BERARDI
 		 * Test dei veicoli
 		 * Funziona tutto
+		 * 
+		 * Aggiornamento del 08/01/2022:
+		 * Le istanze danno errore perchè ho aggiunto capienzaMassima e carburanteAttuale
 		 */
         Auto a1 = new Auto("ABC123ABC", 2021, Alimentazione.GPL, "Toyota", "Yaris", "Martin", "Berardi", 1.5);
         Moto m1 = new Moto("AAA999ZZZ", 1999, Alimentazione.BENZINA, "Honda", "SuHonda", "Radja", "Nainggolan", 300.0);
