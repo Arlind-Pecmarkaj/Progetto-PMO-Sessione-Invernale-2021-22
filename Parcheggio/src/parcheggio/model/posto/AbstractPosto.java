@@ -3,6 +3,8 @@ package parcheggio.model.posto;
 import java.time.*;
 import java.time.format.*;
 import java.util.Optional;
+
+import parcheggio.enumerations.Alimentazione;
 import parcheggio.model.veicolo.Veicolo;
 
 
@@ -27,7 +29,7 @@ public abstract class AbstractPosto implements Posto {
 	/**
 	 * 	templete method FINAL per le sottoclassi
 	 */
-	public final void setPosto(String postoId, double standardTax) {
+	protected final void setPosto(String postoId, double standardTax) {
 		this.id = setId(postoId);
 		this.costoOrario = setCostoOrario(standardTax);
 		this.veicolo = Optional.empty();

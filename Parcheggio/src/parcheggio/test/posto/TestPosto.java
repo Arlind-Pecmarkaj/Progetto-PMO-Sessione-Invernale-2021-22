@@ -1,4 +1,4 @@
-package parcheggio.test.junit;
+package parcheggio.test.posto;
 
 
 /**
@@ -15,26 +15,21 @@ import static org.junit.Assert.*;
 import org.junit.*;
 import parcheggio.model.posto.*;
 import parcheggio.model.veicolo.Alimentazione;
+import parcheggio.model.veicolo.Auto;
 import parcheggio.model.veicolo.Moto;
 
 
 public class TestPosto {
-	
+	/*
 	AbstractPosto postoMoto;
 
 	@Before
 	public void createData() {
 		// inizializzazione prima di eseguire un qualunque test
-		
-		
-		
-//		IPosto postoAuto = new PostoAuto(new SensoreCarburante());
-//		postoAuto.setPosto("1", 1.0);
 		postoMoto = new PostoMoto();
-		postoMoto.setPosto("1", 1.0);
 		postoMoto.occupaPosto(new Moto("123", 1999, Alimentazione.BENZINA,
                 "HONDA", "honda", "gianni",
-                "fresca", 200.0));
+                "fresca", 200.0, 0));
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
@@ -43,9 +38,6 @@ public class TestPosto {
 		}
 		postoMoto.liberaPosto();
 		postoMoto.tempoOccupazione();
-//		IPosto postoMoto = new PostoMoto();
-//		postoMoto.setPosto();
-		
 	}
 	
 	@Test
@@ -71,8 +63,26 @@ public class TestPosto {
 	public void testIsLibero() {
 		// controllo se un parcheggio è libero
 		assertTrue(postoMoto.isLibero());
+	}*/
+	
+	@Test
+	public void testRicaricaAutoElettrica() {
+		PostoElettrico postoElettrico = new PostoElettrico();
+		postoElettrico.occupaPosto(new Auto("CIAO", 1999, Alimentazione.ELETTRICA,
+                    						"FIAT", "600", "Massimo", "Minimo", 1.40, 300.4, 90.08));
+		// postoElettrico.ricaricaAuto(70); // ricarica fino al 70%
+		postoElettrico.ricaricaAuto(100); // ricarica fino al 100%
+		System.out.println(postoElettrico.getColonnaSupercharger().getTempoRicarica());
+		System.out.println(postoElettrico.getVeicolo().get().getCarburanteAttuale());
+		
 	}
 	
-//	@Test(expected = IllegalStateException.class)
+	/*@Test(expected = IllegalStateException.class)
+	public void testRicaricaAutoNONElettrica() {
+		AbstractPosto postoElettrico = new PostoElettrico();
+		postoElettrico.occupaPosto(new Auto("CIAO", 1999, Alimentazione.DIESEL,
+                    						"FIAT", "600", "Massimo", "Minimo", 1.40, 40.5, 12.0));
+		
+	}*/
 
 }
