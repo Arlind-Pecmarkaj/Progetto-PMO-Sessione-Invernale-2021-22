@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package parcheggio.model.veicolo;
 
 /**
@@ -12,11 +8,14 @@ public class Moto extends Veicolo{
     
     public Moto(String targa, int annoImm, Alimentazione carburante,
                     String marca, String modello, String nomeProprietario,
-                    String cognomeProprietario, double v){
+                    String cognomeProprietario, double capienzaMassima, double carburanteAttuale){
 
-    	super(targa, annoImm, carburante, marca, modello, nomeProprietario, cognomeProprietario);
+    	super(targa, annoImm, carburante, marca, modello,
+    			nomeProprietario, cognomeProprietario,
+    			capienzaMassima, carburanteAttuale);
     }
 
+    /*--- Equals ---*/
     public boolean equals(Moto m){
     	return this.getCarburante() == m.getCarburante();
     }
