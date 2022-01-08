@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package parcheggio.model.veicolo;
 
 /**
@@ -13,8 +9,11 @@ public class Auto extends Veicolo{
     
     public Auto(String targa, int annoImm, Alimentazione carburante,
                     String marca, String modello, String nomeProprietario,
-                    String cognomeProprietario, double altezza){
-        super(targa, annoImm, carburante, marca, modello, nomeProprietario, cognomeProprietario);
+                    String cognomeProprietario, double altezza,
+                    double capienzaMassima, double carburanteAttuale){
+        super(targa, annoImm, carburante, marca, modello,
+        		nomeProprietario, cognomeProprietario,
+        		capienzaMassima, carburanteAttuale);
         this.altezza = altezza;
     }
     
@@ -26,6 +25,8 @@ public class Auto extends Veicolo{
         this.altezza = alt;
     }
     
+    
+    /*--- Equals ---*/
 	public boolean equals(Auto v) {
 		return this.getAltezza() == v.getAltezza();
 	}
