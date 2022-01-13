@@ -14,9 +14,7 @@ package parcheggio.test.posto;
 import static org.junit.Assert.*;
 import org.junit.*;
 import parcheggio.model.posto.*;
-import parcheggio.model.veicolo.Alimentazione;
-import parcheggio.model.veicolo.Auto;
-import parcheggio.model.veicolo.Moto;
+import parcheggio.model.veicolo.*;
 
 
 public class TestPosto {

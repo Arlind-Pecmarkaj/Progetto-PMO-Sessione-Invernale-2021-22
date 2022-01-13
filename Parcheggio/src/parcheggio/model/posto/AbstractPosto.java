@@ -3,8 +3,6 @@ package parcheggio.model.posto;
 import java.time.*;
 import java.time.format.*;
 import java.util.Optional;
-
-import parcheggio.enumerations.Alimentazione;
 import parcheggio.model.veicolo.Veicolo;
 
 
