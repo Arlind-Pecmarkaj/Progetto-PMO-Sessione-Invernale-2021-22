@@ -18,6 +18,7 @@ import parcheggio.model.persona.Persona;
 import parcheggio.model.sensore.Sensore;
 import parcheggio.model.sensore.SensoreAltezza;
 import parcheggio.model.sensore.SensoreCarburante;
+import parcheggio.model.veicolo.Alimentazione;
 import parcheggio.model.veicolo.Auto;
 import parcheggio.model.veicolo.Moto;
 import parcheggio.model.veicolo.Veicolo;
@@ -270,13 +271,18 @@ public class Parcheggio {
 			/* se il veicolo e' un auto e' necessario controllare che l'altezza 
 			 * di quest'ultima non superi il limite massimo consentito
 			 */
-			if(v instanceof Auto) {
+			if(v instanceof Auto) {// IMPLEMENTARE IL SENSORE DI CARBURANTE!!!
 				if((double)this.sensoreAltezza.effettuaRilevamento((Auto)v) <= this.altezzaMassimaConsentita) {
 					tmp.get().occupaPosto(v);
 				} else {
 					//lancia eccezione
 					throw new AltezzaMassimaConsentitaException("Eccezione: L'altezza del veicolo ha superato il limite massimo consentito!");
 				}
+				
+				if(((PostoAuto) tmp.get()).getSensoreCarburante().effettuaRilevamento((Auto)v).equals(Alimentazione.METANO)) {
+		//			throw new TipologiaCarburanteNonConsentita();
+				}
+				
 			} else {
 				/* il veicolo e' una moto e non effettua il controllo dell'altezza */
 				tmp.get().occupaPosto(v);
@@ -286,5 +292,5 @@ public class Parcheggio {
 			throw new PostiFinitiException("Eccezione: I posti sono finiti");
 		}
 	}// end metodo filtraAggiungi
-	
+
 }// end classe
