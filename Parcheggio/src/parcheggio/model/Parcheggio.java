@@ -35,7 +35,7 @@ public class Parcheggio {
 	final private double altezzaMassimaConsentita;
 
 	// costruttore
-	public Parcheggio(String id, String n, int nPostiAuto, int nPostiMoto, int nPostiMonopattino, double a) {
+	public Parcheggio(String id, String n, int nPostiAuto, int nPostiMoto, int nPostiElettrici, int nPostiMonopattino, double a) {
 		this.id = id;
 		this.name = n;
 		this.altezzaMassimaConsentita = a;
@@ -47,6 +47,10 @@ public class Parcheggio {
 		/* istanzio gli oggetti di tipo PostoMoto */
 		for(int i = 0; i < nPostiMoto; i++)
 			this.postiDisponibili.add(new PostoMoto());
+		
+		/* istanzio gli oggetti di tipo PostoElettrico */
+		for(int i = 0; i < nPostiElettrici; i++)
+			this.postiDisponibili.add(new PostoElettrico());
 		
 		/* istanzio gli oggetti di tipo Monopattino */
 		if(nPostiMonopattino != 0) {
@@ -102,6 +106,16 @@ public class Parcheggio {
 								    .collect(Collectors.toList())
 								    .size();
 	}// end metodo getNPostiMoto()
+	
+	/*
+	 * restituisce il numero di posti per le auto elettriche presenti nel parcheggio
+	 */
+	public int getNPostiElettrici() {
+		return this.postiDisponibili.stream()
+								    .filter(p -> p instanceof PostoElettrico)
+								    .collect(Collectors.toList())
+								    .size();
+	}// end metodo getNPostiElettrici()
 	
 	public LinkedList<Monopattino> getPostiMonopattino() {
 		return postiMonopattino;
