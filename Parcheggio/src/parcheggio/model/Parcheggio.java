@@ -293,7 +293,7 @@ public class Parcheggio {
 					throw new AltezzaMassimaConsentitaException("Eccezione: L'altezza del veicolo ha superato il limite massimo consentito!");
 				}
 				
-				if(((PostoAuto) tmp.get()).getSensoreCarburante().effettuaRilevamento((Auto)v).equals(Alimentazione.METANO)) {
+				if(this.id.startsWith("S")  && ((PostoAuto) tmp.get()).getSensoreCarburante().effettuaRilevamento((Auto)v).equals(Alimentazione.METANO)) {
 		//			throw new TipologiaCarburanteNonConsentita();
 				}
 				
