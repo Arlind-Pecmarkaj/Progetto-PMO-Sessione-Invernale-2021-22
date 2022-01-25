@@ -42,6 +42,7 @@ public class ReaderWriterFromFile implements ReaderWriter<GestioneParcheggio> {
 			String       nome;
 			int   nrPostiAuto;
 			int   nrPostiMoto;
+			int   nrPostiElet;
 			int nrMonopattini;
 			double    altezza;
 			
@@ -57,9 +58,10 @@ public class ReaderWriterFromFile implements ReaderWriter<GestioneParcheggio> {
 					nome          = splittedInput[1];
 					nrPostiAuto   = Integer.parseInt(splittedInput[2]);
 					nrPostiMoto   = Integer.parseInt(splittedInput[3]);
-					nrMonopattini = Integer.parseInt(splittedInput[4]);
-					altezza       = Double.parseDouble(splittedInput[5]);
-					gestione.aggiungiParcheggio(new Parcheggio(id, nome, nrPostiAuto, nrPostiMoto, nrMonopattini, altezza));
+					nrPostiElet   = Integer.parseInt(splittedInput[4]);
+					nrMonopattini = Integer.parseInt(splittedInput[5]);
+					altezza       = Double.parseDouble(splittedInput[6]);
+					gestione.aggiungiParcheggio(new Parcheggio(id, nome, nrPostiAuto, nrPostiMoto, nrPostiElet, nrMonopattini, altezza));
 				}
 				
 				// Leggo il numero di abbonamenti;
@@ -118,6 +120,7 @@ public class ReaderWriterFromFile implements ReaderWriter<GestioneParcheggio> {
 						     + " " + p.getName() 
 						     + " " + p.getNPostiAuto() 
 						     + " " + p.getNPostiMoto()
+						     + " " + p.getNPostiElettrici()
 						     + " " + p.getPostiMonopattino().size()
 						     + " " + p.getAltezzaMassimaConsentita()
 						     + "\n");
