@@ -11,6 +11,7 @@ import parcheggio.model.persona.Persona;
 import parcheggio.model.veicolo.Alimentazione;
 import parcheggio.model.veicolo.Auto;
 import parcheggio.model.veicolo.Moto;
+import parcheggio.view.GUI.GUIGestione;
 
 /* Classe riservata ai test delle classi e dei metodi tramite Main.
  * Specificare nominativo, piccolo commento sul test da effettuare
@@ -112,6 +113,13 @@ public class Test {
 		} catch (Exception e) {
 			System.out.println("Errore con il writer: " + e);
 		}
+		
+		/* TEST DI ARLIND PECMARKAJ
+		 * Test GUI Gestione
+		 * 
+		 */
+		GUIGestione gui = new GUIGestione();
+		gui.setVisible(true);
 		
 	}
 

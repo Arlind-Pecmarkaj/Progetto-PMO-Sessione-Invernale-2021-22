@@ -12,6 +12,7 @@ import parcheggio.model.*;
 import parcheggio.model.ParcheggioImpl;
 import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.persona.Persona;
+import parcheggio.model.posto.*;
 
 public class ReaderWriterFromFile implements ReaderWriter<GestioneParcheggio> {
 	
@@ -25,9 +26,9 @@ public class ReaderWriterFromFile implements ReaderWriter<GestioneParcheggio> {
 	
 	@Override
 	public GestioneParcheggio read() {
-		/* La formattazione del file �
+		/* Formattazione del file:
 		 * <NR Parcheggi>
-		 * <Id1> <Nome> <Nr posti auto parcheggio 1> <Nr posti moto parcheggio 1> <nr monopattini>
+		 * <ID> <nome> <nr posti auto> <nr posti moto> <nr posti elettrico> <nr monopattini> <altezza max>
 		 * ...
 		 * <Nr Abbonamenti>
 		 * <Targa> <Codice Fiscale> <Nome> <Cognome> <Data Nascita> <Nazione> <Data Inizio> <Data Fine>
@@ -118,9 +119,9 @@ public class ReaderWriterFromFile implements ReaderWriter<GestioneParcheggio> {
 			for (ParcheggioImpl p : g.getParcheggi()) {
 				writer.write(p.getId() 
 						     + " " + p.getName() 
-						     + " " + p.getNPostiAuto() 
-						     + " " + p.getNPostiMoto()
-						     + " " + p.getNPostiElettrici()
+						     + " " + p.getNPostiSpecifici(posto -> posto instanceof PostoAuto)
+						     + " " + p.getNPostiSpecifici(posto -> posto instanceof PostoMoto)
+						     + " " + p.getNPostiSpecifici(posto -> posto instanceof PostoElettrico)
 						     + " " + p.getPostiMonopattino().size()
 						     + " " + p.getAltezzaMassimaConsentita()
 						     + "\n");
