@@ -88,34 +88,16 @@ public class ParcheggioImpl implements Parcheggio{
 	}// end metodo getPostoDisponibili()
 
 	/*
-	 * restituisce il numero di posti per le auto presenti nel parcheggio
+	 * restituisce il numero di posti presenti nel parcheggio del tipo specificato dal parametro
+	 * d'ingresso
 	 */
-	public int getNPostiAuto() {
+	@Override
+	public int getNPostiSpecifici(Predicate<Posto> filtro) {
 		return this.postiDisponibili.stream()
-								    .filter(p -> p instanceof PostoAuto)
+								    .filter(filtro)
 								    .collect(Collectors.toList())
 								    .size();
-	}// end metodo getNPostiAuto()
-	
-	/*
-	 * restituisce il numero di posti per le moto presenti nel parcheggio
-	 */
-	public int getNPostiMoto() {
-		return this.postiDisponibili.stream()
-								    .filter(p -> p instanceof PostoMoto)
-								    .collect(Collectors.toList())
-								    .size();
-	}// end metodo getNPostiMoto()
-	
-	/*
-	 * restituisce il numero di posti per le auto elettriche presenti nel parcheggio
-	 */
-	public int getNPostiElettrici() {
-		return this.postiDisponibili.stream()
-								    .filter(p -> p instanceof PostoElettrico)
-								    .collect(Collectors.toList())
-								    .size();
-	}// end metodo getNPostiElettrici()
+	}// end metodo getNPostiSpecifici()
 	
 	public LinkedList<Monopattino> getPostiMonopattino() {
 		return this.postiMonopattino;
@@ -128,6 +110,7 @@ public class ParcheggioImpl implements Parcheggio{
 	/* metodo per aggiungere un veicolo al parcheggio, se e' presente un posto libero
 	 * altrimenti viene lanciata un'eccezione.
 	 */
+	@Override
 	public void aggiungiVeicolo(Veicolo v){
 		/* controllo se il veicolo e' un auto o una moto */
 		if(v instanceof Auto) {
@@ -140,6 +123,7 @@ public class ParcheggioImpl implements Parcheggio{
 	/* metodo per liberare un posto del parcheggio
 	 * restituisce il prezzo da pagare
 	 */
+	@Override
 	public double liberaPosto(Posto p) {
 		double prezzo = 0;
 		/* controllo se e' presente o meno il posto da liberare */
@@ -166,6 +150,7 @@ public class ParcheggioImpl implements Parcheggio{
 	/*
 	 * restituisce tutti i veicoli presenti nel parcheggio
 	 */
+	@Override
 	public Set<Optional<Veicolo>> listaVeicoliPresenti() {
 		return this.postiDisponibili.stream()
 						            .filter(p -> p.isLibero() == false)
@@ -176,6 +161,7 @@ public class ParcheggioImpl implements Parcheggio{
 	/*
 	 * metodo per noleggiare un monopattino
 	 */
+	@Override
 	public Monopattino noleggiaMonopattino(Persona p) {
 		Monopattino m = null;
 		/* i monopattini possono essere noleggiati solo da una persona
@@ -204,6 +190,7 @@ public class ParcheggioImpl implements Parcheggio{
 	/*
 	 * metodo per restituire un monopattino, precedentemente noleggiato
 	 */
+	@Override
 	public double restituisciMonopattino(Persona p, Monopattino m) {
 		double prezzo = 0;
 		m.setFineNoleggio(System.currentTimeMillis());
