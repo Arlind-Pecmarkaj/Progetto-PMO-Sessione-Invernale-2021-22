@@ -8,15 +8,15 @@ import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.persona.Persona;
 
 public class GestioneParcheggio {
-	ArrayList<ParcheggioImpl>    parcheggi;
-	ArrayList<Abbonamento> abbonamenti;
+	List<Parcheggio>    parcheggi;
+	List<Abbonamento> abbonamenti;
 	
 	public GestioneParcheggio() {
 		this.parcheggi   = new ArrayList<>();
 		this.abbonamenti = new ArrayList<>();
 	}
 	
-	public ParcheggioImpl getParcheggio(int index) {
+	public Parcheggio getParcheggio(int index) {
 		return this.parcheggi.get(index);
 	}
 	
@@ -38,7 +38,7 @@ public class GestioneParcheggio {
     	return this.abbonamenti.stream().filter(ab -> ab.getTarga().equals(targa)).findAny().get();
     }
     
-    public List<ParcheggioImpl> getParcheggi() {
+    public List<Parcheggio> getParcheggi() {
     	return this.parcheggi;
     }
     
@@ -50,6 +50,10 @@ public class GestioneParcheggio {
     	for (Abbonamento a : this.abbonamenti) {
     		if (a.getDataFine().isBefore(LocalDate.now()))
     			this.abbonamenti.remove(a);
+    	}
+    	
+    	for (Parcheggio p : this.parcheggi) {
+    		((ParcheggioImpl) p).setAbbonamenti(this.abbonamenti);
     	}
     }
     

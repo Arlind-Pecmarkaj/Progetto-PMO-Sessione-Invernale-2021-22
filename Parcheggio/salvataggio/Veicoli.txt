@@ -1,8 +1,7 @@
-4
-prova parcheggio_prova 5 3 0 1 1000.0
-SS789 parcheggio_conad_Fermignano 50 10 2 5 34.0
+2
 prova parcehggio_prova 5 3 1 0 1000.0
 prova parcehggio_prova 5 3 1 0 1000.0
+
 2
 20221 CC532FD PRRRR0001038 Mario Verdi 1976-04-03 Italia 2022-01-01 2022-12-31 false
 20222 FG554AB PRRRR0001038 Mario Verdi 1976-04-03 Italia 2022-01-01 2022-12-31 true

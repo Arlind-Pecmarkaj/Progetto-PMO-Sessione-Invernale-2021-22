@@ -2,7 +2,6 @@ package parcheggio.controller;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -116,14 +115,14 @@ public class ReaderWriterFromFile implements ReaderWriter<GestioneParcheggio> {
 			this.writer = new BufferedWriter(new FileWriter(this.pathName));
 			// Scrivo il numero di parcheggi;
 			writer.write(g.getParcheggi().size() + "\n");
-			for (ParcheggioImpl p : g.getParcheggi()) {
-				writer.write(p.getId() 
-						     + " " + p.getName() 
+			for (Parcheggio p : g.getParcheggi()) {
+				writer.write(((ParcheggioImpl) p).getId() 
+						     + " " + ((ParcheggioImpl) p).getName() 
 						     + " " + p.getNPostiSpecifici(posto -> posto instanceof PostoAuto)
 						     + " " + p.getNPostiSpecifici(posto -> posto instanceof PostoMoto)
 						     + " " + p.getNPostiSpecifici(posto -> posto instanceof PostoElettrico)
-						     + " " + p.getPostiMonopattino().size()
-						     + " " + p.getAltezzaMassimaConsentita()
+						     + " " + ((ParcheggioImpl) p).getPostiMonopattino().size()
+						     + " " + ((ParcheggioImpl) p).getAltezzaMassimaConsentita()
 						     + "\n");
 			}
 			writer.write(g.getAbbonamenti().size() + "\n");

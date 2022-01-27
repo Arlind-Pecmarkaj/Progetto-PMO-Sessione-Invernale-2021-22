@@ -3,13 +3,21 @@ package parcheggio.view.GUI;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import parcheggio.model.GestioneParcheggio;
+import parcheggio.model.Parcheggio;
+import parcheggio.model.abbonamento.Abbonamento;
+import parcheggio.model.persona.Persona;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
@@ -22,7 +30,6 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class GUIGestione extends JFrame {
 
 	private JPanel           contentPane;
-	//private ArrayList<JButton> parcheggi;
 	private JTextField     codiceFiscale;
 	private JTextField              nome;
 	private JTextField           cognome;
@@ -32,9 +39,9 @@ public class GUIGestione extends JFrame {
 	/**
 	 * Costruisco il frame
 	 */
-	public GUIGestione() {
+	public GUIGestione(GestioneParcheggio g) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 810, 470); /* la finestra sara' di 810x470 px con il vertice superiore sinistro nela posizione (100,100). */
+		setBounds(100, 100, 810, 470); /* la finestra sara' di 810x470 px con il vertice superiore sinistro nella posizione (100,100). */
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5)); /* margini della finestra. */
 		setContentPane(contentPane);
@@ -59,41 +66,17 @@ public class GUIGestione extends JFrame {
 		gbc_panel_parcheggi.gridx = 0;
 		gbc_panel_parcheggi.gridy = 1;
 		contentPane.add(panel_parcheggi, gbc_panel_parcheggi);
-		panel_parcheggi.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5)); //Per i parcheggi si usa un flow layout.
+		panel_parcheggi.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5)); //Per i parcheggi si usa un flow layout.	
 		
-		/* Temporaneo per la visualizzazione, in futuro ogni bottono sarà collegato ai numero di parcheggi. */
-		JButton bottone_parcheggio1 = new JButton("Parcheggio Santa Lucia");
-		/* TODO: I bottoni dovranno aprire la loro pagina. */
-		bottone_parcheggio1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showMessageDialog(null, "Parcheggio Santa Lucia");
-			}
-		});
-		panel_parcheggi.add(bottone_parcheggio1);
-		
-		JButton bottone_parcheggio2 = new JButton("Parcheggio Fortezza");
-		bottone_parcheggio2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showMessageDialog(null, "Parcheggio Fortezza");
-			}
-		});
-		panel_parcheggi.add(bottone_parcheggio2);
-		
-		JButton bottone_parcheggio3 = new JButton("Parcheggio Borgo Mercatale");
-		bottone_parcheggio3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showMessageDialog(null, "Parcheggio Borgo Mercatale");
-			}
-		});
-		panel_parcheggi.add(bottone_parcheggio3);
-		
-		JButton bottone_parcheggio4 = new JButton("Parcheggio Ospedale");
-		bottone_parcheggio4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showMessageDialog(null, "Parcheggio ospedale");
-			}
-		});
-		panel_parcheggi.add(bottone_parcheggio4);
+		for (Parcheggio p : g.getParcheggi()) {
+			JButton bottone_parcheggio = new JButton(p.toString());
+			bottone_parcheggio.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					showMessageDialog(null, p.toString());
+				}
+			});
+			panel_parcheggi.add(bottone_parcheggio);
+		}
 		
 		JSeparator separator = new JSeparator();
 		GridBagConstraints gbc_separator = new GridBagConstraints();
@@ -243,23 +226,34 @@ public class GUIGestione extends JFrame {
 					String cn = cognome.getText();
 					String tr = targa.getText();
 					String dr = durata.getSelectedItem().toString();
-					String pr = premium.isSelected()? "si" : "no";
-					String toShow = "CODICE FISCALE: " + cf + '\n' +
-					                "NOME: "    + nm + '\n' +
-							        "COGNOME: " + cn + '\n' + 
-							        "TARGA: "   + tr + '\n' +
-							        "DURATA: "  + dr + '\n' +
-							        "PREMIUM: " + pr;
-					showMessageDialog(null, toShow);
+					LocalDate na = LocalDate.parse(dataNascita.getText());
+					LocalDate end = null;
+					if (dr.equals("mensile")) {
+						end = LocalDate.now().plusMonths(1);
+					} else if (dr.equals("trimestrale")) {
+						end = LocalDate.now().plusMonths(3);
+					} else if (dr.equals("semestrale")) {
+						end = LocalDate.now().plusMonths(6);
+					} else if (dr.equals("annuale")) {
+						end = LocalDate.now().plusMonths(12);
+					}
+					Persona p = new Persona(cf, nm, cn, LocalDate.now(), "prova");					
+					Abbonamento a = new Abbonamento(p.hashCode(), tr, p, na, end, premium.isSelected());
+					g.aggiungiAbbonamento(a);
+					g.aggiornaAbbonamenti();
+					showMessageDialog(null, "Aggiunto abbonamento: \n" + a);
 				} catch (Exception ex) {
 					showMessageDialog(null, "ATTENZIONE: campi non compilati correttamente!");
 				}
 				
 			}
 		});
+		
 		GridBagConstraints gbc_inserimento = new GridBagConstraints();
 		gbc_inserimento.gridx = 1;
 		gbc_inserimento.gridy = 7;
 		panel_abbonamenti.add(inserimento, gbc_inserimento);
+		
+		this.setVisible(true);
 	}
 }

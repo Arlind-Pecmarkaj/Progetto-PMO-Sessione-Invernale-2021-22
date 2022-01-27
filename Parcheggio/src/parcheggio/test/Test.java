@@ -86,7 +86,7 @@ public class Test {
 		 *  -impossibile effettuare il test di liberaPosto();
 		 *  -rimane da effettuare il test ai due metodi per gestire il noleggio di monopattini;
 		 */
-		ParcheggioImpl p = new ParcheggioImpl("prova", "parcehggio_prova", 5,3,1,0, 1000);//parcheggio senza monopattini
+		ParcheggioImpl p = new ParcheggioImpl("prova", "parcheggio_prova", 5,3,1,0, 1000);//parcheggio senza monopattini
 		System.out.println(p.getPostiDisponibili()); /* OK */
 		System.out.println(p.getPostiDisponibili().size());	/* OK */
 		p.aggiungiVeicolo(new Auto("ABC123ABC", 2021, Alimentazione.GPL, "Toyota", "Yaris", "Martin", "Berardi", 1.5, 50, 3)); /* OK */
@@ -108,18 +108,16 @@ public class Test {
 		g.aggiungiAbbonamento(ab);
 		g.aggiungiAbbonamento(ab2);
 		
+		/* TEST DI ARLIND PECMARKAJ
+		 * Test GUI Gestione
+		 * 
+		 */
+		GUIGestione gui = new GUIGestione(g);
 		try {
 			rP.write(g);
 		} catch (Exception e) {
 			System.out.println("Errore con il writer: " + e);
 		}
-		
-		/* TEST DI ARLIND PECMARKAJ
-		 * Test GUI Gestione
-		 * 
-		 */
-		GUIGestione gui = new GUIGestione();
-		gui.setVisible(true);
 		
 	}
 
