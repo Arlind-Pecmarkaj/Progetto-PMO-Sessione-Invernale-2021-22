@@ -27,23 +27,23 @@ public class Test {
 		 * Aggiornamento del 08/01/2022:
 		 * Le istanze danno errore perchè ho aggiunto capienzaMassima e carburanteAttuale
 		 */
-        Auto a1 = new Auto("ABC123ABC", 2021, Alimentazione.GPL, "Toyota", "Yaris", "Martin", "Berardi", 1.5);
-        Moto m1 = new Moto("AAA999ZZZ", 1999, Alimentazione.BENZINA, "Honda", "SuHonda", "Radja", "Nainggolan", 300.0);
+        Auto a1 = new Auto("ABC123ABC", 2021, Alimentazione.GPL, "Toyota", "Yaris", "Martin", "Berardi", 1.5, 50, 30);
+        Moto m1 = new Moto("AAA999ZZZ", 1999, Alimentazione.BENZINA, "Honda", "SuHonda", "Radja", "Nainggolan", 300.0, 30.0);
         System.out.println(a1);
         System.out.println("\n");
         System.out.println(m1);
         
-        Auto a2 = new Auto("AAA000ZZZ", 2022, Alimentazione.DIESEL, "Mustang", "Mach-E", "Fabio", "Quagliarella", 1.5);
-        Auto a3 = new Auto("GHF128SHD", 1914, Alimentazione.METANO, "Fiat", "Panda", "Vladimir", "Putin", 2.3);
-        Auto a4 = new Auto("SHD237SHD", 1921, Alimentazione.GPL, "Clementoni", "Sapientino", "Paolo", "Bonolis", 0.2);
-        Auto a5 = new Auto("ASK128SDJ", 3642, Alimentazione.ELETTRICA, "Hyundai", "Eddai", "Mike", "Tyson", 1.4);
+        Auto a2 = new Auto("AAA000ZZZ", 2022, Alimentazione.DIESEL, "Mustang", "Mach-E", "Fabio", "Quagliarella", 1.5, 70, 30);
+        Auto a3 = new Auto("GHF128SHD", 1914, Alimentazione.METANO, "Fiat", "Panda", "Vladimir", "Putin", 2.3, 60, 10);
+        Auto a4 = new Auto("SHD237SHD", 1921, Alimentazione.GPL, "Clementoni", "Sapientino", "Paolo", "Bonolis", 0.2, 60, 4);
+        Auto a5 = new Auto("ASK128SDJ", 3642, Alimentazione.ELETTRICA, "Hyundai", "Eddai", "Mike", "Tyson", 1.4, 500, 300);
 
         System.out.println("\n");
         
         if(a1.equals(a2)) /*Il metodo equals confronta le altezze delle auto*/
        	System.out.println("Ok Auto");
         
-        Moto m2 = new Moto("AAA999ZZZ", 1999, Alimentazione.BENZINA, "Honda", "SuHonda", "Radja", "Nainggolan", 300.0);
+        Moto m2 = new Moto("AAA999ZZZ", 1999, Alimentazione.BENZINA, "Honda", "SuHonda", "Radja", "Nainggolan", 300.0, 80);
         
         if(m1.equals(m2))
         	System.out.println("Ok Moto");
@@ -85,13 +85,13 @@ public class Test {
 		 *  -impossibile effettuare il test di liberaPosto();
 		 *  -rimane da effettuare il test ai due metodi per gestire il noleggio di monopattini;
 		 */
-		ParcheggioImpl p = new ParcheggioImpl("prova", "parcehggio_prova", 5,3,1, 1000);//parcheggio senza monopattini
+		ParcheggioImpl p = new ParcheggioImpl("prova", "parcehggio_prova", 5,3,1,0, 1000);//parcheggio senza monopattini
 		System.out.println(p.getPostiDisponibili()); /* OK */
 		System.out.println(p.getPostiDisponibili().size());	/* OK */
-		p.aggiungiVeicolo(new Auto("ABC123ABC", 2021, Alimentazione.GPL, "Toyota", "Yaris", "Martin", "Berardi", 1.5)); /* OK */
+		p.aggiungiVeicolo(new Auto("ABC123ABC", 2021, Alimentazione.GPL, "Toyota", "Yaris", "Martin", "Berardi", 1.5, 50, 3)); /* OK */
 		System.out.println(p.getPostiDisponibili()); /* problema con la tariffa(?) */
 		/* p.liberaPosto(posto), NON E' POSSIBILE DA PROVARE */
-		p.aggiungiVeicolo(new Moto("AAA999ZZZ", 1999, Alimentazione.BENZINA, "Honda", "SuHonda", "Radja", "Nainggolan", 300.0)); /* OK */
+		p.aggiungiVeicolo(new Moto("AAA999ZZZ", 1999, Alimentazione.BENZINA, "Honda", "SuHonda", "Radja", "Nainggolan", 300.0, 56)); /* OK */
 		System.out.println(p.getPostiDisponibili()); /* OK */
 		System.out.println(p.listaVeicoliPresenti()); /* OK */
 		
