@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 import parcheggio.model.*;
-import parcheggio.model.Parcheggio;
+import parcheggio.model.ParcheggioImpl;
 import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.persona.Persona;
 
@@ -61,7 +61,7 @@ public class ReaderWriterFromFile implements ReaderWriter<GestioneParcheggio> {
 					nrPostiElet   = Integer.parseInt(splittedInput[4]);
 					nrMonopattini = Integer.parseInt(splittedInput[5]);
 					altezza       = Double.parseDouble(splittedInput[6]);
-					gestione.aggiungiParcheggio(new Parcheggio(id, nome, nrPostiAuto, nrPostiMoto, nrPostiElet, nrMonopattini, altezza));
+					gestione.aggiungiParcheggio(new ParcheggioImpl(id, nome, nrPostiAuto, nrPostiMoto, nrPostiElet, nrMonopattini, altezza));
 				}
 				
 				// Leggo il numero di abbonamenti;
@@ -115,7 +115,7 @@ public class ReaderWriterFromFile implements ReaderWriter<GestioneParcheggio> {
 			this.writer = new BufferedWriter(new FileWriter(this.pathName));
 			// Scrivo il numero di parcheggi;
 			writer.write(g.getParcheggi().size() + "\n");
-			for (Parcheggio p : g.getParcheggi()) {
+			for (ParcheggioImpl p : g.getParcheggi()) {
 				writer.write(p.getId() 
 						     + " " + p.getName() 
 						     + " " + p.getNPostiAuto() 

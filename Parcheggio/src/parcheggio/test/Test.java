@@ -5,7 +5,7 @@ import java.util.*;
 
 import parcheggio.controller.ReaderWriterFromFile;
 import parcheggio.model.GestioneParcheggio;
-import parcheggio.model.Parcheggio;
+import parcheggio.model.ParcheggioImpl;
 import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.persona.Persona;
 import parcheggio.model.veicolo.Alimentazione;
@@ -85,7 +85,7 @@ public class Test {
 		 *  -impossibile effettuare il test di liberaPosto();
 		 *  -rimane da effettuare il test ai due metodi per gestire il noleggio di monopattini;
 		 */
-		Parcheggio p = new Parcheggio("prova", "parcehggio_prova", 5,3,1, 1000);//parcheggio senza monopattini
+		ParcheggioImpl p = new ParcheggioImpl("prova", "parcehggio_prova", 5,3,1, 1000);//parcheggio senza monopattini
 		System.out.println(p.getPostiDisponibili()); /* OK */
 		System.out.println(p.getPostiDisponibili().size());	/* OK */
 		p.aggiungiVeicolo(new Auto("ABC123ABC", 2021, Alimentazione.GPL, "Toyota", "Yaris", "Martin", "Berardi", 1.5)); /* OK */

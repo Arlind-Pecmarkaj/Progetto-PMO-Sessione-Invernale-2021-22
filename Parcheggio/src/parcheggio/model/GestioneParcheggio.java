@@ -8,7 +8,7 @@ import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.persona.Persona;
 
 public class GestioneParcheggio {
-	ArrayList<Parcheggio>    parcheggi;
+	ArrayList<ParcheggioImpl>    parcheggi;
 	ArrayList<Abbonamento> abbonamenti;
 	
 	public GestioneParcheggio() {
@@ -16,11 +16,11 @@ public class GestioneParcheggio {
 		this.abbonamenti = new ArrayList<>();
 	}
 	
-	public Parcheggio getParcheggio(int index) {
+	public ParcheggioImpl getParcheggio(int index) {
 		return this.parcheggi.get(index);
 	}
 	
-	public void aggiungiParcheggio(Parcheggio p) {
+	public void aggiungiParcheggio(ParcheggioImpl p) {
 		if(!parcheggi.contains(p))
 			parcheggi.add(p);
 	}
@@ -38,7 +38,7 @@ public class GestioneParcheggio {
     	return this.abbonamenti.stream().filter(ab -> ab.getTarga().equals(targa)).findAny().get();
     }
     
-    public List<Parcheggio> getParcheggi() {
+    public List<ParcheggioImpl> getParcheggi() {
     	return this.parcheggi;
     }
     
