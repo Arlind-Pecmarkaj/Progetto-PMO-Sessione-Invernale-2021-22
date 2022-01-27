@@ -112,13 +112,8 @@ public class Test {
 		 * Test GUI Gestione
 		 * 
 		 */
-		GUIGestione gui = new GUIGestione(g);
-		try {
-			rP.write(g);
-		} catch (Exception e) {
-			System.out.println("Errore con il writer: " + e);
-		}
-		
+		GUIGestione gui = new GUIGestione(g, rP);
+
 	}
 
 }

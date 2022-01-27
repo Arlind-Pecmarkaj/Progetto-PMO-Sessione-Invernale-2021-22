@@ -4,20 +4,22 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import parcheggio.controller.ReaderWriterFromFile;
 import parcheggio.model.GestioneParcheggio;
-import parcheggio.model.Parcheggio;
+import parcheggio.model.ParcheggioImpl;
 import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.persona.Persona;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.Insets;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Random;
+
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
@@ -39,7 +41,7 @@ public class GUIGestione extends JFrame {
 	/**
 	 * Costruisco il frame
 	 */
-	public GUIGestione(GestioneParcheggio g) {
+	public GUIGestione(GestioneParcheggio g, ReaderWriterFromFile r) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 810, 470); /* la finestra sara' di 810x470 px con il vertice superiore sinistro nella posizione (100,100). */
 		contentPane = new JPanel();
@@ -68,8 +70,8 @@ public class GUIGestione extends JFrame {
 		contentPane.add(panel_parcheggi, gbc_panel_parcheggi);
 		panel_parcheggi.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5)); //Per i parcheggi si usa un flow layout.	
 		
-		for (Parcheggio p : g.getParcheggi()) {
-			JButton bottone_parcheggio = new JButton(p.toString());
+		for (ParcheggioImpl p : g.getParcheggi()) {
+			JButton bottone_parcheggio = new JButton(p.getName());
 			bottone_parcheggio.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					showMessageDialog(null, p.toString());
@@ -217,7 +219,7 @@ public class GUIGestione extends JFrame {
 		panel_abbonamenti.add(premium, gbc_premium);
 		
 		JButton inserimento = new JButton("Inserisci abbonamento");
-		/*TODO: Cliccando sul bottone si creerà un istanza di Abbonamento. Adesso mostra solo cosa si è scritto.*/
+		/* Cliccando su inserisci abbonamento viene inserito l'abbonamento in Gestione e viene aggiornata la lista di tutti gli abbonamenti. */
 		inserimento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -253,6 +255,14 @@ public class GUIGestione extends JFrame {
 		gbc_inserimento.gridx = 1;
 		gbc_inserimento.gridy = 7;
 		panel_abbonamenti.add(inserimento, gbc_inserimento);
+		
+		/* Alla chiusura del frame dovrò scrivere i dati */
+		this.addWindowListener(new WindowAdapter() {
+		    @Override
+		    public void windowClosing(WindowEvent windowEvent) {
+		    	r.write(g);
+		    }
+		});
 		
 		this.setVisible(true);
 	}
