@@ -1,5 +1,6 @@
 package parcheggio.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class ParcheggioImpl implements Parcheggio{
 	/* Campi della classe */
 	final private String id;
 	private String name;
-	private LinkedList<AbstractPosto> postiDisponibili = new LinkedList<AbstractPosto>();
+	private ArrayList<AbstractPosto> postiDisponibili = new ArrayList<AbstractPosto>();
 	private LinkedList<Monopattino> postiMonopattino = new LinkedList<Monopattino>();
 	private Sensore<Double> sensoreAltezza = new SensoreAltezza();
 	private HashSet<Abbonamento> abbonamenti = new HashSet<Abbonamento>();
@@ -83,7 +84,7 @@ public class ParcheggioImpl implements Parcheggio{
 	/*
 	 * restituisce tutti i posti del parcheggio
 	 */
-	public LinkedList<AbstractPosto> getPostiDisponibili() {
+	public ArrayList<AbstractPosto> getPostiDisponibili() {
 		return this.postiDisponibili;
 	}// end metodo getPostoDisponibili()
 

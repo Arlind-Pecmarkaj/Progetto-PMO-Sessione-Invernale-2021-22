@@ -19,6 +19,7 @@ import javax.swing.JComboBox;
 import parcheggio.model.veicolo.*;
 import parcheggio.model.Parcheggio;
 import parcheggio.model.ParcheggioImpl;
+import parcheggio.model.posto.Posto;
 import parcheggio.model.posto.PostoAuto;
 import parcheggio.model.posto.PostoElettrico;
 import parcheggio.model.posto.PostoMoto;
@@ -31,6 +32,7 @@ public class GUIParcheggio extends JFrame{
 	private JPanel topA = new JPanel();
 	private JPanel bottom = new JPanel();
 	private ArrayList<JButton> bottoniVeicoli = new ArrayList<JButton>();
+	private ArrayList<Posto> posti = new ArrayList<Posto>();
 	private ArrayList<JButton> bottoniMonopattini = new ArrayList<JButton>();
 	private JButton in = new JButton("In");
 	private JTextField targa = new JTextField();
@@ -59,12 +61,15 @@ public class GUIParcheggio extends JFrame{
 		
 		for(int i = 0; i < p.getNPostiSpecifici(po -> po instanceof PostoAuto); i++) {
 			this.bottoniVeicoli.add(new JButton("Posto auto"));
+			this.posti.add(new PostoAuto());
 		}
 		for(int i = 0; i < p.getNPostiSpecifici(po -> po instanceof PostoMoto); i++) {
 			this.bottoniVeicoli.add(new JButton("Posto moto"));
+			this.posti.add(new PostoMoto());
 		}
 		for(int i = 0; i < p.getNPostiSpecifici(po -> po instanceof PostoElettrico); i++) {
 			this.bottoniVeicoli.add(new JButton("Posto auto elettriche"));
+			this.posti.add(new PostoElettrico());
 		}
 		for(JButton jb: this.bottoniVeicoli) {
 			jb.setBackground(Color.green);
