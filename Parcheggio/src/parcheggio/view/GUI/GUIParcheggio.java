@@ -91,16 +91,20 @@ public class GUIParcheggio extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(listaVeicoli.getSelectedItem().equals("Auto")) {
-					p.aggiungiVeicolo(new Auto(targa.getText(),
-							   				   2001,
-							   				   Alimentazione.BENZINA,
-							   				   "a",
-							   				   "b",
-							   				   "Pietro",
-							   				   "Augusto",
-							   				   195.5,
-							   				   205.0,
-							   				   50.0));
+					Veicolo v = new Auto(targa.getText(),
+			   				   2001,
+			   				   Alimentazione.BENZINA,
+			   				   "a",
+			   				   "b",
+			   				   "Pietro",
+			   				   "Augusto",
+			   				   195.5,
+			   				   205.0,
+			   				   50.0);
+				/*	p.aggiungiVeicolo(v);
+					Posto tmp = posti.stream().filter(p -> p instanceof PostoAuto).filter(p -> p.isLibero()).findFirst().get();
+					tmp.occupaPosto(v);*/
+					
 					
 				} else if(listaVeicoli.getSelectedItem().equals("Moto")) {
 					p.aggiungiVeicolo(new Moto(targa.getText(),
