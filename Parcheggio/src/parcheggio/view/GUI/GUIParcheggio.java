@@ -7,11 +7,16 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import java.util.ArrayList;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+
+//import parcheggio.enumerations.Alimentazione;
+import parcheggio.model.veicolo.*;
 import parcheggio.model.Parcheggio;
 import parcheggio.model.ParcheggioImpl;
 import parcheggio.model.posto.PostoAuto;
@@ -49,7 +54,7 @@ public class GUIParcheggio extends JFrame{
 		this.topB.setLayout(new FlowLayout());
 		this.top.setLayout(new GridLayout(1, 2));
 		//top.add(new JLabel());
-		this.bottom.setLayout(new GridLayout(2,3));
+		this.bottom.setLayout(new FlowLayout());
 		//bottom.add(new JLabel());
 		
 		for(int i = 0; i < p.getNPostiSpecifici(po -> po instanceof PostoAuto); i++) {
@@ -74,11 +79,46 @@ public class GUIParcheggio extends JFrame{
 			this.topA.add(jb);
 		}
 		
+		/**/
+		
+		this.in.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(listaVeicoli.getSelectedItem().equals("Auto")) {
+					p.aggiungiVeicolo(new Auto(targa.getText(),
+							   				   2001,
+							   				   Alimentazione.BENZINA,
+							   				   "a",
+							   				   "b",
+							   				   "Pietro",
+							   				   "Augusto",
+							   				   195.5,
+							   				   205.0,
+							   				   50.0));
+					
+				} else if(listaVeicoli.getSelectedItem().equals("Moto")) {
+					p.aggiungiVeicolo(new Moto(targa.getText(),
+											   2001,
+											   Alimentazione.BENZINA,
+											   "a",
+											   "b",
+											   "ciao",
+											   "prova",
+											   200.2,
+											   20));
+				}
+			}
+		});
+		
+		/**/
+		
 		this.bottom.add(this.listaVeicoli);
 		this.targa.setText("Targa");
 		this.bottom.add(this.targa);
-		this.bottom.add(this.in);
+		this.codiceFiscale.setText("Codice fiscale utente");
 		this.bottom.add(this.codiceFiscale);
+		this.bottom.add(this.in);
 		
 		this.top.add(this.topA);
 		this.top.add(this.topB);
