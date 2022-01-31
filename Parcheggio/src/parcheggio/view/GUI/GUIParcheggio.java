@@ -55,7 +55,7 @@ public class GUIParcheggio extends JFrame{
 	private JTextField targa = new JTextField();
 	private JTextField codiceFiscale = new JTextField();
 	private String[] veicoliDisponibili = { "Auto", "Moto" };
-	private JComboBox listaVeicoli = new JComboBox(veicoliDisponibili);
+	private JComboBox<?> listaVeicoli = new JComboBox<Object>(veicoliDisponibili);
 	
 	/*
 	 * costruzione del frame
@@ -109,6 +109,18 @@ public class GUIParcheggio extends JFrame{
 		}
 		for(JButton jb: this.bottoniMonopattini) {
 			jb.setBackground(Color.green);
+			
+			jb.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(jb.getBackground().equals(Color.red)) {
+						
+					}
+				}
+				
+			});
+			
 			this.topA.add(jb);
 		}
 		
@@ -116,7 +128,7 @@ public class GUIParcheggio extends JFrame{
 		
 		JTextField nome = new JTextField("Nome");
 		JTextField cognome = new JTextField("Cognome");
-		JComboBox listaAlimentazioni = new JComboBox(Alimentazione.values());
+		JComboBox<?> listaAlimentazioni = new JComboBox<Object>(Alimentazione.values());
 		JCheckBox noleggiaMonopattino = new JCheckBox("Noleggia monopattino");
 		
 		/*
