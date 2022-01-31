@@ -9,11 +9,17 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -23,6 +29,8 @@ import static javax.swing.JOptionPane.showMessageDialog;
 import parcheggio.model.veicolo.*;
 import parcheggio.model.Parcheggio;
 import parcheggio.model.ParcheggioImpl;
+import parcheggio.model.abbonamento.Abbonamento;
+import parcheggio.model.persona.Persona;
 import parcheggio.model.posto.Posto;
 import parcheggio.model.posto.PostoAuto;
 import parcheggio.model.posto.PostoElettrico;
@@ -37,7 +45,8 @@ public class GUIParcheggio extends JFrame{
 	private JPanel bottom = new JPanel();
 	private ArrayList<JButton> bottoniVeicoli = new ArrayList<JButton>();
 	private ArrayList<Posto> posti;
-	private ArrayList<JButton> bottoniMonopattini = new ArrayList<JButton>();
+	private HashSet<Abbonamento> abbonamenti;
+	private LinkedList<JButton> bottoniMonopattini = new LinkedList<JButton>();
 	private JButton in = new JButton("In");
 	private JTextField targa = new JTextField();
 	private JTextField codiceFiscale = new JTextField();
@@ -49,6 +58,9 @@ public class GUIParcheggio extends JFrame{
 	 */
 	public GUIParcheggio(Parcheggio p) {
 		super("Parcheggio: " + ((ParcheggioImpl)p).getName());
+		
+		this.abbonamenti = ((ParcheggioImpl) p).getAbbonamenti();
+		
 		int numeroPosti = p.getNPostiSpecifici(po -> po instanceof PostoAuto) +
 						  p.getNPostiSpecifici(po -> po instanceof PostoMoto) +
 						  p.getNPostiSpecifici(po -> po instanceof PostoElettrico);
@@ -101,6 +113,7 @@ public class GUIParcheggio extends JFrame{
 		JTextField nome = new JTextField("Nome");
 		JTextField cognome = new JTextField("Cognome");
 		JComboBox listaAlimentazioni = new JComboBox(Alimentazione.values());
+		JCheckBox noleggiaMonopattino = new JCheckBox("Noleggia monopattino");
 		
 		/*
 		 * implementazione dell'inserimento di un veicolo all'interno del parcheggio 
@@ -138,6 +151,20 @@ public class GUIParcheggio extends JFrame{
 					GUIParcheggio.this.aggiornamento(v, p);
 					
 				}
+				if(noleggiaMonopattino.isSelected()) {
+					// generazione di una data casuale
+					long minDay = LocalDate.of(1980, 1, 1).toEpochDay();
+					long maxDay = LocalDate.of(2022, 12, 31).toEpochDay();
+					long tmpDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+					LocalDate tmpDate = LocalDate.ofEpochDay(tmpDay);
+					p.noleggiaMonopattino(new Persona(codiceFiscale.getText(),
+													  nome.getText(),
+													  cognome.getText(),
+													  tmpDate,
+													  "Italia"
+													  ));
+					GUIParcheggio.this.bottoniMonopattini.getLast().setBackground(Color.red);
+				}
 			}
 		});
 		
@@ -152,6 +179,7 @@ public class GUIParcheggio extends JFrame{
 		this.bottom.add(cognome);
 		this.bottom.add(listaAlimentazioni);
 		this.bottom.add(this.in);
+		this.bottom.add(noleggiaMonopattino);
 		
 		this.top.add(this.topA);
 		this.top.add(this.topB);

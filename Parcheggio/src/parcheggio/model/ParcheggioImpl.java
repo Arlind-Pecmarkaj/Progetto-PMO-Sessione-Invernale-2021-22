@@ -104,6 +104,10 @@ public class ParcheggioImpl implements Parcheggio{
 		return this.postiMonopattino;
 	}// end metodo getPostiMonopattino()
 	
+	public HashSet<Abbonamento> getAbbonamenti() {
+		return this.abbonamenti;
+	}// end metodo getAbbonamenti()
+	
 	public void setAbbonamenti(List<Abbonamento> lista) {
 		this.abbonamenti = new HashSet<Abbonamento>(lista);
 	}// end metodo setAbbonamenti()
