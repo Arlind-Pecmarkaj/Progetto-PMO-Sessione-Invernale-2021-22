@@ -77,6 +77,7 @@ public class Test {
 			System.out.println("Errore reader: " + e);
 		}		
 		System.out.println("Situazione con gestionale: " + g);
+		g.aggiornaAbbonamenti();
 		
 		System.out.println("-------------------------------------------------------------------------------------------");
 		
@@ -112,7 +113,7 @@ public class Test {
 		 * Test GUI Gestione
 		 * 
 		 */
-		GUIGestione gui = new GUIGestione(g, rP);
+		new GUIGestione(g, rP);
 
 	}
 
