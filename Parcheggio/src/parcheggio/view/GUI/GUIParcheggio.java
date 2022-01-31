@@ -27,6 +27,10 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 //import parcheggio.enumerations.Alimentazione;
 import parcheggio.model.veicolo.*;
+import parcheggio.exceptions.AltezzaMassimaConsentitaException;
+import parcheggio.exceptions.MonopattiniEsauritiException;
+import parcheggio.exceptions.PersonaSenzaAbbonamentoException;
+import parcheggio.exceptions.PostiFinitiException;
 import parcheggio.model.Parcheggio;
 import parcheggio.model.ParcheggioImpl;
 import parcheggio.model.abbonamento.Abbonamento;
@@ -157,13 +161,20 @@ public class GUIParcheggio extends JFrame{
 					long maxDay = LocalDate.of(2022, 12, 31).toEpochDay();
 					long tmpDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
 					LocalDate tmpDate = LocalDate.ofEpochDay(tmpDay);
-					p.noleggiaMonopattino(new Persona(codiceFiscale.getText(),
-													  nome.getText(),
-													  cognome.getText(),
-													  tmpDate,
-													  "Italia"
-													  ));
-					GUIParcheggio.this.bottoniMonopattini.getLast().setBackground(Color.red);
+					try {
+						p.noleggiaMonopattino(new Persona(codiceFiscale.getText(),
+														  nome.getText(),
+														  cognome.getText(),
+														  tmpDate,
+														  "Italia"
+														  ));
+						GUIParcheggio.this.bottoniMonopattini.getLast().setBackground(Color.red);
+					}catch(MonopattiniEsauritiException m) {
+						showMessageDialog(null, "Attenzione! Monopattini esauriti");
+					}catch(PersonaSenzaAbbonamentoException m) {
+						showMessageDialog(null, "Attenzione! L'utente è sprovvisto di abbonamento. " +
+									      "Monopattino non noleggiato");
+					}
 				}
 			}
 		});
@@ -195,12 +206,18 @@ public class GUIParcheggio extends JFrame{
 	}
 	
 	private void aggiornamento(Veicolo v, Parcheggio p) {
-		Optional<Posto> postoOccupato = Optional.empty();
-		postoOccupato = Optional.ofNullable(p.aggiungiVeicolo(v));
-		
-		if(postoOccupato.isPresent()) {
-			bottoniVeicoli.get(posti.lastIndexOf(postoOccupato.get())).setBackground(Color.red);
-			showMessageDialog(null,"Il veicolo e' ora parcheggiato!");
+		try {
+			Optional<Posto> postoOccupato = Optional.empty();
+			postoOccupato = Optional.ofNullable(p.aggiungiVeicolo(v));
+			
+			if(postoOccupato.isPresent()) {
+				bottoniVeicoli.get(posti.lastIndexOf(postoOccupato.get())).setBackground(Color.red);
+				showMessageDialog(null,"Il veicolo e' ora parcheggiato!");
+			}
+		}catch(PostiFinitiException e) {
+			showMessageDialog(null,"Attenzione! non è possibile parcheggiare, posti insufficienti");
+		}catch(AltezzaMassimaConsentitaException e) {
+			showMessageDialog(null, "Attenzione! Altezza non consentita, veicolo non parcheggiato");
 		}
 	}
 }
