@@ -142,11 +142,12 @@ public class ParcheggioImpl implements Parcheggio{
 			 * abbia o meno un abbonamento, se cosi' non fosse
 			 * paga il parcheggio
 			 */
+			Optional<Abbonamento> ab = this.abbonamenti.stream()
+					   .filter(a -> a.getTarga().equals(((AbstractPosto) p).getVeicolo().get().getTarga()))
+					   .findAny();
 			postoDaLiberare.get().liberaPosto();
 			
-			Optional<Abbonamento> ab = this.abbonamenti.stream()
-													   .filter(a -> a.getTarga().equals(((AbstractPosto) p).getVeicolo().get().getTarga()))
-													   .findAny();
+
 			if(ab.isEmpty()) {
 				prezzo = ((AbstractPosto) postoDaLiberare.get()).getCostoOrario() * (((AbstractPosto) postoDaLiberare.get()).getOrarioUscita().getNano() -
 																   ((AbstractPosto) postoDaLiberare.get()).getOrarioArrivo().getNano());

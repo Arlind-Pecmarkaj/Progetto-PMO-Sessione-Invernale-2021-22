@@ -95,6 +95,7 @@ public class Test {
 		/* p.liberaPosto(posto), NON E' POSSIBILE DA PROVARE */
 		p.aggiungiVeicolo(new Moto("AAA999ZZZ", 1999, Alimentazione.BENZINA, "Honda", "SuHonda", "Radja", "Nainggolan", 300.0, 56)); /* OK */
 		System.out.println(p.getPostiDisponibili()); /* OK */
+		System.out.println("\nVeicoli presenti:");
 		System.out.println(p.listaVeicoliPresenti()); /* OK */
 		
 		/* TEST DI ARLIND PECMARKAJ
