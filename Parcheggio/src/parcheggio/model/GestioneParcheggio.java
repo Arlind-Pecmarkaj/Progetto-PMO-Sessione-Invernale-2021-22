@@ -21,12 +21,14 @@ public class GestioneParcheggio {
 	}
 	
 	public void aggiungiParcheggio(ParcheggioImpl p) {
-		if (this.parcheggi.stream().filter(pr -> ((ParcheggioImpl) pr).getId().equals(p.getId())).findAny().isEmpty())
+		if (this.parcheggi.stream().filter(pr -> ((ParcheggioImpl) pr).getId().equals(p.getId())).findAny().isEmpty()) {
 			parcheggi.add(p);
+			p.setAbbonamenti(this.abbonamenti);
+		}
 	}
         
     public void aggiungiAbbonamento(Abbonamento a) {
-    	if(!abbonamenti.contains(a))
+    	if (!abbonamenti.contains(a))
     		this.abbonamenti.add(a);
     }
     
