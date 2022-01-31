@@ -12,8 +12,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.Random;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 //import parcheggio.enumerations.Alimentazione;
 import parcheggio.model.veicolo.*;
@@ -32,7 +36,7 @@ public class GUIParcheggio extends JFrame{
 	private JPanel topA = new JPanel();
 	private JPanel bottom = new JPanel();
 	private ArrayList<JButton> bottoniVeicoli = new ArrayList<JButton>();
-	private ArrayList<Posto> posti = new ArrayList<Posto>();
+	private ArrayList<Posto> posti;
 	private ArrayList<JButton> bottoniMonopattini = new ArrayList<JButton>();
 	private JButton in = new JButton("In");
 	private JTextField targa = new JTextField();
@@ -45,8 +49,6 @@ public class GUIParcheggio extends JFrame{
 	 */
 	public GUIParcheggio(Parcheggio p) {
 		super("Parcheggio: " + ((ParcheggioImpl)p).getName());
-	/*	Container a = this.getContentPane();
-		Container b = this.getContentPane();*/
 		int numeroPosti = p.getNPostiSpecifici(po -> po instanceof PostoAuto) +
 						  p.getNPostiSpecifici(po -> po instanceof PostoMoto) +
 						  p.getNPostiSpecifici(po -> po instanceof PostoElettrico);
@@ -55,24 +57,34 @@ public class GUIParcheggio extends JFrame{
 		this.topA.setLayout(new FlowLayout());
 		this.topB.setLayout(new FlowLayout());
 		this.top.setLayout(new GridLayout(1, 2));
-		//top.add(new JLabel());
 		this.bottom.setLayout(new FlowLayout());
-		//bottom.add(new JLabel());
 		
 		for(int i = 0; i < p.getNPostiSpecifici(po -> po instanceof PostoAuto); i++) {
 			this.bottoniVeicoli.add(new JButton("Posto auto"));
-			this.posti.add(new PostoAuto());
 		}
 		for(int i = 0; i < p.getNPostiSpecifici(po -> po instanceof PostoMoto); i++) {
 			this.bottoniVeicoli.add(new JButton("Posto moto"));
-			this.posti.add(new PostoMoto());
 		}
 		for(int i = 0; i < p.getNPostiSpecifici(po -> po instanceof PostoElettrico); i++) {
 			this.bottoniVeicoli.add(new JButton("Posto auto elettriche"));
-			this.posti.add(new PostoElettrico());
 		}
 		for(JButton jb: this.bottoniVeicoli) {
 			jb.setBackground(Color.green);
+			
+			jb.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(!GUIParcheggio.this.posti.get(GUIParcheggio.this.bottoniVeicoli.lastIndexOf(jb)).isLibero()) {
+						double prezzoDaPagare = p.liberaPosto(GUIParcheggio.this.posti.get(GUIParcheggio.this.bottoniVeicoli.lastIndexOf(jb)));
+						jb.setBackground(Color.green);
+						showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
+										  prezzoDaPagare + " euro");
+					} else {
+						showMessageDialog(null,"Il posto auto è gia' libero!");
+					}
+				}
+			});
+			
 			this.topB.add(jb);
 		}
 		
@@ -84,38 +96,47 @@ public class GUIParcheggio extends JFrame{
 			this.topA.add(jb);
 		}
 		
-		/**/
+		this.posti = ((ParcheggioImpl)p).getPostiDisponibili();
 		
+		JTextField nome = new JTextField("Nome");
+		JTextField cognome = new JTextField("Cognome");
+		JComboBox listaAlimentazioni = new JComboBox(Alimentazione.values());
+		
+		/*
+		 * implementazione dell'inserimento di un veicolo all'interno del parcheggio 
+		 */
 		this.in.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(listaVeicoli.getSelectedItem().equals("Auto")) {
+				Random r = new Random();
+				if(GUIParcheggio.this.listaVeicoli.getSelectedItem().equals("Auto")) {
 					Veicolo v = new Auto(targa.getText(),
-			   				   2001,
-			   				   Alimentazione.BENZINA,
-			   				   "a",
-			   				   "b",
-			   				   "Pietro",
-			   				   "Augusto",
-			   				   195.5,
-			   				   205.0,
-			   				   50.0);
-				/*	p.aggiungiVeicolo(v);
-					Posto tmp = posti.stream().filter(p -> p instanceof PostoAuto).filter(p -> p.isLibero()).findFirst().get();
-					tmp.occupaPosto(v);*/
+			   				   	r.nextInt(2022 - 1980) + 1980,
+			   				   	(Alimentazione) listaAlimentazioni.getSelectedItem(),
+			   				   	"a",
+			   				   	"b",
+			   				   	nome.getText(),
+			   				   	cognome.getText(),
+			   				   	100 + (500 - 100) * r.nextDouble(),
+			   				   	200 + (300 - 200) * r.nextDouble(),
+			   				   	0 + (300 - 0) * r.nextDouble());
 					
+					GUIParcheggio.this.aggiornamento(v, p);
 					
-				} else if(listaVeicoli.getSelectedItem().equals("Moto")) {
-					p.aggiungiVeicolo(new Moto(targa.getText(),
-											   2001,
-											   Alimentazione.BENZINA,
-											   "a",
-											   "b",
-											   "ciao",
-											   "prova",
-											   200.2,
-											   20));
+				} else if(GUIParcheggio.this.listaVeicoli.getSelectedItem().equals("Moto")) {
+					Veicolo v = new Moto(targa.getText(),
+								r.nextInt(2022 - 1980) + 1980,
+								(Alimentazione) listaAlimentazioni.getSelectedItem(),
+								"a",
+								"b",
+								nome.getText(),
+								cognome.getText(),
+								200 + (300 - 200) * r.nextDouble(),
+								0 + (300 - 0) * r.nextDouble());
+					
+					GUIParcheggio.this.aggiornamento(v, p);
+					
 				}
 			}
 		});
@@ -127,6 +148,9 @@ public class GUIParcheggio extends JFrame{
 		this.bottom.add(this.targa);
 		this.codiceFiscale.setText("Codice fiscale utente");
 		this.bottom.add(this.codiceFiscale);
+		this.bottom.add(nome);
+		this.bottom.add(cognome);
+		this.bottom.add(listaAlimentazioni);
 		this.bottom.add(this.in);
 		
 		this.top.add(this.topA);
@@ -140,5 +164,15 @@ public class GUIParcheggio extends JFrame{
 		this.setSize(600,400);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+	}
+	
+	private void aggiornamento(Veicolo v, Parcheggio p) {
+		Optional<Posto> postoOccupato = Optional.empty();
+		postoOccupato = Optional.ofNullable(p.aggiungiVeicolo(v));
+		
+		if(postoOccupato.isPresent()) {
+			bottoniVeicoli.get(posti.lastIndexOf(postoOccupato.get())).setBackground(Color.red);
+			showMessageDialog(null,"Il veicolo e' ora parcheggiato!");
+		}
 	}
 }

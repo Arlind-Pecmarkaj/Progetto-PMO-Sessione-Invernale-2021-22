@@ -16,7 +16,7 @@ public interface Parcheggio {
 
 	int getNPostiSpecifici(Predicate<Posto> filtro);
 	
-	void aggiungiVeicolo(Veicolo v);
+	Posto aggiungiVeicolo(Veicolo v);
 	
 	double liberaPosto(Posto p);
 	

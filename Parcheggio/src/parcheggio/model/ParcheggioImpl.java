@@ -29,7 +29,7 @@ public class ParcheggioImpl implements Parcheggio{
 	/* Campi della classe */
 	final private String id;
 	private String name;
-	private ArrayList<AbstractPosto> postiDisponibili = new ArrayList<AbstractPosto>();
+	private ArrayList<Posto> postiDisponibili = new ArrayList<Posto>();
 	private LinkedList<Monopattino> postiMonopattino = new LinkedList<Monopattino>();
 	private Sensore<Double> sensoreAltezza = new SensoreAltezza();
 	private HashSet<Abbonamento> abbonamenti = new HashSet<Abbonamento>();
@@ -84,7 +84,7 @@ public class ParcheggioImpl implements Parcheggio{
 	/*
 	 * restituisce tutti i posti del parcheggio
 	 */
-	public ArrayList<AbstractPosto> getPostiDisponibili() {
+	public ArrayList<Posto> getPostiDisponibili() {
 		return this.postiDisponibili;
 	}// end metodo getPostoDisponibili()
 
@@ -112,13 +112,15 @@ public class ParcheggioImpl implements Parcheggio{
 	 * altrimenti viene lanciata un'eccezione.
 	 */
 	@Override
-	public void aggiungiVeicolo(Veicolo v){
+	public Posto aggiungiVeicolo(Veicolo v){
+		Posto posto = null;
 		/* controllo se il veicolo e' un auto o una moto */
 		if(v instanceof Auto) {
-			this.filtraAggiungi(p -> p instanceof PostoAuto, v);
+			posto = this.filtraAggiungi(p -> p instanceof PostoAuto, v);
 		} else if(v instanceof Moto){
-			this.filtraAggiungi(p -> p instanceof PostoMoto, v);
+			posto = this.filtraAggiungi(p -> p instanceof PostoMoto, v);
 		}
+		return posto;
 	}// end metodo aggiungiVeicolo
 	
 	/* metodo per liberare un posto del parcheggio
@@ -128,22 +130,23 @@ public class ParcheggioImpl implements Parcheggio{
 	public double liberaPosto(Posto p) {
 		double prezzo = 0;
 		/* controllo se e' presente o meno il posto da liberare */
-		Optional<AbstractPosto> postoDaLiberare = this.postiDisponibili.stream()
-																	   .filter(x -> x.equals(p))
-																	   .findAny();
+		Optional<Posto> postoDaLiberare = this.postiDisponibili.stream()
+															   .filter(x -> x.equals(p))
+															   .findAny();
 		if(postoDaLiberare.isPresent()) {
 			/* controllo se il veicolo parcheggiato nel posto da liberare
 			 * abbia o meno un abbonamento, se cosi' non fosse
 			 * paga il parcheggio
 			 */
+			postoDaLiberare.get().liberaPosto();
+			
 			Optional<Abbonamento> ab = this.abbonamenti.stream()
 													   .filter(a -> a.getTarga().equals(((AbstractPosto) p).getVeicolo().get().getTarga()))
 													   .findAny();
 			if(ab.isEmpty()) {
-				prezzo = postoDaLiberare.get().getCostoOrario() * (postoDaLiberare.get().getOrarioUscita().getNano() -
-																   postoDaLiberare.get().getOrarioArrivo().getNano());
+				prezzo = ((AbstractPosto) postoDaLiberare.get()).getCostoOrario() * (((AbstractPosto) postoDaLiberare.get()).getOrarioUscita().getNano() -
+																   ((AbstractPosto) postoDaLiberare.get()).getOrarioArrivo().getNano());
 			}
-			postoDaLiberare.get().liberaPosto();
 		}
 		return prezzo;
 	}// end metodo liberaPosto()
@@ -155,7 +158,7 @@ public class ParcheggioImpl implements Parcheggio{
 	public Set<Optional<Veicolo>> listaVeicoliPresenti() {
 		return this.postiDisponibili.stream()
 						            .filter(p -> p.isLibero() == false)
-						            .map(p -> p.getVeicolo())
+						            .map(p -> ((AbstractPosto) p).getVeicolo())
 						            .collect(Collectors.toSet());
 	}// end metodo listaVeicoliPresenti()
 	
@@ -263,31 +266,32 @@ public class ParcheggioImpl implements Parcheggio{
 	 * lancia un'eccezione (PostiFiniti). Se il veicolo ha un'altezza maggiore
 	 * rispetto al limite consentito, viene lanciata un'eccezione (ALtezzaMassimaSuperata)
 	 */
-	private void filtraAggiungi(Predicate<AbstractPosto> filtro, Veicolo v){
+	private Posto filtraAggiungi(Predicate<? super Posto> filtro, Veicolo v){
 		/* ottengo un posto libero presente nel parcheggio */
-		Optional<AbstractPosto> tmp = this.postiDisponibili.stream()
-				   								   		   .filter(p -> p.isLibero() == true)
-				   								           .filter(filtro)
-				   								           .findFirst();
+		Optional<Posto> tmp = this.postiDisponibili.stream()
+				   								   .filter(p -> p.isLibero() == true)
+				   								   .filter(filtro)
+				   								   .findFirst();
 		if(tmp.isPresent()) {
 			/* se il veicolo e' un auto e' necessario controllare che l'altezza 
 			 * di quest'ultima non superi il limite massimo consentito
 			 */
 			if(v instanceof Auto) {// IMPLEMENTARE IL SENSORE DI CARBURANTE!!!
 				if((double)this.sensoreAltezza.effettuaRilevamento((Auto)v) <= this.altezzaMassimaConsentita) {
+					if(this.id.startsWith("S")  && ((PostoAuto) tmp.get()).getSensoreCarburante().effettuaRilevamento((Auto)v).equals(Alimentazione.METANO)) {//TEMPORANEO
+						//			throw new TipologiaCarburanteNonConsentita();
+					}
 					tmp.get().occupaPosto(v);
+					return tmp.get();
 				} else {
 					//lancia eccezione
 					throw new AltezzaMassimaConsentitaException("Eccezione: L'altezza del veicolo ha superato il limite massimo consentito!");
 				}
-				
-				if(this.id.startsWith("S")  && ((PostoAuto) tmp.get()).getSensoreCarburante().effettuaRilevamento((Auto)v).equals(Alimentazione.METANO)) {
-		//			throw new TipologiaCarburanteNonConsentita();
-				}
-				
+					
 			} else {
 				/* il veicolo e' una moto e non effettua il controllo dell'altezza */
 				tmp.get().occupaPosto(v);
+				return tmp.get();
 			}
 		} else {
 			//lancia eccezione
