@@ -22,6 +22,7 @@ import java.time.LocalDate;
 
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -31,12 +32,13 @@ import static javax.swing.JOptionPane.showMessageDialog;
 @SuppressWarnings("serial")
 public class GUIGestione extends JFrame {
 
-	private JPanel           contentPane;
-	private JTextField     codiceFiscale;
-	private JTextField              nome;
-	private JTextField           cognome;
-	private JTextField       dataNascita;
-	private JTextField             targa;
+	private JPanel       contentPane;
+	private JTextField codiceFiscale;
+	private JTextField          nome;
+	private JTextField       cognome;
+	private JTextField   dataNascita;
+	private JTextField   nazionalita;
+	private JTextField         targa;
 
 	/**
 	 * Costruisco il frame
@@ -74,7 +76,7 @@ public class GUIGestione extends JFrame {
 			JButton bottone_parcheggio = new JButton(p.getName());
 			bottone_parcheggio.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					showMessageDialog(null, p.toString());
+					new GUIParcheggio(p);
 				}
 			});
 			panel_parcheggi.add(bottone_parcheggio);
@@ -176,12 +178,29 @@ public class GUIGestione extends JFrame {
 		panel_abbonamenti.add(dataNascita, gbc_dataNascita);
 		dataNascita.setColumns(10);
 		
+		JLabel label_nazionalita = new JLabel("Nazionalita'");
+		GridBagConstraints gbc_label_nazionalita = new GridBagConstraints();
+		gbc_label_nazionalita.anchor = GridBagConstraints.EAST;
+		gbc_label_nazionalita.insets = new Insets(0, 0, 5, 5);
+		gbc_label_nazionalita.gridx = 0;
+		gbc_label_nazionalita.gridy = 4;
+		panel_abbonamenti.add(label_nazionalita, gbc_label_nazionalita);
+		
+		nazionalita = new JTextField();
+		GridBagConstraints gbc_nazionalita = new GridBagConstraints();
+		gbc_nazionalita.insets = new Insets(0, 0, 5, 0);
+		gbc_nazionalita.fill = GridBagConstraints.HORIZONTAL;
+		gbc_nazionalita.gridx = 1;
+		gbc_nazionalita.gridy = 4;
+		panel_abbonamenti.add(nazionalita, gbc_nazionalita);
+		nazionalita.setColumns(10);
+		
 		JLabel label_targa = new JLabel("Targa");
 		GridBagConstraints gbc_label_targa = new GridBagConstraints();
 		gbc_label_targa.anchor = GridBagConstraints.EAST;
 		gbc_label_targa.insets = new Insets(0, 0, 5, 5);
 		gbc_label_targa.gridx = 0;
-		gbc_label_targa.gridy = 4;
+		gbc_label_targa.gridy = 5;
 		panel_abbonamenti.add(label_targa, gbc_label_targa);
 		
 		targa = new JTextField();
@@ -189,7 +208,7 @@ public class GUIGestione extends JFrame {
 		gbc_targa.fill = GridBagConstraints.HORIZONTAL;
 		gbc_targa.insets = new Insets(0, 0, 5, 0);
 		gbc_targa.gridx = 1;
-		gbc_targa.gridy = 4;
+		gbc_targa.gridy = 5;
 		panel_abbonamenti.add(targa, gbc_targa);
 		targa.setColumns(10);
 		
@@ -198,8 +217,9 @@ public class GUIGestione extends JFrame {
 		gbc_label_durata.anchor = GridBagConstraints.EAST;
 		gbc_label_durata.insets = new Insets(0, 0, 5, 5);
 		gbc_label_durata.gridx = 0;
-		gbc_label_durata.gridy = 5;
+		gbc_label_durata.gridy = 6;
 		panel_abbonamenti.add(label_durata, gbc_label_durata);
+
 		
 		String[] opzioni = {"mensile", "trimestrale", "semestrale", "annuale"};
 		JComboBox<String> durata = new JComboBox<>(opzioni);
@@ -207,15 +227,15 @@ public class GUIGestione extends JFrame {
 		gbc_durata.insets = new Insets(0, 0, 5, 0);
 		gbc_durata.fill = GridBagConstraints.HORIZONTAL;
 		gbc_durata.gridx = 1;
-		gbc_durata.gridy = 5;
+		gbc_durata.gridy = 6;
 		panel_abbonamenti.add(durata, gbc_durata);
 		
 		JCheckBox premium = new JCheckBox("Premium");
 		GridBagConstraints gbc_premium = new GridBagConstraints();
 		gbc_premium.fill = GridBagConstraints.HORIZONTAL;
-		gbc_premium.insets = new Insets(0, 0, 5, 5);
-		gbc_premium.gridx = 0;
-		gbc_premium.gridy = 6;
+		gbc_premium.insets = new Insets(0, 0, 5, 0);
+		gbc_premium.gridx = 1;
+		gbc_premium.gridy = 7;
 		panel_abbonamenti.add(premium, gbc_premium);
 		
 		JButton inserimento = new JButton("Inserisci abbonamento");
@@ -226,6 +246,7 @@ public class GUIGestione extends JFrame {
 					String cf = codiceFiscale.getText();
 					String nm = nome.getText();
 					String cn = cognome.getText();
+					String nz = nazionalita.getText();
 					String tr = targa.getText();
 					String dr = durata.getSelectedItem().toString();
 					LocalDate na = LocalDate.parse(dataNascita.getText());
@@ -239,13 +260,13 @@ public class GUIGestione extends JFrame {
 					} else if (dr.equals("annuale")) {
 						end = LocalDate.now().plusMonths(12);
 					}
-					Persona p = new Persona(cf, nm, cn, LocalDate.now(), "prova");					
-					Abbonamento a = new Abbonamento(p.hashCode(), tr, p, na, end, premium.isSelected());
+					Persona p = new Persona(cf, nm, cn, na, nz);					
+					Abbonamento a = new Abbonamento(p.hashCode(), tr, p, LocalDate.now(), end, premium.isSelected());
 					g.aggiungiAbbonamento(a);
 					g.aggiornaAbbonamenti();
 					showMessageDialog(null, "Aggiunto abbonamento: \n" + a);
 				} catch (Exception ex) {
-					showMessageDialog(null, "ATTENZIONE: campi non compilati correttamente!");
+					showMessageDialog(null, "ATTENZIONE: campi non compilati correttamente!", "Errore!", JOptionPane.WARNING_MESSAGE);
 				}
 				
 			}
@@ -253,7 +274,7 @@ public class GUIGestione extends JFrame {
 		
 		GridBagConstraints gbc_inserimento = new GridBagConstraints();
 		gbc_inserimento.gridx = 1;
-		gbc_inserimento.gridy = 7;
+		gbc_inserimento.gridy = 8;
 		panel_abbonamenti.add(inserimento, gbc_inserimento);
 		
 		/* Alla chiusura del frame dovrò scrivere i dati */
