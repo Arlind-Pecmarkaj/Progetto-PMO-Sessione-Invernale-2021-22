@@ -118,6 +118,15 @@ public class ParcheggioImpl implements Parcheggio{
 	@Override
 	public Posto aggiungiVeicolo(Veicolo v){
 		Posto posto = null;
+		
+		// controllo di non inserire auto con targhe uguali
+		Optional<Veicolo> veicoloGiaPresente = this.listaVeicoliPresenti().stream()
+								   										  .filter(ve -> ve.getTarga().equals(v.getTarga()))
+								   										  .findAny();
+		if(veicoloGiaPresente.isPresent()) {
+			throw new AltezzaMassimaConsentitaException("Auto con la stessa targa presente!");
+		}
+		
 		/* controllo se il veicolo e' un auto o una moto */
 		if(v instanceof Auto) {
 			if(v.getCarburante().equals(Alimentazione.ELETTRICA)) {
@@ -153,6 +162,7 @@ public class ParcheggioImpl implements Parcheggio{
 			
 
 			if(ab.isEmpty()) {
+				System.out.println(((AbstractPosto) postoDaLiberare.get()).getCostoOrario());
 				prezzo = ((AbstractPosto) postoDaLiberare.get()).getCostoOrario() * (((AbstractPosto) postoDaLiberare.get()).getOrarioUscita().getNano() -
 																   ((AbstractPosto) postoDaLiberare.get()).getOrarioArrivo().getNano());
 			}
@@ -164,10 +174,10 @@ public class ParcheggioImpl implements Parcheggio{
 	 * restituisce tutti i veicoli presenti nel parcheggio
 	 */
 	@Override
-	public Set<Optional<Veicolo>> listaVeicoliPresenti() {
+	public Set<Veicolo> listaVeicoliPresenti() {
 		return this.postiDisponibili.stream()
 						            .filter(p -> p.isLibero() == false)
-						            .map(p -> ((AbstractPosto) p).getVeicolo())
+						            .map(p -> ((AbstractPosto) p).getVeicolo().get())
 						            .collect(Collectors.toSet());
 	}// end metodo listaVeicoliPresenti()
 	
@@ -304,9 +314,11 @@ public class ParcheggioImpl implements Parcheggio{
 			 */
 			if(v instanceof Auto) {// IMPLEMENTARE IL SENSORE DI CARBURANTE!!!
 				if((double)this.sensoreAltezza.effettuaRilevamento((Auto)v) <= this.altezzaMassimaConsentita) {
-					if(this.id.startsWith("S")  && ((PostoAuto) tmp.get()).getSensoreCarburante().effettuaRilevamento((Auto)v).equals(Alimentazione.METANO)) {//TEMPORANEO
+					if(this.id.startsWith("S")  && 
+					   !(tmp.get() instanceof PostoElettrico) &&
+					   ((PostoAuto) tmp.get()).getSensoreCarburante().effettuaRilevamento((Auto)v).equals(Alimentazione.METANO)) {//TEMPORANEO
 						//throw new TipologiaCarburanteNonConsentita();
-						throw new AltezzaMassimaConsentitaException("Eccezione: L'altezza del veicolo ha superato il limite massimo consentito!");
+						throw new AltezzaMassimaConsentitaException("Le auto a metano non possono parcheggiare in un parcheggio sotteraneo.");
 					}
 					tmp.get().occupaPosto(v);
 					return tmp.get();

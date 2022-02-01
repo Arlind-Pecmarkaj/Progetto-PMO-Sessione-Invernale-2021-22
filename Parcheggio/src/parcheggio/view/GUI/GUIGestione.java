@@ -44,6 +44,7 @@ public class GUIGestione extends JFrame {
 	 * Costruisco il frame
 	 */
 	public GUIGestione(GestioneParcheggio g, ReaderWriterFromFile r) {
+		super("Gestionale parcheggi");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 810, 470); /* la finestra sara' di 810x470 px con il vertice superiore sinistro nella posizione (100,100). */
 		contentPane = new JPanel();
