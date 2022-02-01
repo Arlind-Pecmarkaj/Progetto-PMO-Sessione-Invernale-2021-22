@@ -120,7 +120,11 @@ public class ParcheggioImpl implements Parcheggio{
 		Posto posto = null;
 		/* controllo se il veicolo e' un auto o una moto */
 		if(v instanceof Auto) {
-			posto = this.filtraAggiungi(p -> p instanceof PostoAuto, v);
+			if(v.getCarburante().equals(Alimentazione.ELETTRICA)) {
+				posto = this.filtraAggiungi(p -> p instanceof PostoElettrico, v);
+			} else {
+				posto = this.filtraAggiungi(p -> p instanceof PostoAuto, v);
+			}
 		} else if(v instanceof Moto){
 			posto = this.filtraAggiungi(p -> p instanceof PostoMoto, v);
 		}
@@ -301,7 +305,8 @@ public class ParcheggioImpl implements Parcheggio{
 			if(v instanceof Auto) {// IMPLEMENTARE IL SENSORE DI CARBURANTE!!!
 				if((double)this.sensoreAltezza.effettuaRilevamento((Auto)v) <= this.altezzaMassimaConsentita) {
 					if(this.id.startsWith("S")  && ((PostoAuto) tmp.get()).getSensoreCarburante().effettuaRilevamento((Auto)v).equals(Alimentazione.METANO)) {//TEMPORANEO
-						//			throw new TipologiaCarburanteNonConsentita();
+						//throw new TipologiaCarburanteNonConsentita();
+						throw new AltezzaMassimaConsentitaException("Eccezione: L'altezza del veicolo ha superato il limite massimo consentito!");
 					}
 					tmp.get().occupaPosto(v);
 					return tmp.get();
@@ -315,6 +320,8 @@ public class ParcheggioImpl implements Parcheggio{
 				tmp.get().occupaPosto(v);
 				return tmp.get();
 			}
+		} else if(v.getCarburante().equals(Alimentazione.ELETTRICA)){
+			return this.filtraAggiungi(p -> p instanceof PostoAuto, v);
 		} else {
 			//lancia eccezione
 			throw new PostiFinitiException("Eccezione: I posti sono finiti");
