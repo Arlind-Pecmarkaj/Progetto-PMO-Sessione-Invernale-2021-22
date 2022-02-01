@@ -34,6 +34,7 @@ import parcheggio.exceptions.PostiFinitiException;
 import parcheggio.model.Parcheggio;
 import parcheggio.model.ParcheggioImpl;
 import parcheggio.model.abbonamento.Abbonamento;
+import parcheggio.model.monopattino.Monopattino;
 import parcheggio.model.persona.Persona;
 import parcheggio.model.posto.Posto;
 import parcheggio.model.posto.PostoAuto;
@@ -50,7 +51,7 @@ public class GUIParcheggio extends JFrame{
 	private ArrayList<JButton> bottoniVeicoli = new ArrayList<JButton>();
 	private ArrayList<Posto> posti;
 	private HashSet<Abbonamento> abbonamenti;
-	private LinkedList<JButton> bottoniMonopattini = new LinkedList<JButton>();
+	private ArrayList<JButton> bottoniMonopattini = new ArrayList<JButton>();
 	private JButton in = new JButton("In");
 	private JTextField targa = new JTextField();
 	private JTextField codiceFiscale = new JTextField();
@@ -114,8 +115,16 @@ public class GUIParcheggio extends JFrame{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if(jb.getBackground().equals(Color.red)) {
-						
+					if(!((ParcheggioImpl) p).getPostiMonopattino().get(bottoniMonopattini.lastIndexOf(jb)).getDisponibile()) {
+					//	((ParcheggioImpl) p).getPostiMonopattino().get(bottoniMonopattini.lastIndexOf(jb)).setDisponibile(true);
+						double costo = p.restituisciMonopattino(((ParcheggioImpl) p).getPostiMonopattino().get(bottoniMonopattini.lastIndexOf(jb)).getPersona(),
+									   ((ParcheggioImpl) p).getPostiMonopattino().get(bottoniMonopattini.lastIndexOf(jb)));
+						jb.setBackground(Color.green);
+						System.out.println(((ParcheggioImpl) p).getPostiMonopattino());
+						showMessageDialog(null, "Monopattino restituito. \n" + 
+										 "Prezzo da pagare: " + costo);
+					} else {
+						showMessageDialog(null, "Il monopattino è già disponibile per il noleggio.");
 					}
 				}
 				
@@ -174,13 +183,17 @@ public class GUIParcheggio extends JFrame{
 					long tmpDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
 					LocalDate tmpDate = LocalDate.ofEpochDay(tmpDay);
 					try {
-						p.noleggiaMonopattino(new Persona(codiceFiscale.getText(),
-														  nome.getText(),
-														  cognome.getText(),
-														  tmpDate,
-														  "Italia"
-														  ));
-						GUIParcheggio.this.bottoniMonopattini.getLast().setBackground(Color.red);
+						Monopattino m = p.noleggiaMonopattino(new Persona(codiceFiscale.getText(),
+														  			      nome.getText(),
+														  			      cognome.getText(),
+														  			      tmpDate,
+														  			      "Italia"
+														  	  ));
+						GUIParcheggio.this.bottoniMonopattini.get(((ParcheggioImpl) p).getPostiMonopattino()
+															 .indexOf(m))
+															 .setBackground(Color.red);
+						System.out.println(((ParcheggioImpl) p).getPostiMonopattino());
+				//		GUIParcheggio.this.bottoniMonopattini.getLast().setBackground(Color.red);
 					}catch(MonopattiniEsauritiException m) {
 						showMessageDialog(null, "Attenzione! Monopattini esauriti");
 					}catch(PersonaSenzaAbbonamentoException m) {

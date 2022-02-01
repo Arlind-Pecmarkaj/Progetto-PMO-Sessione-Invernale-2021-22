@@ -1,14 +1,17 @@
 package parcheggio.model.monopattino;
 
+import parcheggio.model.persona.Persona;
+
 public class Monopattino {
 	final private String id;
 	private boolean disponibile;
 	private long oraNoleggiato = System.currentTimeMillis();
 	private long fineNoleggio;
+	private Persona persona;
 	static final public double COSTO = 5.0;
 	
-	public Monopattino() {
-		this.id = Integer.toString((int) System.currentTimeMillis());
+	public Monopattino(int index) {
+		this.id = Integer.toString(index);
 		this.disponibile = true;
 	}
 	
@@ -18,6 +21,10 @@ public class Monopattino {
 
 	public long getOraNoleggiato() {
 		return oraNoleggiato;
+	}
+	
+	public void setDisponibile(boolean d) {
+		this.disponibile = d;
 	}
 
 	public void setOraNoleggiato(long oraNoleggiato) {
@@ -30,6 +37,14 @@ public class Monopattino {
 
 	public void setFineNoleggio(long fineNoleggio) {
 		this.fineNoleggio = fineNoleggio;
+	}
+	
+	public void setPersona(Persona p) {
+		this.persona = p;
+	}
+	
+	public Persona getPersona() {
+		return this.persona;
 	}
 
 	@Override
@@ -55,6 +70,11 @@ public class Monopattino {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Monopattino [id=" + id + ", disponibile=" + disponibile + "]";
 	}
 	
 }

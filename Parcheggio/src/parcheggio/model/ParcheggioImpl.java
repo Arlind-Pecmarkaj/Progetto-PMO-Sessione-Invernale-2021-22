@@ -30,7 +30,7 @@ public class ParcheggioImpl implements Parcheggio{
 	final private String id;
 	private String name;
 	private ArrayList<Posto> postiDisponibili = new ArrayList<Posto>();
-	private LinkedList<Monopattino> postiMonopattino = new LinkedList<Monopattino>();
+	private ArrayList<Monopattino> postiMonopattino = new ArrayList<Monopattino>();
 	private Sensore<Double> sensoreAltezza = new SensoreAltezza();
 	private HashSet<Abbonamento> abbonamenti = new HashSet<Abbonamento>();
 	final private double altezzaMassimaConsentita;
@@ -56,7 +56,7 @@ public class ParcheggioImpl implements Parcheggio{
 		/* istanzio gli oggetti di tipo Monopattino */
 		if(nPostiMonopattino != 0) {
 			for(int i = 0; i < nPostiMonopattino; i++)
-				this.postiMonopattino.add(new Monopattino());
+				this.postiMonopattino.add(new Monopattino(i));
 		}
 	}// end costruttore	
 	
@@ -100,7 +100,7 @@ public class ParcheggioImpl implements Parcheggio{
 								    .size();
 	}// end metodo getNPostiSpecifici()
 	
-	public LinkedList<Monopattino> getPostiMonopattino() {
+	public ArrayList<Monopattino> getPostiMonopattino() {
 		return this.postiMonopattino;
 	}// end metodo getPostiMonopattino()
 	
@@ -180,11 +180,22 @@ public class ParcheggioImpl implements Parcheggio{
 													   .filter(a -> a.getPersona().equals(p))
 													   .findAny();
 		if(esiste.isPresent()){
-			if(this.postiMonopattino.size() != 0 && this.postiMonopattino.getLast().getDisponibile()) {
+		/*	if(this.postiMonopattino.size() != 0 && this.postiMonopattino.getLast().getDisponibile()) {
 				m = this.postiMonopattino.getLast();
 				this.postiMonopattino.removeLast();
 			} else {
 				// lancia eccezione per mancanza di monopattini!!!
+				throw new MonopattiniEsauritiException("Eccezione: Monopattini non disponibili!");
+			} */
+			Optional<Monopattino> tmp = this.postiMonopattino.stream()
+															 .filter(mo -> mo.getDisponibile())
+															 .findFirst();
+			if(tmp.isPresent()) {
+				tmp.get().setDisponibile(false);
+				m = tmp.get();
+				m.setPersona(p);
+			} else {
+				// lancia eccezione per mancanza di monopattini
 				throw new MonopattiniEsauritiException("Eccezione: Monopattini non disponibili!");
 			}
 		} else {
@@ -212,7 +223,13 @@ public class ParcheggioImpl implements Parcheggio{
 						   .isEmpty()) {
 			prezzo = Monopattino.COSTO * (m.getFineNoleggio() - m.getOraNoleggiato());
 		}
-		this.postiMonopattino.add(m);
+		// identifica il monopattino presente nel parcheggio e lo imposta come disponibile
+		this.postiMonopattino.stream()
+							 .filter(mo -> mo.equals(m))
+							 .findAny()
+							 .get()
+							 .setDisponibile(true);
+	//	this.postiMonopattino.add(m);
 		
 		return prezzo;
 	}
