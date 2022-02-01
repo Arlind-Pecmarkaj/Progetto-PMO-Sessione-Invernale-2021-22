@@ -42,8 +42,10 @@ public interface Posto {
 	Duration tempoOccupazione();
 	
 	/**
+	 *  Calcola importo totale dovuto per occupato il parcheggio
+	 *  
+	 *  @return importo
 	 * 
-	 * 
-	 * */
+	 */
 	double costoOccupazione();
 }

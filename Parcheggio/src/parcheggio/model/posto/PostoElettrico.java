@@ -13,9 +13,7 @@ public class PostoElettrico extends AbstractPosto {
 	}
 	
 	public PostoElettrico(String postoId) {
-		super.setPosto(postoId);
-		this.sensoreCarburante = new SensoreCarburante();
-		this.colonnaSupercharger = new ColonnaSupercharger();
+		this(postoId, new SensoreCarburante());
 	}
 	
 	public PostoElettrico(String postoId, SensoreCarburante sensore) {
@@ -35,14 +33,6 @@ public class PostoElettrico extends AbstractPosto {
 		return this.colonnaSupercharger;
 	}
 	
-	public void ricaricaAuto(int percentualeRaggiungere) {
-		double percentualeAttuale = (100 * super.getVeicolo().get().getCarburanteAttuale()) / super.getVeicolo().get().getCapienzaMassima(); // 100kW rimasti => X% => max => 100%
-		double percentualeRicaricare = percentualeRaggiungere - percentualeAttuale; // 70% - 10% => ricarico 60%
-		double kWRicaricare = (super.getVeicolo().get().getCapienzaMassima() * percentualeRicaricare) / 100;
-		
-		super.getVeicolo().get().setCarburanteAttuale(super.getVeicolo().get().getCarburanteAttuale() + kWRicaricare);
-		this.colonnaSupercharger.setTempoRicarica(kWRicaricare / this.colonnaSupercharger.getkWh()); // numero di ore di ricarica: 0,5 => 30 minuti
-	}
 	
 	/**
 	 * 	Compone una parte variabile univoca con il codice "E"

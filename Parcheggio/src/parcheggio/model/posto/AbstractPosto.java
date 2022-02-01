@@ -86,6 +86,7 @@ public abstract class AbstractPosto implements Posto {
 	}
 	
 	
+	
 	/****************************************************
 	 * 	METODI DELL'INTERFACCIA Posto DA IMPLEMENTARE	*
 	 ****************************************************/
@@ -126,16 +127,22 @@ public abstract class AbstractPosto implements Posto {
 	}
 	
 	/**
+	 *  Calcola importo totale dovuto per occupato il parcheggio
+	 *  
+	 *  @return importo
 	 * 
-	 * */
+	 */
 	public final double costoOccupazione() {
 		double daPagare = this.getCostoOrario() * this.tempoOccupazione().getSeconds();
 		return daPagare;
 	}
+
 	
-	/**
-	 * 	utility methods
-	 */
+	
+	/*********************
+	 * 	UTILITY METHODS	 *
+	 *********************/
+	
 	@Override
 	public String toString() {
 		return 	"Posto " + this.getId() 

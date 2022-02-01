@@ -1,4 +1,5 @@
 package parcheggio.model.posto;
+import parcheggio.model.veicolo.*;
 
 public class ColonnaSupercharger implements Supercharger {
 	private double kWh;
@@ -23,6 +24,14 @@ public class ColonnaSupercharger implements Supercharger {
 		return this.tempoRicarica;
 	}
 	
-	
+	@Override
+	public void ricaricaVeicolo(int percentualeRaggiungere, Veicolo veicoloElettrico) {
+		double percentualeAttuale = (100 * veicoloElettrico.getCarburanteAttuale()) / veicoloElettrico.getCapienzaMassima(); // 100kW rimasti => X% => max => 100%
+		double percentualeRicaricare = percentualeRaggiungere - percentualeAttuale; // 70% - 10% => ricarico 60%
+		double kWRicaricare = (veicoloElettrico.getCapienzaMassima() * percentualeRicaricare) / 100;
+		
+		veicoloElettrico.setCarburanteAttuale(veicoloElettrico.getCarburanteAttuale() + kWRicaricare);
+		this.setTempoRicarica(kWRicaricare / this.getkWh()); // numero di ore di ricarica: 0,5 => 30 minuti
+	}
 	
 }

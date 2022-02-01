@@ -68,8 +68,11 @@ public class TestPosto {
 		PostoElettrico postoElettrico = new PostoElettrico();
 		postoElettrico.occupaPosto(new Auto("CIAO", 1999, Alimentazione.ELETTRICA,
                     						"FIAT", "600", "Massimo", "Minimo", 1.40, 300.4, 90.08));
-		// postoElettrico.ricaricaAuto(70); // ricarica fino al 70%
-		postoElettrico.ricaricaAuto(100); // ricarica fino al 100%
+		// ricarica fino al 70%
+		postoElettrico.getColonnaSupercharger().ricaricaVeicolo(70, postoElettrico.getVeicolo().get()); 
+		// ricarica fino al 100%
+		postoElettrico.getColonnaSupercharger().ricaricaVeicolo(100, postoElettrico.getVeicolo().get()); 
+		
 		System.out.println(postoElettrico.getColonnaSupercharger().getTempoRicarica());
 		System.out.println(postoElettrico.getVeicolo().get().getCarburanteAttuale());
 		
