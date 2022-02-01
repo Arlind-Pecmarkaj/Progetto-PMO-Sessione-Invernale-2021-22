@@ -119,6 +119,7 @@ public class ParcheggioImpl implements Parcheggio{
 	public Posto aggiungiVeicolo(Veicolo v){
 		Posto posto = null;
 		
+		// controllo di non inserire auto con targhe uguali
 		Optional<Veicolo> veicoloGiaPresente = this.listaVeicoliPresenti().stream()
 								   										  .filter(ve -> ve.getTarga().equals(v.getTarga()))
 								   										  .findAny();
@@ -161,6 +162,7 @@ public class ParcheggioImpl implements Parcheggio{
 			
 
 			if(ab.isEmpty()) {
+				System.out.println(((AbstractPosto) postoDaLiberare.get()).getCostoOrario());
 				prezzo = ((AbstractPosto) postoDaLiberare.get()).getCostoOrario() * (((AbstractPosto) postoDaLiberare.get()).getOrarioUscita().getNano() -
 																   ((AbstractPosto) postoDaLiberare.get()).getOrarioArrivo().getNano());
 			}
