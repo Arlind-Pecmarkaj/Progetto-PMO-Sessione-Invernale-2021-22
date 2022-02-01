@@ -20,7 +20,7 @@ public interface Parcheggio {
 	
 	double liberaPosto(Posto p);
 	
-	Set<Optional<Veicolo>> listaVeicoliPresenti();
+	Set<Veicolo> listaVeicoliPresenti();
 	
 	Monopattino noleggiaMonopattino(Persona p);
 	

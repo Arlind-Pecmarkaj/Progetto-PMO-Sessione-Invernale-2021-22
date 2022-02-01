@@ -118,6 +118,14 @@ public class ParcheggioImpl implements Parcheggio{
 	@Override
 	public Posto aggiungiVeicolo(Veicolo v){
 		Posto posto = null;
+		
+		Optional<Veicolo> veicoloGiaPresente = this.listaVeicoliPresenti().stream()
+								   										  .filter(ve -> ve.getTarga().equals(v.getTarga()))
+								   										  .findAny();
+		if(veicoloGiaPresente.isPresent()) {
+			throw new AltezzaMassimaConsentitaException("Auto con la stessa targa presente!");
+		}
+		
 		/* controllo se il veicolo e' un auto o una moto */
 		if(v instanceof Auto) {
 			if(v.getCarburante().equals(Alimentazione.ELETTRICA)) {
@@ -164,10 +172,10 @@ public class ParcheggioImpl implements Parcheggio{
 	 * restituisce tutti i veicoli presenti nel parcheggio
 	 */
 	@Override
-	public Set<Optional<Veicolo>> listaVeicoliPresenti() {
+	public Set<Veicolo> listaVeicoliPresenti() {
 		return this.postiDisponibili.stream()
 						            .filter(p -> p.isLibero() == false)
-						            .map(p -> ((AbstractPosto) p).getVeicolo())
+						            .map(p -> ((AbstractPosto) p).getVeicolo().get())
 						            .collect(Collectors.toSet());
 	}// end metodo listaVeicoliPresenti()
 	
