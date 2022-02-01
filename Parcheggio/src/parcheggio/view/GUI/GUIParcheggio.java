@@ -4,24 +4,27 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.JTextField;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -33,7 +36,6 @@ import parcheggio.exceptions.PersonaSenzaAbbonamentoException;
 import parcheggio.exceptions.PostiFinitiException;
 import parcheggio.model.Parcheggio;
 import parcheggio.model.ParcheggioImpl;
-import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.monopattino.Monopattino;
 import parcheggio.model.persona.Persona;
 import parcheggio.model.posto.Posto;
@@ -41,58 +43,85 @@ import parcheggio.model.posto.PostoAuto;
 import parcheggio.model.posto.PostoElettrico;
 import parcheggio.model.posto.PostoMoto;
 
+@SuppressWarnings("serial")
 public class GUIParcheggio extends JFrame{
 
-	private JPanel container = new JPanel();
-	private JPanel top = new JPanel();
-	private JPanel topB = new JPanel();
-	private JPanel topA = new JPanel();
-	private JPanel bottom = new JPanel();
-	private ArrayList<JButton> bottoniVeicoli = new ArrayList<JButton>();
-	private ArrayList<Posto> posti;
-	private HashSet<Abbonamento> abbonamenti;
-	private ArrayList<JButton> bottoniMonopattini = new ArrayList<JButton>();
-	private JButton in = new JButton("In");
-	private JTextField targa = new JTextField();
-	private JTextField codiceFiscale = new JTextField();
-	private String[] veicoliDisponibili = { "Auto", "Moto" };
-	private JComboBox<?> listaVeicoli = new JComboBox<Object>(veicoliDisponibili);
+	private JPanel contentPane;      // Panel principale del frame
+	private JPanel panelParcheggi;   // Panel in cui son visibili i parchegi
+	private JPanel panelMonopattini; // Panel in cui son visibili i monopattini
+	private JPanel panelInserimento; // Panel in cui è visibile il form di inserimento di un veicolo
 	
+	/* Label associate al gruppo di Field/Box qui sotto e aiutano nell'identificazione. */
+	private JLabel lblPanelInserimento;
+	private JLabel lblTarga;
+	private JLabel lblCodiceFiscale;
+	private JLabel lblNome;
+	private JLabel lblCognome;
+	private JLabel lblTipoVeicolo;
+	private JLabel lblCarburante;
+	
+	private JTextField   targa;
+	private JTextField   codiceFiscale;
+	private JTextField   nome;
+	private JTextField   cognome;
+	private JButton      in;	
+	private String[]     veicoliDisponibili = { "Auto", "Moto" };
+	private JComboBox<?> listaVeicoli = new JComboBox<Object>(veicoliDisponibili);
+	private JComboBox<?> listaAlimentazioni;
+	private JCheckBox    noleggiaMonopattino;
+	
+	private ArrayList<Posto>   posti;
+	private ArrayList<JButton> bottoniVeicoli = new ArrayList<JButton>();
+	private ArrayList<JButton> bottoniMonopattini = new ArrayList<JButton>();
+
 	/*
 	 * costruzione del frame
 	 */
 	public GUIParcheggio(Parcheggio p) {
 		super("Parcheggio: " + ((ParcheggioImpl)p).getName());
 		
-		this.abbonamenti = ((ParcheggioImpl) p).getAbbonamenti();
+		((ParcheggioImpl) p).getAbbonamenti();
 		
 		int numeroPosti = p.getNPostiSpecifici(po -> po instanceof PostoAuto) +
 						  p.getNPostiSpecifici(po -> po instanceof PostoMoto) +
 						  p.getNPostiSpecifici(po -> po instanceof PostoElettrico);
 		
-		this.container.setLayout(new GridLayout(2, 1));
-		this.topA.setLayout(new FlowLayout());
-		this.topB.setLayout(new FlowLayout());
-		this.top.setLayout(new GridLayout(1, 2));
-		this.bottom.setLayout(new FlowLayout());
 		
-		for(int i = 0; i < p.getNPostiSpecifici(po -> po instanceof PostoAuto); i++) {
-			this.bottoniVeicoli.add(new JButton("Posto auto"));
-		}
-		for(int i = 0; i < p.getNPostiSpecifici(po -> po instanceof PostoMoto); i++) {
-			this.bottoniVeicoli.add(new JButton("Posto moto"));
-		}
-		for(int i = 0; i < p.getNPostiSpecifici(po -> po instanceof PostoElettrico); i++) {
-			this.bottoniVeicoli.add(new JButton("Posto auto elettriche"));
-		}
-		for(JButton jb: this.bottoniVeicoli) {
-			jb.setBackground(Color.green);
+		setBounds(100, 100, 800, 550);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		
+		/* ------------------------------------ POSTI -------------------------- */
+		posti = ((ParcheggioImpl) p).getPostiDisponibili();
+		
+		this.panelParcheggi = new JPanel();	
+		this.panelParcheggi.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		for (int i = 0; i < numeroPosti; i++) {
+			JButton jb = new JButton();		
+			if (posti.get(i) instanceof PostoAuto) {
+				jb.setText("Posto Auto");
+			} else if (posti.get(i) instanceof PostoElettrico) {
+				jb.setText("Posto Elettrica");
+			} else {
+				jb.setText("Posto moto");
+			}
 			
+			if (posti.get(i).isLibero())
+				jb.setBackground(Color.green);
+			else 
+				jb.setBackground(Color.red);
+			
+			this.bottoniVeicoli.add(jb);
+		}
+
+		for (JButton jb: this.bottoniVeicoli) {	
 			jb.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if(!GUIParcheggio.this.posti.get(GUIParcheggio.this.bottoniVeicoli.lastIndexOf(jb)).isLibero()) {
-						double prezzoDaPagare = p.liberaPosto(GUIParcheggio.this.posti.get(GUIParcheggio.this.bottoniVeicoli.lastIndexOf(jb)));
+					if(!posti.get(bottoniVeicoli.lastIndexOf(jb)).isLibero()) {
+						double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
 						jb.setBackground(Color.green);
 						showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
 										  prezzoDaPagare + " euro");
@@ -102,17 +131,20 @@ public class GUIParcheggio extends JFrame{
 				}
 			});
 			
-			this.topB.add(jb);
+		    this.panelParcheggi.add(jb);
 		}
 		
-		for(int i = 0; i < ((ParcheggioImpl)p).getPostiMonopattino().size(); i++){
-			this.bottoniMonopattini.add(new JButton("M" + i));
-		}
-		for(JButton jb: this.bottoniMonopattini) {
+		/* ---------------------- MONOPATTINI -------------------------- */
+		
+		this.panelMonopattini = new JPanel();
+		this.panelMonopattini.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JLabel labelMonopattini = new JLabel("Monopattini disponibili");
+		this.panelMonopattini.add(labelMonopattini);
+		
+		for (int i = 0; i < ((ParcheggioImpl)p).getPostiMonopattino().size(); i++) {
+			JButton jb = new JButton("M" + i);
 			jb.setBackground(Color.green);
-			
 			jb.addActionListener(new ActionListener() {
-
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if(!((ParcheggioImpl) p).getPostiMonopattino().get(bottoniMonopattini.lastIndexOf(jb)).getDisponibile()) {
@@ -129,17 +161,140 @@ public class GUIParcheggio extends JFrame{
 				}
 				
 			});
-			
-			this.topA.add(jb);
+			this.panelMonopattini.add(jb);
+			this.bottoniMonopattini.add(jb);
 		}
+	
+		/* ------------------------------------------ INSERIMENTO ----------------------------- */
+		panelInserimento = new JPanel();
+		GridBagLayout gblPanelInserimento = new GridBagLayout();
+		gblPanelInserimento.columnWidths  = new int[]{0, 0, 0};
+		gblPanelInserimento.rowHeights    = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gblPanelInserimento.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gblPanelInserimento.rowWeights    = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panelInserimento.setLayout(gblPanelInserimento);
 		
-		this.posti = ((ParcheggioImpl)p).getPostiDisponibili();
 		
-		JTextField nome = new JTextField("Nome");
-		JTextField cognome = new JTextField("Cognome");
-		JComboBox<?> listaAlimentazioni = new JComboBox<Object>(Alimentazione.values());
-		JCheckBox noleggiaMonopattino = new JCheckBox("Noleggia monopattino");
+		lblPanelInserimento = new JLabel("Inserimento veicolo");
+		GridBagConstraints gbcPanelInserimento = new GridBagConstraints();
+		gbcPanelInserimento.insets             = new Insets(0, 0, 5, 0);
+		gbcPanelInserimento.gridx              = 1;
+		gbcPanelInserimento.gridy              = 0;
+		panelInserimento.add(lblPanelInserimento, gbcPanelInserimento);
 		
+		lblTarga = new JLabel("Targa");
+		GridBagConstraints gbcLblTarga = new GridBagConstraints();
+		gbcLblTarga.anchor             = GridBagConstraints.EAST;
+		gbcLblTarga.insets             = new Insets(0, 0, 5, 5);
+		gbcLblTarga.gridx              = 0;
+		gbcLblTarga.gridy              = 1;
+		panelInserimento.add(lblTarga, gbcLblTarga);
+		
+		targa = new JTextField();
+		GridBagConstraints gbcTarga = new GridBagConstraints();
+		gbcTarga.insets             = new Insets(0, 0, 5, 0);
+		gbcTarga.fill               = GridBagConstraints.HORIZONTAL;
+		gbcTarga.gridx              = 1;
+		gbcTarga.gridy              = 1;
+		panelInserimento.add(targa, gbcTarga);
+		targa.setColumns(10);
+		
+		lblCodiceFiscale = new JLabel("Codice Fiscale");
+		GridBagConstraints gbcLblCodiceFiscale = new GridBagConstraints();
+		gbcLblCodiceFiscale.anchor             = GridBagConstraints.EAST;
+		gbcLblCodiceFiscale.insets             = new Insets(0, 0, 5, 5);
+		gbcLblCodiceFiscale.gridx              = 0;
+		gbcLblCodiceFiscale.gridy              = 2;
+		panelInserimento.add(lblCodiceFiscale, gbcLblCodiceFiscale);
+		
+		codiceFiscale = new JTextField();
+		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
+		gbc_textField_2.insets             = new Insets(0, 0, 5, 0);
+		gbc_textField_2.fill               = GridBagConstraints.HORIZONTAL;
+		gbc_textField_2.gridx              = 1;
+		gbc_textField_2.gridy              = 2;
+		panelInserimento.add(codiceFiscale, gbc_textField_2);
+		codiceFiscale.setColumns(10);
+		
+		lblNome = new JLabel("Nome");
+		GridBagConstraints gbcLblNome = new GridBagConstraints();
+		gbcLblNome.insets             = new Insets(0, 0, 5, 5);
+		gbcLblNome.anchor             = GridBagConstraints.EAST;
+		gbcLblNome.gridx              = 0;
+		gbcLblNome.gridy              = 3;
+		panelInserimento.add(lblNome, gbcLblNome);
+		
+		nome = new JTextField();
+		GridBagConstraints gbcNome = new GridBagConstraints();
+		gbcNome.insets             = new Insets(0, 0, 5, 0);
+		gbcNome.fill               = GridBagConstraints.HORIZONTAL;
+		gbcNome.gridx              = 1;
+		gbcNome.gridy              = 3;
+		panelInserimento.add(nome, gbcNome);
+		nome.setColumns(10);
+		
+		
+		lblCognome = new JLabel("Cognome");
+		GridBagConstraints gbcLblCognome = new GridBagConstraints();
+		gbcLblCognome.anchor             = GridBagConstraints.EAST;
+		gbcLblCognome.insets             = new Insets(0, 0, 5, 5);
+		gbcLblCognome.gridx              = 0;
+		gbcLblCognome.gridy              = 4;
+		panelInserimento.add(lblCognome, gbcLblCognome);
+		
+		cognome = new JTextField();
+		GridBagConstraints gbcCognome = new GridBagConstraints();
+		gbcCognome.insets             = new Insets(0, 0, 5, 0);
+		gbcCognome.fill               = GridBagConstraints.HORIZONTAL;
+		gbcCognome.gridx              = 1;
+		gbcCognome.gridy              = 4;
+		panelInserimento.add(cognome, gbcCognome);
+		cognome.setColumns(10);
+		
+		lblTipoVeicolo = new JLabel("Tipo veicolo");
+		GridBagConstraints gbcLblTipoVeicolo = new GridBagConstraints();
+		gbcLblTipoVeicolo.anchor             = GridBagConstraints.NORTHEAST;
+		gbcLblTipoVeicolo.insets             = new Insets(0, 0, 5, 5);
+		gbcLblTipoVeicolo.gridx              = 0;
+		gbcLblTipoVeicolo.gridy              = 5;
+		panelInserimento.add(lblTipoVeicolo, gbcLblTipoVeicolo);
+		
+		listaVeicoli = new JComboBox<>(this.veicoliDisponibili);
+		GridBagConstraints gbcListaVeicoli = new GridBagConstraints();
+		gbcListaVeicoli.insets             = new Insets(0, 0, 5, 0);
+		gbcListaVeicoli.fill               = GridBagConstraints.HORIZONTAL;
+		gbcListaVeicoli.gridx              = 1;
+		gbcListaVeicoli.gridy              = 5;
+		panelInserimento.add(listaVeicoli, gbcListaVeicoli);
+		
+		lblCarburante = new JLabel("Carburante");
+		GridBagConstraints gbcLabelCarburante = new GridBagConstraints();
+		gbcLabelCarburante.anchor             = GridBagConstraints.NORTHEAST;
+		gbcLabelCarburante.insets             = new Insets(0, 0, 5, 5);
+		gbcLabelCarburante.gridx              = 0;
+		gbcLabelCarburante.gridy              = 6;
+		panelInserimento.add(lblCarburante, gbcLabelCarburante);
+		
+		listaAlimentazioni = new JComboBox<>(Alimentazione.values());
+		GridBagConstraints gbcListaAlimentazioni = new GridBagConstraints();
+		gbcListaAlimentazioni.insets             = new Insets(0, 0, 5, 0);
+		gbcListaAlimentazioni.fill               = GridBagConstraints.HORIZONTAL;
+		gbcListaAlimentazioni.gridx              = 1;
+		gbcListaAlimentazioni.gridy              = 6;
+		panelInserimento.add(listaAlimentazioni, gbcListaAlimentazioni);
+		
+		noleggiaMonopattino = new JCheckBox("Noleggia monopattino");
+		GridBagConstraints gbcNoleggiaMonopattino = new GridBagConstraints();
+		gbcNoleggiaMonopattino.insets = new Insets(0, 0, 5, 0);
+		gbcNoleggiaMonopattino.gridx = 1;
+		gbcNoleggiaMonopattino.gridy = 7;
+		panelInserimento.add(noleggiaMonopattino, gbcNoleggiaMonopattino);
+		
+		in = new JButton("Inserisci");
+		GridBagConstraints gbcIn = new GridBagConstraints();
+		gbcIn.gridx              = 1;
+		gbcIn.gridy              = 8;
+		panelInserimento.add(in, gbcIn);
 		/*
 		 * implementazione dell'inserimento di un veicolo all'interno del parcheggio 
 		 */
@@ -194,9 +349,9 @@ public class GUIParcheggio extends JFrame{
 															 .setBackground(Color.red);
 						System.out.println(((ParcheggioImpl) p).getPostiMonopattino());
 				//		GUIParcheggio.this.bottoniMonopattini.getLast().setBackground(Color.red);
-					}catch(MonopattiniEsauritiException m) {
+					} catch (MonopattiniEsauritiException m) {
 						showMessageDialog(null, "Attenzione! Monopattini esauriti");
-					}catch(PersonaSenzaAbbonamentoException m) {
+					} catch (PersonaSenzaAbbonamentoException m) {
 						showMessageDialog(null, "Attenzione! L'utente è sprovvisto di abbonamento. " +
 									      "Monopattino non noleggiato");
 					}
@@ -204,37 +359,35 @@ public class GUIParcheggio extends JFrame{
 			}
 		});
 		
-		/**/
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelParcheggi, GroupLayout.PREFERRED_SIZE, 776, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panelInserimento, GroupLayout.PREFERRED_SIZE, 776, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panelMonopattini, GroupLayout.PREFERRED_SIZE, 776, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(panelParcheggi, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
+					.addGap(5)
+					.addComponent(panelMonopattini, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(panelInserimento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
 		
-		this.bottom.add(this.listaVeicoli);
-		this.targa.setText("Targa");
-		this.bottom.add(this.targa);
-		this.codiceFiscale.setText("Codice fiscale utente");
-		this.bottom.add(this.codiceFiscale);
-		this.bottom.add(nome);
-		this.bottom.add(cognome);
-		this.bottom.add(listaAlimentazioni);
-		this.bottom.add(this.in);
-		this.bottom.add(noleggiaMonopattino);
-		
-		this.top.add(this.topA);
-		this.top.add(this.topB);
-		
-		this.container.add(this.top);
-		this.container.add(this.bottom);
-		
-		this.add(this.container);
-		
-		this.setSize(600,400);
+		contentPane.setLayout(gl_contentPane);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
 	}
 	
 	private void aggiornamento(Veicolo v, Parcheggio p) {
 		try {
-			Optional<Posto> postoOccupato = Optional.empty();
-			postoOccupato = Optional.ofNullable(p.aggiungiVeicolo(v));
-			
+			Optional<Posto> postoOccupato = Optional.of(p.aggiungiVeicolo(v));
 			if(postoOccupato.isPresent()) {
 				bottoniVeicoli.get(posti.lastIndexOf(postoOccupato.get())).setBackground(Color.red);
 				showMessageDialog(null,"Il veicolo e' ora parcheggiato!");
