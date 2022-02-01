@@ -12,6 +12,12 @@ public class PostoElettrico extends AbstractPosto {
 		this("E0000", new SensoreCarburante());
 	}
 	
+	public PostoElettrico(String postoId) {
+		super.setPosto(postoId);
+		this.sensoreCarburante = new SensoreCarburante();
+		this.colonnaSupercharger = new ColonnaSupercharger();
+	}
+	
 	public PostoElettrico(String postoId, SensoreCarburante sensore) {
 		super.setPosto(postoId);
 		this.sensoreCarburante = sensore;
