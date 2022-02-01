@@ -213,7 +213,7 @@ public class GUIParcheggio extends JFrame{
 		this.add(this.container);
 		
 		this.setSize(600,400);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
 	}
 	
