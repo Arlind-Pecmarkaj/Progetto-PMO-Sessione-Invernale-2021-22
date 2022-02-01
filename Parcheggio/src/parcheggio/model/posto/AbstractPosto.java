@@ -17,6 +17,8 @@ import parcheggio.model.veicolo.Veicolo;
 
 public abstract class AbstractPosto implements Posto {
 	
+	protected static final double STANDARD_TAX = 1; // tutti i "posti" hanno tassa fissa 1 euro
+	
 	private Optional<Veicolo> veicolo;
 	private Instant orarioArrivo;
 	private Instant orarioUscita;
@@ -27,9 +29,9 @@ public abstract class AbstractPosto implements Posto {
 	/**
 	 * 	templete method FINAL per le sottoclassi
 	 */
-	protected final void setPosto(String postoId, double standardTax) {
+	protected final void setPosto(String postoId) {
 		this.id = setId(postoId);
-		this.costoOrario = setCostoOrario(standardTax);
+		this.costoOrario = setCostoOrario();
 		this.veicolo = Optional.empty();
 	}
 
@@ -39,7 +41,7 @@ public abstract class AbstractPosto implements Posto {
 	 */
 
 	protected abstract String setId(String postoID);
-	protected abstract double setCostoOrario(double standardTax);
+	protected abstract double setCostoOrario();
 
 	
 	/**
@@ -121,6 +123,14 @@ public abstract class AbstractPosto implements Posto {
 	public final Duration tempoOccupazione() {
 		elapsedTime = Duration.between(getOrarioArrivo(), getOrarioUscita());		
 		return elapsedTime;
+	}
+	
+	/**
+	 * 
+	 * */
+	public final double costoOccupazione() {
+		double daPagare = this.getCostoOrario() * this.tempoOccupazione().getSeconds();
+		return daPagare;
 	}
 	
 	/**

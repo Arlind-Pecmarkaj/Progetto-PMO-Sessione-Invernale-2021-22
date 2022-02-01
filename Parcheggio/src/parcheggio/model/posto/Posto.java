@@ -40,4 +40,10 @@ public interface Posto {
 	 * 	@return tempo di occupazione del posto
 	 */
 	Duration tempoOccupazione();
+	
+	/**
+	 * 
+	 * 
+	 * */
+	double costoOccupazione();
 }
