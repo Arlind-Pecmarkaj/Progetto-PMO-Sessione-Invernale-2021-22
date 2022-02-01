@@ -7,17 +7,23 @@ public class PostoAuto extends AbstractPosto {
 	
 	private SensoreCarburante sensoreCarburante;
 	
+//	costruttori per i test
+	
 	public PostoAuto() {
-		this("A0000", 0.0, new SensoreCarburante());
+		this("A0000", new SensoreCarburante());
 	};
 	
 	public PostoAuto(SensoreCarburante sensore) {
-		super.setPosto("A0000", 0.0);
+		super.setPosto("A0000");
 		this.sensoreCarburante = sensore;
 	}
 	
-	public PostoAuto(String postoId, double standardTax, SensoreCarburante sensore) {
-		super.setPosto(postoId, standardTax);
+	public PostoAuto(String postoId) {
+		super.setPosto(postoId);
+	}
+	
+	public PostoAuto(String postoId, SensoreCarburante sensore) {
+		super.setPosto(postoId);
 		this.sensoreCarburante = sensore;
 	}
 	
@@ -49,7 +55,7 @@ public class PostoAuto extends AbstractPosto {
 	 * 	@return tariffa oraria per auto
 	 */
 	@Override
-	protected double setCostoOrario(double standardTax) {
-		return standardTax / TASSA_AUTO.getTaxValue();
+	protected double setCostoOrario() {
+		return STANDARD_TAX / TASSA_AUTO.getTaxValue();
 	}
 }

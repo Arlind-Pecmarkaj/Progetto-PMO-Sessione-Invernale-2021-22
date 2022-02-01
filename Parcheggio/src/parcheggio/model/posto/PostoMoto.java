@@ -6,11 +6,11 @@ public class PostoMoto extends AbstractPosto {
 	
 	
 	public PostoMoto() {
-		this("E0000", 0.0);
+		this("E0000");
 	}
 	
-	public PostoMoto(String postoId, double standardTax) {
-		super.setPosto(postoId, standardTax);
+	public PostoMoto(String postoId) {
+		super.setPosto(postoId);
 	}
 	
 	
@@ -34,8 +34,8 @@ public class PostoMoto extends AbstractPosto {
 	 * 	@return tariffa oraria per moto
 	 */
 	@Override
-	protected double setCostoOrario(double standardTax) {
-		return standardTax / TASSA_MOTO.getTaxValue();
+	protected double setCostoOrario() {
+		return STANDARD_TAX / TASSA_MOTO.getTaxValue();
 	}
 
 }

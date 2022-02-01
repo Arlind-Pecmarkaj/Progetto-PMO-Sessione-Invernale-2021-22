@@ -9,11 +9,11 @@ public class PostoElettrico extends AbstractPosto {
 	private ColonnaSupercharger colonnaSupercharger;
 	
 	public PostoElettrico() { 
-		this("E0000", 0.0, new SensoreCarburante());
+		this("E0000", new SensoreCarburante());
 	}
 	
-	public PostoElettrico(String postoId, double standardTax, SensoreCarburante sensore) {
-		super.setPosto(postoId, standardTax);
+	public PostoElettrico(String postoId, SensoreCarburante sensore) {
+		super.setPosto(postoId);
 		this.sensoreCarburante = sensore;
 		this.colonnaSupercharger = new ColonnaSupercharger();
 	}
@@ -58,8 +58,8 @@ public class PostoElettrico extends AbstractPosto {
 	 * 	@return tariffa oraria per vettura elttrica
 	 */
 	@Override
-	protected double setCostoOrario(double standardTax) {
-		return standardTax / TASSA_ELETTRICO.getTaxValue();
+	protected double setCostoOrario() {
+		return STANDARD_TAX / TASSA_ELETTRICO.getTaxValue();
 	}
 
 }
