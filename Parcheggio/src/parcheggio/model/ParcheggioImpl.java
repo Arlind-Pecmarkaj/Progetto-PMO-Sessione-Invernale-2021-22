@@ -304,9 +304,11 @@ public class ParcheggioImpl implements Parcheggio{
 			 */
 			if(v instanceof Auto) {// IMPLEMENTARE IL SENSORE DI CARBURANTE!!!
 				if((double)this.sensoreAltezza.effettuaRilevamento((Auto)v) <= this.altezzaMassimaConsentita) {
-					if(this.id.startsWith("S")  && ((PostoAuto) tmp.get()).getSensoreCarburante().effettuaRilevamento((Auto)v).equals(Alimentazione.METANO)) {//TEMPORANEO
+					if(this.id.startsWith("S")  && 
+					   !(tmp.get() instanceof PostoElettrico) &&
+					   ((PostoAuto) tmp.get()).getSensoreCarburante().effettuaRilevamento((Auto)v).equals(Alimentazione.METANO)) {//TEMPORANEO
 						//throw new TipologiaCarburanteNonConsentita();
-						throw new AltezzaMassimaConsentitaException("Eccezione: L'altezza del veicolo ha superato il limite massimo consentito!");
+						throw new AltezzaMassimaConsentitaException("Le auto a metano non possono parcheggiare in un parcheggio sotteraneo.");
 					}
 					tmp.get().occupaPosto(v);
 					return tmp.get();
