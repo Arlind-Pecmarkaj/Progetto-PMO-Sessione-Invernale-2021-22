@@ -43,15 +43,15 @@ public class ParcheggioImpl implements Parcheggio{
 		
 		/* istanzio gli oggetto di tipo PostoAuto */
 		for(int i = 0; i < nPostiAuto; i++)
-			this.postiDisponibili.add(new PostoAuto(new SensoreCarburante()));
+			this.postiDisponibili.add(new PostoAuto(Integer.toString(i), new SensoreCarburante()));
 		
 		/* istanzio gli oggetti di tipo PostoMoto */
 		for(int i = 0; i < nPostiMoto; i++)
-			this.postiDisponibili.add(new PostoMoto());
+			this.postiDisponibili.add(new PostoMoto(Integer.toString(i)));
 		
 		/* istanzio gli oggetti di tipo PostoElettrico */
 		for(int i = 0; i < nPostiElettrici; i++)
-			this.postiDisponibili.add(new PostoElettrico());
+			this.postiDisponibili.add(new PostoElettrico(Integer.toString(i)));
 		
 		/* istanzio gli oggetti di tipo Monopattino */
 		if(nPostiMonopattino != 0) {
@@ -162,9 +162,7 @@ public class ParcheggioImpl implements Parcheggio{
 			
 
 			if(ab.isEmpty()) {
-				System.out.println(((AbstractPosto) postoDaLiberare.get()).getCostoOrario());
-				prezzo = ((AbstractPosto) postoDaLiberare.get()).getCostoOrario() * (((AbstractPosto) postoDaLiberare.get()).getOrarioUscita().getNano() -
-																   ((AbstractPosto) postoDaLiberare.get()).getOrarioArrivo().getNano());
+				prezzo = postoDaLiberare.get().costoOccupazione();
 			}
 		}
 		return prezzo;
