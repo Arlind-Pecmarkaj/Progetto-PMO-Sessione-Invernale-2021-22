@@ -70,7 +70,7 @@ public class Test {
 		 *  - 06/01/2022 Il metodo funziona.
 		 */
         GestioneParcheggio g = new GestioneParcheggio();
-        ReaderWriterFromFile rP = new ReaderWriterFromFile("C:\\Users\\arlin\\Documents\\PMO\\Progetto-PMO-Sessione-Invernale-2021-22\\Parcheggio\\salvataggio\\Veicoli.txt");
+        ReaderWriterFromFile rP = new ReaderWriterFromFile("C:\\Users\\leona\\Documents\\Università\\PMO\\Progetto\\progetto_pmo\\Parcheggio\\salvataggio\\Veicoli.txt");
 		try {	
 			g = rP.read();
 		} catch (Exception e) {
