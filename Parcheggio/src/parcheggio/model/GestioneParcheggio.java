@@ -28,8 +28,10 @@ public class GestioneParcheggio {
 	}
         
     public void aggiungiAbbonamento(Abbonamento a) {
-    	if (!abbonamenti.contains(a))
+    	if (!abbonamenti.contains(a)) {
     		this.abbonamenti.add(a);
+    		this.aggiornaAbbonamenti();
+    	}
     }
     
     public Abbonamento getAbbonamento(Persona p) {

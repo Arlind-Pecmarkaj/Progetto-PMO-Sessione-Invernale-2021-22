@@ -70,8 +70,9 @@ public class GUIGestione extends JFrame {
 		gbc_panel_parcheggi.gridx = 0;
 		gbc_panel_parcheggi.gridy = 1;
 		contentPane.add(panel_parcheggi, gbc_panel_parcheggi);
-		panel_parcheggi.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5)); //Per i parcheggi si usa un flow layout.	
+		panel_parcheggi.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5)); //Per i parcheggi si usa un flow layout.
 		
+		g.aggiornaAbbonamenti();
 		for (ParcheggioImpl p : g.getParcheggi()) {
 			JButton bottone_parcheggio = new JButton(p.getName());
 			bottone_parcheggio.addActionListener(new ActionListener() {
