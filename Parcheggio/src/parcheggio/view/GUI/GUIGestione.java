@@ -244,6 +244,7 @@ public class GUIGestione extends JFrame {
 		inserimento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					/* Recupero le informazioni dai miei field */
 					String cf = codiceFiscale.getText();
 					String nm = nome.getText();
 					String cn = cognome.getText();
@@ -261,11 +262,12 @@ public class GUIGestione extends JFrame {
 					} else if (dr.equals("annuale")) {
 						end = LocalDate.now().plusMonths(12);
 					}
-					Persona p = new Persona(cf, nm, cn, na, nz);					
+					Persona p = new Persona(cf, nm, cn, na, nz);			
+					/* Per identificare un abbonamento si usa l'hashcode di una persona */
 					Abbonamento a = new Abbonamento(p.hashCode(), tr, p, LocalDate.now(), end, premium.isSelected());
 					g.aggiungiAbbonamento(a);
 					g.aggiornaAbbonamenti();
-					showMessageDialog(null, "Aggiunto abbonamento: \n" + a);
+					showMessageDialog(null, "Aggiunto abbonamento con successo: \n" + a, "Inserimento abbonamento", JOptionPane.DEFAULT_OPTION);
 				} catch (Exception ex) {
 					showMessageDialog(null, "ATTENZIONE: campi non compilati correttamente!", "Errore!", JOptionPane.WARNING_MESSAGE);
 				}

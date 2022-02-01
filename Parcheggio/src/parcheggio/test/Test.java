@@ -70,7 +70,7 @@ public class Test {
 		 *  - 06/01/2022 Il metodo funziona.
 		 */
         GestioneParcheggio g = new GestioneParcheggio();
-        ReaderWriterFromFile rP = new ReaderWriterFromFile("C:\\Users\\leona\\Documents\\Università\\PMO\\Progetto\\progetto_pmo\\Parcheggio\\salvataggio\\Veicoli.txt");
+        ReaderWriterFromFile rP = new ReaderWriterFromFile("C:\\Users\\arlin\\Documents\\PMO\\Progetto-PMO-Sessione-Invernale-2021-22\\Parcheggio\\salvataggio\\Veicoli.txt");
 		try {	
 			g = rP.read();
 		} catch (Exception e) {
@@ -87,7 +87,7 @@ public class Test {
 		 *  -impossibile effettuare il test di liberaPosto();
 		 *  -rimane da effettuare il test ai due metodi per gestire il noleggio di monopattini;
 		 */
-		ParcheggioImpl p = new ParcheggioImpl("prova", "parcheggio_prova", 5,3,1,0, 1000);//parcheggio senza monopattini
+		ParcheggioImpl p = new ParcheggioImpl("prova", "parcheggio_prova", 5,3,1,5, 1000);//parcheggio senza monopattini
 		System.out.println(p.getPostiDisponibili()); /* OK */
 		System.out.println(p.getPostiDisponibili().size());	/* OK */
 		p.aggiungiVeicolo(new Auto("ABC123ABC", 2021, Alimentazione.GPL, "Toyota", "Yaris", "Martin", "Berardi", 1.5, 50, 3)); /* OK */
