@@ -119,6 +119,10 @@ public class ParcheggioImpl implements Parcheggio{
 	public Posto aggiungiVeicolo(Veicolo v){
 		Posto posto = null;
 		
+		if(v.getTarga().equals("")) {
+			throw new AltezzaMassimaConsentitaException("Attenzione: non e' stata inserita la targa!");
+		}
+		
 		// controllo di non inserire auto con targhe uguali
 		Optional<Veicolo> veicoloGiaPresente = this.listaVeicoliPresenti().stream()
 								   										  .filter(ve -> ve.getTarga().equals(v.getTarga()))
@@ -158,8 +162,7 @@ public class ParcheggioImpl implements Parcheggio{
 			Optional<Abbonamento> ab = this.abbonamenti.stream()
 					   .filter(a -> a.getTarga().equals(((AbstractPosto) p).getVeicolo().get().getTarga()))
 					   .findAny();
-			postoDaLiberare.get().liberaPosto();
-			
+			postoDaLiberare.get().liberaPosto();	
 
 			if(ab.isEmpty()) {
 				prezzo = postoDaLiberare.get().costoOccupazione();
@@ -192,13 +195,6 @@ public class ParcheggioImpl implements Parcheggio{
 													   .filter(a -> a.getPersona().equals(p))
 													   .findAny();
 		if(esiste.isPresent()){
-		/*	if(this.postiMonopattino.size() != 0 && this.postiMonopattino.getLast().getDisponibile()) {
-				m = this.postiMonopattino.getLast();
-				this.postiMonopattino.removeLast();
-			} else {
-				// lancia eccezione per mancanza di monopattini!!!
-				throw new MonopattiniEsauritiException("Eccezione: Monopattini non disponibili!");
-			} */
 			Optional<Monopattino> tmp = this.postiMonopattino.stream()
 															 .filter(mo -> mo.getDisponibile())
 															 .findFirst();
