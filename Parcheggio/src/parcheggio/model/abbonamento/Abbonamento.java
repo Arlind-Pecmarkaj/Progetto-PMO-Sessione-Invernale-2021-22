@@ -33,6 +33,7 @@ public class Abbonamento implements abb {
 		this.dataInizio = dataIn;
 		this.dataFine   = dataFine;
 		this.premium    = premium;
+		illegalArgumentAbbonamento();
 	}
 	
 	public Abbonamento(final int       id,
@@ -41,6 +42,14 @@ public class Abbonamento implements abb {
 					   final LocalDate dataIn,
 					   final LocalDate dataFine) {
 		this(id,targa, pers, dataIn, dataFine, false);
+	}
+	
+	// illegal arguments 
+	public void illegalArgumentAbbonamento() {
+		if(id < 0 || 
+		   targa.isBlank() || targa.isEmpty() || targa == null ||
+		   dataInizio == null || dataFine == null)
+			throw new IllegalArgumentException();
 	}
 	
 	/*

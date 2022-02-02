@@ -28,6 +28,18 @@ public class Persona implements Pers {
 		this.cognome	 = cognome;
 		this.dataNascita = dataNascita;
 		this.nazione     = nazione;
+		illegalArgumentPersona();	
+	}
+	
+	// illegal arguments 
+	public void illegalArgumentPersona() {
+		if(codFiscale.isBlank() || codFiscale.isEmpty()|| codFiscale == null ||
+		   nome.isBlank() || nome.isEmpty() || nome == null || 
+		   cognome.isBlank() || cognome.isEmpty() || cognome == null ||
+		   dataNascita == null || 
+		   nazione.isBlank() || nazione.isEmpty() || nazione == null) {
+			throw new IllegalArgumentException();
+		}
 	}
 	
 	/*
