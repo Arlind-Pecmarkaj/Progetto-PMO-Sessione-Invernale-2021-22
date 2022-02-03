@@ -46,10 +46,9 @@ public class Abbonamento implements abb {
 	
 	// illegal arguments 
 	public void illegalArgumentAbbonamento() {
-		if(id < 0 || 
-		   targa.isBlank() || targa.isEmpty() || targa == null ||
+		if(targa.isBlank() || targa.isEmpty() || targa == null ||
 		   dataInizio == null || dataFine == null)
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("campi vuoti!");
 	}
 	
 	/*
