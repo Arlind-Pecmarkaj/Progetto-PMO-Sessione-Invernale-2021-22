@@ -291,8 +291,10 @@ public class GUIGestione extends JFrame {
 					g.aggiungiAbbonamento(a);
 					g.aggiornaAbbonamenti();
 					showMessageDialog(null, "Aggiunto abbonamento con successo: \n" + a, "Inserimento abbonamento", JOptionPane.DEFAULT_OPTION);
+				} catch (IllegalArgumentException il) {
+					showMessageDialog(null, "ATTENZIONE: campi non compilati correttamente:\n" + il.getMessage(), "Errore", JOptionPane.WARNING_MESSAGE);
 				} catch (Exception ex) {
-					showMessageDialog(null, "ATTENZIONE: campi non compilati correttamente!", "Errore!", JOptionPane.WARNING_MESSAGE);
+					showMessageDialog(null, "ATTENZIONE: campo data di nascita non compilato correttamente!", "Errore!", JOptionPane.WARNING_MESSAGE);
 				}
 				
 			}
