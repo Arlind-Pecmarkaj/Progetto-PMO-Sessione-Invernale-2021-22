@@ -30,7 +30,7 @@ public class GUIRicaricaAuto extends JFrame {
 		
 		setTitle("Supercharger - " + pElettrico.getColonnaSupercharger().getkWh() + "kWh");
 		setBounds(100, 100, 400, 300);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		
 		this.container = getContentPane();
@@ -50,7 +50,7 @@ public class GUIRicaricaAuto extends JFrame {
         this.lbl_tempoRicarica.setFont(bodyFont);
         this.form.add(lbl_tempoRicarica);
         
-        this.lbl_caricaAttuale = new JLabel("Carburante attuale:" + (int) Math.ceil(pElettrico.getColonnaSupercharger().getPercentualeAttuale(pElettrico.getVeicolo().get())) + "%");
+        this.lbl_caricaAttuale = new JLabel("Carica attuale:" + (int) Math.ceil(pElettrico.getColonnaSupercharger().getPercentualeAttuale(pElettrico.getVeicolo().get())) + "%");
         this.lbl_caricaAttuale.setFont(bodyFont);
         this.form.add(lbl_caricaAttuale);
 		
@@ -78,7 +78,7 @@ public class GUIRicaricaAuto extends JFrame {
 					
 					lbl_caricaCompleta.setText("Carica completa");
 					
-					lbl_caricaAttuale.setText("Carburante attuale:" + (int) Math.ceil(pElettrico.getColonnaSupercharger().getPercentualeAttuale(pElettrico.getVeicolo().get())) + "%");
+					lbl_caricaAttuale.setText("Carica attuale:" + (int) Math.ceil(pElettrico.getColonnaSupercharger().getPercentualeAttuale(pElettrico.getVeicolo().get())) + "%");
 					
 				} catch(IllegalChargerException ex) {
 					

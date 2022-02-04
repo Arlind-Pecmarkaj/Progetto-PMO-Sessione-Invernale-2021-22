@@ -3,8 +3,6 @@ package parcheggio.view.GUI;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.AttributeSet.ColorAttribute;
-
 import parcheggio.controller.ReaderWriterFromFile;
 import parcheggio.model.GestioneParcheggio;
 import parcheggio.model.ParcheggioImpl;
