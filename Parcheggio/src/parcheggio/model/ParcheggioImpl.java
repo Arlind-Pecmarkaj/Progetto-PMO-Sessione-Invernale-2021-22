@@ -17,6 +17,7 @@ import parcheggio.exceptions.PostiFinitiException;
 import parcheggio.exceptions.MonopattiniEsauritiException;
 import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.monopattino.Monopattino;
+import parcheggio.model.monopattino.MonopattinoImpl;
 import parcheggio.model.persona.Persona;
 import parcheggio.model.sensore.Sensore;
 import parcheggio.model.sensore.SensoreAltezza;
@@ -58,7 +59,7 @@ public class ParcheggioImpl implements Parcheggio{
 		/* istanzio gli oggetti di tipo Monopattino */
 		if(nPostiMonopattino != 0) {
 			for(int i = 0; i < nPostiMonopattino; i++)
-				this.postiMonopattino.add(new Monopattino(i));
+				this.postiMonopattino.add(new MonopattinoImpl(i));
 		}
 	}// end costruttore	
 	
@@ -170,7 +171,8 @@ public class ParcheggioImpl implements Parcheggio{
 				prezzo = postoDaLiberare.get().costoOccupazione();
 			}
 		}
-		return prezzo;
+		// approssimazione a due cifre decimali
+		return (Math.round(prezzo * 100)/100);
 	}// end metodo liberaPosto()
 	
 	/*
@@ -231,7 +233,7 @@ public class ParcheggioImpl implements Parcheggio{
 						   .filter(a -> (a.getPersona().equals(p) && a.isPremium()))
 						   .findAny()
 						   .isEmpty()) {
-			prezzo = Monopattino.COSTO * (Duration.between(m.getOraNoleggiato(), m.getFineNoleggio()).getSeconds());
+			prezzo = MonopattinoImpl.COSTO * (Duration.between(m.getOraNoleggiato(), m.getFineNoleggio()).getSeconds());
 		}
 		// identifica il monopattino presente nel parcheggio e lo imposta come disponibile
 		this.postiMonopattino.stream()
