@@ -3,6 +3,7 @@ package parcheggio.view.GUI;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import javax.swing.JTextField;
 import javax.swing.GroupLayout.Alignment;
@@ -72,6 +74,7 @@ public class GUIParcheggio extends JFrame{
 	
 	private ArrayList<Posto>   posti;
 	private ArrayList<JButton> bottoniVeicoli = new ArrayList<JButton>();
+	private ArrayList<JButton> bottoniVeicoliElettrici = new ArrayList<JButton>();
 	private ArrayList<JButton> bottoniMonopattini = new ArrayList<JButton>();
 
 	/*
@@ -114,6 +117,10 @@ public class GUIParcheggio extends JFrame{
 				jb.setBackground(Color.red);
 			
 			this.bottoniVeicoli.add(jb);
+			
+			/* ottengo i bottoni per i posti dei veicoli elettrici */
+			this.bottoniVeicoliElettrici = (ArrayList<JButton>) this.bottoniVeicoli.stream().filter(b -> b.getText().equals("Posto Elettrica")).collect(Collectors.toList());
+			
 		}
 
 		for (JButton jb: this.bottoniVeicoli) {	
@@ -121,11 +128,35 @@ public class GUIParcheggio extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if(!posti.get(bottoniVeicoli.lastIndexOf(jb)).isLibero()) {
-						double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
-						jb.setBackground(Color.green);
-						showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
-										  prezzoDaPagare + " euro");
-					} else {
+						int risposta = -1;
+						if(bottoniVeicoliElettrici.contains(jb)) {
+							/* se il posto è occupato posso ricare l'auto */
+							String[] opzioni = {"Ricarica auto", "Lascia parcheggio"};
+							risposta = JOptionPane.showOptionDialog(null, 
+																	"Che operazione ti interessa effettuare?",
+																	"Operazioni disponibili", 
+																	JOptionPane.DEFAULT_OPTION, 
+																	JOptionPane.QUESTION_MESSAGE, 
+																	null, 
+																	opzioni, 
+																	null);
+							if(risposta == 0) {
+								/* sceglo di ricaricare auto */
+								new GUIRicaricaAuto((PostoElettrico) posti.get(bottoniVeicoli.lastIndexOf(jb)));
+//								JFrame ricaricaAutoForm = new JFrame("Ricarica Auto Elettrica");
+//								ricaricaAutoForm.setVisible(true);
+//								ricaricaAutoForm.add(new JLabel("Ricarica auto"));
+								
+							}
+						}
+						if(!(risposta == 0 && bottoniVeicoliElettrici.contains(jb))) {
+							double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
+							jb.setBackground(Color.green);
+							showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
+											  prezzoDaPagare + " euro");	
+						}
+					}
+					else {
 						showMessageDialog(null,"Il posto auto è gia' libero!");
 					}
 				}
