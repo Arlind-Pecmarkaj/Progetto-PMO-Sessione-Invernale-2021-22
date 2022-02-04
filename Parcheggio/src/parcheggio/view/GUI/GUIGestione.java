@@ -52,24 +52,27 @@ public class GUIGestione extends JFrame {
 		super("Gestionale parcheggi");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 810, 470); /* la finestra sara' di 810x470 px con il vertice superiore sinistro nella posizione (100,100). */
+		// JPanel principale che farà da contenitore per i due panel presenti sotto.
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5)); /* margini della finestra. */
 		contentPane.setBackground(Color.gray.brighter());
-		setContentPane(contentPane);
-		GridBagLayout gbl_contentPane = new GridBagLayout();
+		setContentPane(contentPane); // Metto nel frame il nosto panel principale.
+		GridBagLayout gbl_contentPane = new GridBagLayout(); // Layout del panel principale. Creato dal plugin WindowsBuilder
 		gbl_contentPane.columnWidths  = new int[]{0, 0};
 		gbl_contentPane.rowHeights    = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights    = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JLabel lblSelezParcheggio                 = new JLabel("Seleziona parcheggio");
+		// Label per indicare visivamente la sezione della finestra. In questo caso alla selezione del parcheggio.
+		JLabel lblSelezParcheggio = new JLabel("Seleziona parcheggio");
 		GridBagConstraints gbcLblSelezParcheggio = new GridBagConstraints();
 		gbcLblSelezParcheggio.insets             = new Insets(0, 0, 5, 0);
 		gbcLblSelezParcheggio.gridx              = 0;
 		gbcLblSelezParcheggio.gridy = 0;
 		contentPane.add(lblSelezParcheggio, gbcLblSelezParcheggio);
 		
+		// Creo il panel in cui verranno inseriti i bottoni che permettono di accedere ai parcheggi.
 		panel_parcheggi = new JPanel();
 		panel_parcheggi.setOpaque(true);
 		panel_parcheggi.setBackground(Color.gray);
@@ -88,12 +91,13 @@ public class GUIGestione extends JFrame {
 			bottone_parcheggio.setForeground(Color.white);
 			bottone_parcheggio.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new GUIParcheggio(p);
+					new GUIParcheggio(p); // Cliccando il bottone si crea una nuova istanza di GUIParcheggio.
 				}
 			});
 			panel_parcheggi.add(bottone_parcheggio);
 		}
 		
+		// Semplice separatore per dividere la sezione dei parcheggi con quella di inserimento degli abbonamenti.
 		JSeparator separator = new JSeparator();
 		GridBagConstraints gbc_separator = new GridBagConstraints();
 		gbc_separator.insets             = new Insets(0, 0, 5, 0);
@@ -101,6 +105,7 @@ public class GUIGestione extends JFrame {
 		gbc_separator.gridy              = 2;
 		contentPane.add(separator, gbc_separator);
 		
+		// Label per indicare visivamente la sezione degli abbonamenti.
 		JLabel lblInserimentoAbbonamento = new JLabel("Inserimento abbonamento");
 		GridBagConstraints gbcLblInsAbbonamento = new GridBagConstraints();
 		gbcLblInsAbbonamento.insets             = new Insets(0, 0, 5, 0);
@@ -108,6 +113,7 @@ public class GUIGestione extends JFrame {
 		gbcLblInsAbbonamento.gridy              = 4;
 		contentPane.add(lblInserimentoAbbonamento, gbcLblInsAbbonamento);
 		
+		// Panel degli abbonamenti
 		panel_abbonamenti = new JPanel();
 		panel_abbonamenti.setBackground(Color.gray);
 		GridBagConstraints gbc_panel_abbonamenti = new GridBagConstraints();
@@ -115,6 +121,8 @@ public class GUIGestione extends JFrame {
 		gbc_panel_abbonamenti.gridx              = 0;
 		gbc_panel_abbonamenti.gridy              = 5;
 		contentPane.add(panel_abbonamenti, gbc_panel_abbonamenti);
+		
+		// Layout degli abbonamenti tramite GridBagConstraint
 		GridBagLayout gbl_panel_abbonamenti = new GridBagLayout();
 		gbl_panel_abbonamenti.columnWidths  = new int[]{0, 0, 0};
 		gbl_panel_abbonamenti.rowHeights    = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -122,6 +130,7 @@ public class GUIGestione extends JFrame {
 		gbl_panel_abbonamenti.rowWeights    = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		panel_abbonamenti.setLayout(gbl_panel_abbonamenti);
 		
+		// Da qui si susseguono label e nome dei vari campi necessari per creare un abbonamento.
 		JLabel label_cf = new JLabel("Codice fiscale");
 		label_cf.setForeground(Color.white);
 		GridBagConstraints gbc_label_cf = new GridBagConstraints();
@@ -260,6 +269,7 @@ public class GUIGestione extends JFrame {
 		gbc_premium.gridy              = 7;
 		panel_abbonamenti.add(premium, gbc_premium);
 		
+		// Bottone di inserimento.
 		JButton inserimento = new JButton("Inserisci abbonamento");
 		inserimento.setBackground(Color.gray.darker());
 		inserimento.setForeground(Color.white);
@@ -275,7 +285,7 @@ public class GUIGestione extends JFrame {
 					String tr = targa.getText();
 					String dr = durata.getSelectedItem().toString();
 					LocalDate na = LocalDate.parse(dataNascita.getText());
-					LocalDate end = null;
+					LocalDate end = null; // In questo caso è ammissibile poichè ad end viene comunque assegnato un valore.
 					if (dr.equals("mensile")) {
 						end = LocalDate.now().plusMonths(1);
 					} else if (dr.equals("trimestrale")) {
@@ -286,15 +296,18 @@ public class GUIGestione extends JFrame {
 						end = LocalDate.now().plusMonths(12);
 					}
 					Persona p = new Persona(cf, nm, cn, na, nz);			
-					/* Per identificare un abbonamento si usa l'hashcode di una persona */
-					Abbonamento a = new Abbonamento(p.hashCode(), tr, p, LocalDate.now(), end, premium.isSelected());
+					/* Per identificare un abbonamento si usa l'hashcode di una persona e della targa in modo tale da ottenere
+					 * valori univoci */
+					Abbonamento a = new Abbonamento(p.hashCode() + targa.hashCode(), tr, p, LocalDate.now(), end, premium.isSelected());
 					g.aggiungiAbbonamento(a);
-					g.aggiornaAbbonamenti();
+					g.aggiornaAbbonamenti(); // Aggiorno gli abbonamenti.
 					showMessageDialog(null, "Aggiunto abbonamento con successo: \n" + a, "Inserimento abbonamento", JOptionPane.DEFAULT_OPTION);
-				} catch (IllegalArgumentException il) {
-					showMessageDialog(null, "ATTENZIONE: campi non compilati correttamente:\n" + il.getMessage(), "Errore", JOptionPane.WARNING_MESSAGE);
-				} catch (Exception ex) {
-					showMessageDialog(null, "ATTENZIONE: campo data di nascita non compilato correttamente!", "Errore!", JOptionPane.WARNING_MESSAGE);
+				} catch (IllegalArgumentException il) { // Eccezione lanciata in caso i campi fossero vuoti.
+					showMessageDialog(null, "ATTENZIONE: campi non compilati correttamente:\n" + il.getMessage(), 
+									  "Errore", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception ex) { // L'unica eccezione base viene lanciata dal ParseDate
+					showMessageDialog(null, "ATTENZIONE: campo data di nascita non compilato correttamente!\n Il formato è AAAA-MM-GG!", 
+							          "Errore", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
