@@ -49,11 +49,9 @@ public class ReaderWriterFromFile implements ReaderWriter<GestioneParcheggio> {
 			String input = this.reader.readLine();
 			if (input != null) {
 				nrParcheggi = Integer.parseInt(input);
-				System.out.println("NR PARCHEGGI: " + nrParcheggi);
-				// gestioneParcheggi = new GestioneParcheggi(nrParcheggi);
 				for (int i = 0; i < nrParcheggi; i++) {
 					input = this.reader.readLine();
-					String[] splittedInput = input.split("\\s+");
+					String[] splittedInput = input.split("\\s+"); // Ad ogni lettura il Buffered reader legge ogni riga dunque devo separarla.
 					id            = splittedInput[0];
 					nome          = splittedInput[1];
 					nrPostiAuto   = Integer.parseInt(splittedInput[2]);
