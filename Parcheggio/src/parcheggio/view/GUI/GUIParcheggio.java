@@ -342,9 +342,11 @@ public class GUIParcheggio extends JFrame{
 			   				   	"b",
 			   				   	nome.getText(),
 			   				   	cognome.getText(),
+//			   				   	100 + (500 - 100) * r.nextDouble(),
+//			   				   	200 + (300 - 200) * r.nextDouble(),
+//			   				   	0 + (300 - 0) * r.nextDouble());
 			   				   	100 + (500 - 100) * r.nextDouble(),
-			   				   	200 + (300 - 200) * r.nextDouble(),
-			   				   	0 + (300 - 0) * r.nextDouble());
+			   				   	300.4, 90.08);
 					
 					GUIParcheggio.this.aggiornamento(v, p);
 					
