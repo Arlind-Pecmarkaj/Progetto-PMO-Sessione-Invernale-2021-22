@@ -1,5 +1,7 @@
 package parcheggio.model;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -202,6 +204,7 @@ public class ParcheggioImpl implements Parcheggio{
 				tmp.get().setDisponibile(false);
 				m = tmp.get();
 				m.setPersona(p);
+				m.setOraNoleggiato(Instant.now());
 			} else {
 				// lancia eccezione per mancanza di monopattini
 				throw new MonopattiniEsauritiException("Eccezione: Monopattini non disponibili!");
@@ -210,7 +213,6 @@ public class ParcheggioImpl implements Parcheggio{
 			// lancia eccezione: la persona non ha l'abbonamento
 			throw new PersonaSenzaAbbonamentoException("Eccezione: L'utente e' senza abbonamento!");
 		}
-		m.setOraNoleggiato(System.currentTimeMillis());
 		
 		return m;
 	}// end metodo noleggiaMonopattino()
@@ -221,7 +223,7 @@ public class ParcheggioImpl implements Parcheggio{
 	@Override
 	public double restituisciMonopattino(Persona p, Monopattino m) {
 		double prezzo = 0;
-		m.setFineNoleggio(System.currentTimeMillis());
+		m.setFineNoleggio(Instant.now());
 		/* se la persona e' munita di un abbonamento premium non paga
 		 * l'utilizzo del monopattino
 		 */
@@ -229,7 +231,7 @@ public class ParcheggioImpl implements Parcheggio{
 						   .filter(a -> (a.getPersona().equals(p) && a.isPremium()))
 						   .findAny()
 						   .isEmpty()) {
-			prezzo = Monopattino.COSTO * (m.getFineNoleggio() - m.getOraNoleggiato());
+			prezzo = Monopattino.COSTO * (Duration.between(m.getOraNoleggiato(), m.getFineNoleggio()).getSeconds());
 		}
 		// identifica il monopattino presente nel parcheggio e lo imposta come disponibile
 		this.postiMonopattino.stream()

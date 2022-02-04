@@ -1,14 +1,16 @@
 package parcheggio.model.monopattino;
 
+import java.time.Instant;
+
 import parcheggio.model.persona.Persona;
 
 public class Monopattino {
 	final private String id;
 	private boolean disponibile;
-	private long oraNoleggiato = System.currentTimeMillis();
-	private long fineNoleggio;
+	private Instant oraNoleggiato; //= System.currentTimeMillis();
+	private Instant fineNoleggio;
 	private Persona persona;
-	static final public double COSTO = 5.0;
+	static final public double COSTO = 0.10;
 	
 	public Monopattino(int index) {
 		this.id = Integer.toString(index);
@@ -19,7 +21,7 @@ public class Monopattino {
 		return this.disponibile;
 	}
 
-	public long getOraNoleggiato() {
+	public Instant getOraNoleggiato() {
 		return oraNoleggiato;
 	}
 	
@@ -27,16 +29,16 @@ public class Monopattino {
 		this.disponibile = d;
 	}
 
-	public void setOraNoleggiato(long oraNoleggiato) {
+	public void setOraNoleggiato(Instant oraNoleggiato) {
 		this.oraNoleggiato = oraNoleggiato;
 	}
 
-	public long getFineNoleggio() {
+	public Instant getFineNoleggio() {
 		return fineNoleggio;
 	}
 
-	public void setFineNoleggio(long fineNoleggio) {
-		this.fineNoleggio = fineNoleggio;
+	public void setFineNoleggio(Instant instant) {
+		this.fineNoleggio = instant;
 	}
 	
 	public void setPersona(Persona p) {
