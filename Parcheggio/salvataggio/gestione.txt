@@ -1,6 +1,8 @@
-2
-prova parcheggio_prova 5 3 1 4 1000.0
-S9988 parcheggio_monte 10 5 2 3 1000.0
+4
+A0023 parcheggio_prova 5 3 1 4 1000.0
+A9988 parcheggio_monte 10 5 2 3 1000.0
+S0001 parcheggio_sotteraneo_mercatale 20 2 5 5 500.0
+A0001 parcheggio_mercatale 10 10 3 5 1000.0
 10
 20221 CC532FD PRRRR0001038 Mario Verdi 1976-04-03 Italia 2022-01-01 2022-12-31 false
 20222 FG554AB PRRRR0001038 Mario Verdi 1976-04-03 Italia 2022-01-01 2022-12-31 true
