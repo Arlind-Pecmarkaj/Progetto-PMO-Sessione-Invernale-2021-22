@@ -18,6 +18,7 @@ import parcheggio.exceptions.MonopattiniEsauritiException;
 import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.monopattino.Monopattino;
 import parcheggio.model.monopattino.MonopattinoImpl;
+import parcheggio.model.persona.Pers;
 import parcheggio.model.persona.Persona;
 import parcheggio.model.sensore.Sensore;
 import parcheggio.model.sensore.SensoreAltezza;
@@ -190,7 +191,7 @@ public class ParcheggioImpl implements Parcheggio{
 	 * metodo per noleggiare un monopattino
 	 */
 	@Override
-	public Monopattino noleggiaMonopattino(Persona p) {
+	public Monopattino noleggiaMonopattino(Pers p) {
 		Monopattino m = null;
 		/* i monopattini possono essere noleggiati solo da una persona
 		 * munita di abbonamento
@@ -223,7 +224,7 @@ public class ParcheggioImpl implements Parcheggio{
 	 * metodo per restituire un monopattino, precedentemente noleggiato
 	 */
 	@Override
-	public double restituisciMonopattino(Persona p, Monopattino m) {
+	public double restituisciMonopattino(Pers p, Monopattino m) {
 		double prezzo = 0;
 		m.setFineNoleggio(Instant.now());
 		/* se la persona e' munita di un abbonamento premium non paga
@@ -243,7 +244,7 @@ public class ParcheggioImpl implements Parcheggio{
 							 .setDisponibile(true);
 	//	this.postiMonopattino.add(m);
 		
-		return prezzo;
+		return (Math.round(prezzo * 100)/100);
 	}
 
 	/*

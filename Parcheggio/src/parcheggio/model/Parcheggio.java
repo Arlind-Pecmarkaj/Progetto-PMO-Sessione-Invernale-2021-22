@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import parcheggio.model.monopattino.Monopattino;
 import parcheggio.model.monopattino.MonopattinoImpl;
+import parcheggio.model.persona.Pers;
 import parcheggio.model.persona.Persona;
 import parcheggio.model.posto.Posto;
 import parcheggio.model.veicolo.Veicolo;
@@ -23,8 +24,8 @@ public interface Parcheggio {
 	
 	Set<Veicolo> listaVeicoliPresenti();
 	
-	Monopattino noleggiaMonopattino(Persona p);
+	Monopattino noleggiaMonopattino(Pers p);
 	
-	double restituisciMonopattino(Persona p, Monopattino m);
+	double restituisciMonopattino(Pers p, Monopattino m);
 	
 }

@@ -2,6 +2,7 @@ package parcheggio.model.monopattino;
 
 import java.time.Instant;
 
+import parcheggio.model.persona.Pers;
 import parcheggio.model.persona.Persona;
 
 public class MonopattinoImpl implements Monopattino{
@@ -9,7 +10,7 @@ public class MonopattinoImpl implements Monopattino{
 	private boolean disponibile;
 	private Instant oraNoleggiato; //= System.currentTimeMillis();
 	private Instant fineNoleggio;
-	private Persona persona;
+	private Pers persona;
 	static final public double COSTO = 0.10;
 	
 	public MonopattinoImpl(int index) {
@@ -41,11 +42,11 @@ public class MonopattinoImpl implements Monopattino{
 		this.fineNoleggio = instant;
 	}
 	
-	public void setPersona(Persona p) {
-		this.persona = p;
+	public void setPersona(Pers p) {
+		this.persona = (Persona) p;
 	}
 	
-	public Persona getPersona() {
+	public Pers getPersona() {
 		return this.persona;
 	}
 

@@ -2,6 +2,7 @@ package parcheggio.model.monopattino;
 
 import java.time.Instant;
 
+import parcheggio.model.persona.Pers;
 import parcheggio.model.persona.Persona;
 
 public interface Monopattino {
@@ -18,7 +19,7 @@ public interface Monopattino {
 	
 	void setFineNoleggio(Instant instant);
 	
-	void setPersona(Persona p);
+	void setPersona(Pers p);
 	
-	Persona getPersona();
+	Pers getPersona();
 }
