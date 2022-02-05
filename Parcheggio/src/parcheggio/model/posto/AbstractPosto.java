@@ -9,15 +9,15 @@ import parcheggio.model.veicolo.Veicolo;
 /**
  * 	@author tomma
  * 	
- * 	Classe astratta generica che implementa il contratto definito dall'interfaccia IPosto
- * 	e quindi si preoccupa di implementare tutti i metodi che saranno comuni alle sottoclassi
- * 	di APosto. Inoltre, definiamo anche i campi comuni.
+ * 	Classe astratta generica che implementa il contratto definito dall'interfaccia Posto
+ * 	e quindi si preoccupa di implementare tutti i metodi che saranno comuni alle sue sottoclassi
+ *  Inoltre, definiamo anche i campi comuni.
  * 	
  */
 
 public abstract class AbstractPosto implements Posto {
 	
-	protected static final double STANDARD_TAX = 1; // tutti i "posti" hanno tassa fissa 1 euro
+	protected static final int STANDARD_TAX = 1; // tutti i "posti" hanno tassa fissa 1 euro
 	
 	private Optional<Veicolo> veicolo;
 	private Instant orarioArrivo;
@@ -40,7 +40,7 @@ public abstract class AbstractPosto implements Posto {
 	 * 	metodi astratti che devono essere implementati dalle sottoclassi
 	 */
 
-	protected abstract String setId(String postoID);
+	protected abstract String setId(String postoId);
 	protected abstract double setCostoOrario();
 
 	

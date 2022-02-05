@@ -43,8 +43,8 @@ public class PostoElettrico extends AbstractPosto {
 	 * 	@return l'ID composto di un posto per vetture Elettriche
 	 */
 	@Override
-	protected String setId(String postoElettricoID) {
-		return "E" + postoElettricoID;
+	protected String setId(String postoElettricoId) {
+		return "E" + postoElettricoId;
 	}
 
 	/**

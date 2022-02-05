@@ -12,7 +12,7 @@ import parcheggio.model.veicolo.Veicolo;
  * 	funzionalità fondamentali:
  * 		- tenere traccia dei movimenti del veicolo
  * 		- segnalare se un posto è libero o meno
- * 		- fornire il tempo di permanenza del veicolo nel posto
+ * 		- fornire il tempo e costo di permanenza del veicolo nel posto
  * 
  */
 public interface Posto {

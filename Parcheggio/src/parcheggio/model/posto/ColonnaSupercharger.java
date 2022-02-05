@@ -50,7 +50,6 @@ public class ColonnaSupercharger implements Supercharger {
 		double kWRicaricare = (veicoloElettrico.getCapienzaMassima() * percentualeRicaricare) / 100;
 		veicoloElettrico.setCarburanteAttuale(veicoloElettrico.getCarburanteAttuale() + kWRicaricare);
 		this.setTempoRicarica(kWRicaricare / this.getkWh()); // numero di ore di ricarica: 0,5 => 30 minuti
-		
 	}
 	
 }

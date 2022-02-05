@@ -23,8 +23,8 @@ public class PostoMoto extends AbstractPosto {
 	 * 	@return l'ID composto di un posto per moto
 	 */
 	@Override
-	protected String setId(String postoMotoID) {
-		return "M" + postoMotoID;
+	protected String setId(String postoMotoId) {
+		return "M" + postoMotoId;
 	}
 
 	/**
