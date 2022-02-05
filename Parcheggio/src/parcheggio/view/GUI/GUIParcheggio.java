@@ -174,7 +174,7 @@ public class GUIParcheggio extends JFrame{
 		
 		for (int i = 0; i < ((ParcheggioImpl)p).getPostiMonopattino().size(); i++) {
 			JButton jb = new JButton("M" + i);
-			jb.setBackground(Color.green);
+			
 			jb.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -194,6 +194,12 @@ public class GUIParcheggio extends JFrame{
 			});
 			this.panelMonopattini.add(jb);
 			this.bottoniMonopattini.add(jb);
+
+			if(((ParcheggioImpl) p).getPostiMonopattino().get(bottoniMonopattini.lastIndexOf(jb)).getDisponibile()) {
+				jb.setBackground(Color.green);
+			} else {
+				jb.setBackground(Color.red);
+			}
 		}
 	
 		/* ------------------------------------------ INSERIMENTO ----------------------------- */
