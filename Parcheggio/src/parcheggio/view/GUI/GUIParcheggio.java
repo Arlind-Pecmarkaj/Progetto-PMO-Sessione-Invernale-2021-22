@@ -33,9 +33,12 @@ import static javax.swing.JOptionPane.showMessageDialog;
 //import parcheggio.enumerations.Alimentazione;
 import parcheggio.model.veicolo.*;
 import parcheggio.exceptions.AltezzaMassimaConsentitaException;
+import parcheggio.exceptions.AutoMetanoNonAmmessaException;
 import parcheggio.exceptions.MonopattiniEsauritiException;
 import parcheggio.exceptions.PersonaSenzaAbbonamentoException;
 import parcheggio.exceptions.PostiFinitiException;
+import parcheggio.exceptions.TargaNonPresenteException;
+import parcheggio.exceptions.TargheUgualiException;
 import parcheggio.model.Parcheggio;
 import parcheggio.model.ParcheggioImpl;
 import parcheggio.model.monopattino.Monopattino;
@@ -340,6 +343,7 @@ public class GUIParcheggio extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Random r = new Random();
+				boolean esito = false;
 				if(GUIParcheggio.this.listaVeicoli.getSelectedItem().equals("Auto")) {
 					Veicolo v = new Auto(targa.getText(),
 			   				   	r.nextInt(2022 - 1980) + 1980,
@@ -354,7 +358,7 @@ public class GUIParcheggio extends JFrame{
 			   				   	100 + (500 - 100) * r.nextDouble(),
 			   				   	300.4, 90.08);
 					
-					GUIParcheggio.this.aggiornamento(v, p);
+					esito = GUIParcheggio.this.aggiornamento(v, p);
 					
 				} else if(GUIParcheggio.this.listaVeicoli.getSelectedItem().equals("Moto")) {
 					Veicolo v = new Moto(targa.getText(),
@@ -367,10 +371,10 @@ public class GUIParcheggio extends JFrame{
 								200 + (300 - 200) * r.nextDouble(),
 								0 + (300 - 0) * r.nextDouble());
 					
-					GUIParcheggio.this.aggiornamento(v, p);
+					esito = GUIParcheggio.this.aggiornamento(v, p);
 					
 				}
-				if(noleggiaMonopattino.isSelected()) {
+				if(noleggiaMonopattino.isSelected() && esito) {
 					// generazione di una data casuale
 					long minDay = LocalDate.of(1980, 1, 1).toEpochDay();
 					long maxDay = LocalDate.of(2022, 12, 31).toEpochDay();
@@ -426,17 +430,26 @@ public class GUIParcheggio extends JFrame{
         this.setVisible(true);
 	}
 	
-	private void aggiornamento(Veicolo v, Parcheggio p) {
+	private boolean aggiornamento(Veicolo v, Parcheggio p) {
+		boolean esito = false;
 		try {
 			Optional<Posto> postoOccupato = Optional.of(p.aggiungiVeicolo(v));
 			if(postoOccupato.isPresent()) {
 				bottoniVeicoli.get(posti.lastIndexOf(postoOccupato.get())).setBackground(Color.red);
 				showMessageDialog(null,"Il veicolo e' ora parcheggiato!");
+				esito = true;
 			}
 		}catch(PostiFinitiException e) {
 			showMessageDialog(null,"Attenzione! non è possibile parcheggiare, posti insufficienti");
 		}catch(AltezzaMassimaConsentitaException e) {
 			showMessageDialog(null, "Attenzione! Altezza non consentita, veicolo non parcheggiato");
+		}catch(AutoMetanoNonAmmessaException e) {
+			showMessageDialog(null, "Attenzione! Le auto a metano non sono ammesse in un parcheggio sotterranneo");
+		}catch(TargheUgualiException e) {
+			showMessageDialog(null, "Attenzione! Un veicolo con la stessa targa è già parcheggio");
+		}catch(TargaNonPresenteException e) {
+			showMessageDialog(null, "Attenzione! Non è stata inserita la targa");
 		}
+		return esito;
 	}
 }
