@@ -121,7 +121,9 @@ public abstract class AbstractPosto implements Posto {
 	 * 
 	 * 	@return tempo di occupazione del posto
 	 */
-	public final Duration tempoOccupazione() {
+	public final Duration tempoOccupazione() throws NullPointerException {
+		if(getOrarioArrivo() == null || getOrarioUscita() == null) throw new NullPointerException();
+			
 		elapsedTime = Duration.between(getOrarioArrivo(), getOrarioUscita());		
 		return elapsedTime;
 	}
@@ -133,7 +135,12 @@ public abstract class AbstractPosto implements Posto {
 	 * 
 	 */
 	public final double costoOccupazione() {
-		double daPagare = this.getCostoOrario() * this.tempoOccupazione().getSeconds();
+		double daPagare = 0.0;
+		try {			
+			daPagare = this.getCostoOrario() * this.tempoOccupazione().getSeconds();
+		} catch(NullPointerException ex) {
+			System.out.println(ex);
+		}
 		return daPagare;
 	}
 
