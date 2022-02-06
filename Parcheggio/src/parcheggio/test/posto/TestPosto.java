@@ -8,9 +8,6 @@ package parcheggio.test.posto;
  * 	che implementano l'interfaccia IPosto
  */
 
-
-//import static org.junit.jupiter.api.Assertions.*;
-//import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 import org.junit.*;
 import parcheggio.model.posto.*;
@@ -18,26 +15,16 @@ import parcheggio.model.veicolo.*;
 
 
 public class TestPosto {
-	/*
+	
 	AbstractPosto postoMoto;
+	Moto moto;
 
 	@Before
 	public void createData() {
-		// inizializzazione prima di eseguire un qualunque test
 		postoMoto = new PostoMoto();
-		postoMoto.occupaPosto(new Moto("123", 1999, Alimentazione.BENZINA,
-                "HONDA", "honda", "gianni",
-                "fresca", 200.0, 0));
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		postoMoto.liberaPosto();
-		postoMoto.tempoOccupazione();
+		moto = new Moto("123", 1999, Alimentazione.BENZINA, "HONDA", "honda", "gianni", "fresca", 200.0, 0);
 	}
-	
+	/*
 	@Test
 	public void testTempleteMethodSetPosto() {
 		// controllo se viene settato il gisuto ID
@@ -45,7 +32,60 @@ public class TestPosto {
 		// controllo se viene settata la giusta tariffa oraria
 		assertEquals(0.5, postoMoto.getCostoOrario(), 0);
 	}
+	*/
 	
+	@Test
+	public void testOccupaPosto() {
+		postoMoto.occupaPosto(moto);
+		assertEquals(moto.getTarga(), postoMoto.getVeicolo().get().getTarga());
+	}
+	
+	@Test
+	public void testLiberaPosto() {
+		postoMoto.liberaPosto();
+		assertFalse(postoMoto.getVeicolo().isPresent());
+	}
+	
+	@Test
+	public void testIsLibero() {
+		postoMoto.occupaPosto(moto);
+		assertFalse(postoMoto.isLibero());
+		postoMoto.liberaPosto();
+		assertTrue(postoMoto.isLibero());
+	}
+	
+	@Test
+	public void testTempoOccupazione() {
+		postoMoto.occupaPosto(moto);
+		try {
+			// simulo 2 secondi di occupazione
+			Thread.sleep(2000); 
+		} catch (InterruptedException ex) {
+			System.out.println("Eccezione catturata");
+		}
+		postoMoto.liberaPosto();
+		postoMoto.tempoOccupazione();
+		assertEquals(postoMoto.elapsedToString(), "00:00:02");
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testTempoOccupazioneException() {
+		postoMoto.tempoOccupazione();
+	}
+	
+	@Test
+	public void testCostoOccuapzione() {
+		postoMoto.occupaPosto(moto);
+		try {
+			// simulo 2 secondi di occupazione
+			Thread.sleep(2000); 
+		} catch (InterruptedException ex) {
+			System.out.println("Eccezione catturata");
+		}
+		postoMoto.liberaPosto();
+		assertEquals(postoMoto.costoOccupazione(), 1.0);
+	}
+	/*
 	@Test
 	public void testPrintOrari() {
 		System.out.println(postoMoto.getOrarioArrivo());
@@ -56,12 +96,6 @@ public class TestPosto {
 		System.out.println(postoMoto.elapsedToString());
 		
 	}
-	
-	@Test
-	public void testIsLibero() {
-		// controllo se un parcheggio è libero
-		assertTrue(postoMoto.isLibero());
-	}*/
 	
 	@Test
 	public void testRicaricaAutoElettrica() {
