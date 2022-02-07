@@ -3,7 +3,7 @@ A0023 parcheggio_prova 5 3 1 4 1000.0
 A9988 parcheggio_monte 10 5 2 3 1000.0
 S0001 parcheggio_sotteraneo_mercatale 20 2 5 5 500.0
 A0001 parcheggio_mercatale 10 10 3 5 1000.0
-10
+12
 20221 CC532FD PRRRR0001038 Mario Verdi 1976-04-03 Italia 2022-01-01 2022-12-31 false
 20222 FG554AB PRRRR0001038 Mario Verdi 1976-04-03 Italia 2022-01-01 2022-12-31 true
 1348155240 CE531FP PCMRND02A08Z100I Arlind Pecmarkaj 2022-01-27 prova 2002-01-08 2023-01-27 true
@@ -14,3 +14,5 @@ A0001 parcheggio_mercatale 10 10 3 5 1000.0
 103227 TARGAPROVA hey heuj LLL 2001-03-02 prova 2022-02-03 2022-03-03 false
 129612750 0000 prova luca rossi 2020-01-01 italia 2022-02-05 2022-03-05 false
 -957125937 0000 prova1 luca rossi 2020-01-01 italia 2022-02-05 2022-03-05 true
+-302737017 ABC11DGH BRRRRR Gianfranco Zola 2001-03-15 Tonga 2022-02-07 2022-03-07 false
+2024517881 ABC11DGH ABC Leonardo Zola 2001-03-15 Tonga 2022-02-07 2022-03-07 false
