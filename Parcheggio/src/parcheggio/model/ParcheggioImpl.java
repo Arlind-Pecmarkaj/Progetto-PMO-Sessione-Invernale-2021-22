@@ -70,6 +70,7 @@ public class ParcheggioImpl implements Parcheggio{
 	/*
 	 * restituisce l'id del parcheggio
 	 */
+	@Override
 	public String getId() {
 		return this.id;
 	}// end metodo getId()
@@ -124,6 +125,7 @@ public class ParcheggioImpl implements Parcheggio{
 	/*
 	 * permette di impostare gli abbonamenti 
 	 */
+	@Override
 	public void setAbbonamenti(List<Abbonamento> lista) {
 		this.abbonamenti = new HashSet<Abbonamento>(lista);
 	}// end metodo setAbbonamenti()
