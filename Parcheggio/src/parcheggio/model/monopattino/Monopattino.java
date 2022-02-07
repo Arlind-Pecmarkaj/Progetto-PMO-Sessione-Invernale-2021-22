@@ -1,5 +1,6 @@
 package parcheggio.model.monopattino;
 
+/* import utilizzati: */
 import java.time.Instant;
 
 import parcheggio.model.persona.Pers;

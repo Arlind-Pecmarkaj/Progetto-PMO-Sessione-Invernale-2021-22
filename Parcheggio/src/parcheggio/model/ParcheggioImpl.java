@@ -1,16 +1,15 @@
 package parcheggio.model;
 
+/* import utilizzati: */
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
 import parcheggio.exceptions.AltezzaMassimaConsentitaException;
 import parcheggio.exceptions.AutoMetanoNonAmmessaException;
 import parcheggio.exceptions.PersonaSenzaAbbonamentoException;
@@ -22,7 +21,6 @@ import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.monopattino.Monopattino;
 import parcheggio.model.monopattino.MonopattinoImpl;
 import parcheggio.model.persona.Pers;
-import parcheggio.model.persona.Persona;
 import parcheggio.model.sensore.Sensore;
 import parcheggio.model.sensore.SensoreAltezza;
 import parcheggio.model.sensore.SensoreCarburante;
@@ -130,6 +128,13 @@ public class ParcheggioImpl implements Parcheggio{
 		this.abbonamenti = new HashSet<Abbonamento>(lista);
 	}// end metodo setAbbonamenti()
 
+	/*
+	 * metodo per aggiungere un abbonamento
+	 */
+	public void aggiungiAbbonamento(Abbonamento a) {
+		this.abbonamenti.add(a);
+	}// end aggiungiAbbonamento()
+
 	/* metodo per aggiungere un veicolo al parcheggio, se e' presente un posto libero
 	 * altrimenti viene lanciata un'eccezione.
 	 */
@@ -161,7 +166,7 @@ public class ParcheggioImpl implements Parcheggio{
 			posto = this.filtraAggiungi(p -> p instanceof PostoMoto, v);
 		}
 		return posto;
-	}// end metodo aggiungiVeicolo
+	}// end metodo aggiungiVeicolo()
 	
 	/* metodo per liberare un posto del parcheggio
 	 * restituisce il prezzo da pagare
@@ -263,14 +268,7 @@ public class ParcheggioImpl implements Parcheggio{
 		
 		// arrotondamento a due cifre decimali
 		return (Math.round(prezzo * 100)/100);
-	}
-
-	/*
-	 * metodo per aggiungere un abbonamento
-	 */
-	public void aggiungiAbbonamento(Abbonamento a) {
-		this.abbonamenti.add(a);
-	}
+	}// end restituisciMonopattino()
 
 	@Override
 	public int hashCode() {
@@ -281,7 +279,7 @@ public class ParcheggioImpl implements Parcheggio{
 		result = prime * result + ((postiDisponibili == null) ? 0 : postiDisponibili.hashCode());
 		result = prime * result + ((postiMonopattino == null) ? 0 : postiMonopattino.hashCode());
 		return result;
-	}
+	}// end hashCode()
 
 	@Override
 	public boolean equals(Object obj) {
@@ -313,7 +311,7 @@ public class ParcheggioImpl implements Parcheggio{
 		} else if (!postiMonopattino.equals(other.postiMonopattino))
 			return false;
 		return true;
-	}
+	}// end equals()
 	
 	/* metodo per controllare se e' presente un posto libero, in caso contrario
 	 * lancia un'eccezione (PostiFiniti). Se il veicolo ha un'altezza maggiore
@@ -360,6 +358,6 @@ public class ParcheggioImpl implements Parcheggio{
 			//lancia eccezione per posti finiti
 			throw new PostiFinitiException("Eccezione: I posti sono finiti");
 		}
-	}// end metodo filtraAggiungi
+	}// end metodo filtraAggiungi()
 
 }// end classe

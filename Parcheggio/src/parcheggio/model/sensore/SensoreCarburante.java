@@ -1,5 +1,6 @@
 package parcheggio.model.sensore;
 
+/* import utilizzati: */
 import parcheggio.model.veicolo.Alimentazione;
 import parcheggio.model.veicolo.Auto;
 
