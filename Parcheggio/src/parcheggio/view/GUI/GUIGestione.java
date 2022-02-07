@@ -5,10 +5,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import parcheggio.controller.ReaderWriterFromFile;
 import parcheggio.model.GestioneParcheggio;
+import parcheggio.model.Parcheggio;
 import parcheggio.model.ParcheggioImpl;
 import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.persona.Persona;
-
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.WindowAdapter;
@@ -18,7 +18,6 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -83,8 +82,8 @@ public class GUIGestione extends JFrame {
 		panel_parcheggi.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5)); //Per i parcheggi si usa un flow layout.
 		
 		g.aggiornaAbbonamenti();
-		for (ParcheggioImpl p : g.getParcheggi()) {
-			JButton bottone_parcheggio = new JButton(p.getName());
+		for (Parcheggio p : g.getParcheggi()) {
+			JButton bottone_parcheggio = new JButton(((ParcheggioImpl) p).getName());
 			bottone_parcheggio.setBackground(Color.gray.darker());
 			bottone_parcheggio.setForeground(Color.white);
 			bottone_parcheggio.addActionListener(new ActionListener() {

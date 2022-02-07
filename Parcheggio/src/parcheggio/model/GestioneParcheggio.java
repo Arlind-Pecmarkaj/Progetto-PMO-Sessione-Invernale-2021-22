@@ -8,7 +8,7 @@ import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.persona.Persona;
 
 public class GestioneParcheggio {
-	List<ParcheggioImpl> parcheggi;
+	List<Parcheggio> parcheggi;
 	List<Abbonamento>  abbonamenti;
 	
 	public GestioneParcheggio() {
@@ -20,8 +20,8 @@ public class GestioneParcheggio {
 		return this.parcheggi.get(index);
 	}
 	
-	public void aggiungiParcheggio(ParcheggioImpl p) {
-		if (this.parcheggi.stream().filter(pr -> ((ParcheggioImpl) pr).getId().equals(p.getId())).findAny().isEmpty()) {
+	public void aggiungiParcheggio(Parcheggio p) {
+		if (this.parcheggi.stream().filter(pr -> pr.getId().equals(p.getId())).findAny().isEmpty()) {
 			parcheggi.add(p);
 			p.setAbbonamenti(this.abbonamenti);
 		}
@@ -42,7 +42,7 @@ public class GestioneParcheggio {
     	return this.abbonamenti.stream().filter(ab -> ab.getTarga().equals(targa)).findAny().get();
     }
     
-    public List<ParcheggioImpl> getParcheggi() {
+    public List<Parcheggio> getParcheggi() {
     	return this.parcheggi;
     }
     
@@ -57,7 +57,7 @@ public class GestioneParcheggio {
     	}
     	
     	for (Parcheggio p : this.parcheggi) {
-    		((ParcheggioImpl) p).setAbbonamenti(this.abbonamenti);
+    		p.setAbbonamenti(this.abbonamenti);
     	}
     }
     
