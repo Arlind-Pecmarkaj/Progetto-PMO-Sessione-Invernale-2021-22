@@ -84,7 +84,7 @@ public class GUIHelp extends JFrame{
 		txtpnCliccandoSulBottone.setText("Cliccando sul bottone");
 		getContentPane().add(txtpnCliccandoSulBottone);
 		
-		JButton btnNewButton_2 = new JButton("Rimuovi");
+		JButton btnNewButton_2 = new JButton("Pulisci campi");
 		btnNewButton_2.setBounds(148, 265, 85, 21);
 		getContentPane().add(btnNewButton_2);
 		
