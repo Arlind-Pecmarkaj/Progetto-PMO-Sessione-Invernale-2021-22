@@ -262,7 +262,7 @@ public class GUIGestione extends JFrame {
 		GridBagConstraints gbc_premium = new GridBagConstraints();
 		gbc_premium.fill               = GridBagConstraints.HORIZONTAL;
 		gbc_premium.insets             = new Insets(0, 0, 5, 0);
-		gbc_premium.gridx              = 1;
+		gbc_premium.gridx              = 0;
 		gbc_premium.gridy              = 7;
 		panel_abbonamenti.add(premium, gbc_premium);
 		
@@ -311,9 +311,24 @@ public class GUIGestione extends JFrame {
 		});
 		
 		GridBagConstraints gbc_inserimento = new GridBagConstraints();
-		gbc_inserimento.gridx              = 2;
+		gbc_inserimento.gridx              = 1;
 		gbc_inserimento.gridy              = 7;
 		panel_abbonamenti.add(inserimento, gbc_inserimento);
+		
+		JButton help = new JButton("?");
+		help.setBackground(Color.gray.darker());
+		help.setForeground(Color.white);
+		help.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new GUIHelp();
+			}
+		});
+		
+		GridBagConstraints gbc_help = new GridBagConstraints();
+		gbc_help.gridx 				= 2;
+		gbc_help.gridy 				= 7;
+		panel_abbonamenti.add(help, gbc_help);
 		
 		/* Alla chiusura del frame dovrò scrivere i dati */
 		this.addWindowListener(new WindowAdapter() {
