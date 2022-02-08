@@ -183,11 +183,10 @@ public class GUIParcheggio extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if(!((ParcheggioImpl) p).getPostiMonopattino().get(bottoniMonopattini.lastIndexOf(jb)).getDisponibile()) {
-					//	((ParcheggioImpl) p).getPostiMonopattino().get(bottoniMonopattini.lastIndexOf(jb)).setDisponibile(true);
 						double costo = p.restituisciMonopattino(((ParcheggioImpl) p).getPostiMonopattino().get(bottoniMonopattini.lastIndexOf(jb)).getPersona(),
 									   ((ParcheggioImpl) p).getPostiMonopattino().get(bottoniMonopattini.lastIndexOf(jb)));
 						jb.setBackground(Color.green);
-						System.out.println(((ParcheggioImpl) p).getPostiMonopattino());
+						
 						showMessageDialog(null, "Monopattino restituito. \n" + 
 										 "Prezzo da pagare: " + costo);
 					} else {
@@ -392,8 +391,7 @@ public class GUIParcheggio extends JFrame{
 						GUIParcheggio.this.bottoniMonopattini.get(((ParcheggioImpl) p).getPostiMonopattino()
 															 .indexOf(m))
 															 .setBackground(Color.red);
-						System.out.println(((ParcheggioImpl) p).getPostiMonopattino());
-				//		GUIParcheggio.this.bottoniMonopattini.getLast().setBackground(Color.red);
+						
 					} catch (MonopattiniEsauritiException m) {
 						showMessageDialog(null, "Attenzione! Monopattini esauriti");
 					} catch (PersonaSenzaAbbonamentoException m) {
