@@ -345,6 +345,7 @@ public class GUIParcheggio extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				Random r = new Random();
 				boolean esito = false;
+				double capacitaSerbatoio = Math.round((200 + (300 - 200) * r.nextDouble())*100.0)/100.0;
 				if(GUIParcheggio.this.listaVeicoli.getSelectedItem().equals("Auto")) {
 					Veicolo v = new Auto(targa.getText(),
 			   				   	r.nextInt(2022 - 1980) + 1980,
@@ -353,14 +354,9 @@ public class GUIParcheggio extends JFrame{
 			   				   	"b",
 			   				   	nome.getText(),
 			   				   	cognome.getText(),
-//			   				   	100 + (500 - 100) * r.nextDouble(),
-//			   				   	200 + (300 - 200) * r.nextDouble(),
-//			   				   	0 + (300 - 0) * r.nextDouble());
 			   				   	100 + (500 - 100) * r.nextDouble(),
-			   				   	Math.round((200 + (300 - 200) * r.nextDouble())*100.0)/100.0,
-			   				   	Math.round((0 + (300 - 0) * r.nextDouble())*100.0)/100.0);
-			   				   //	300.4, 90.08);
-					System.out.println(Math.round((100 + (500 - 100) * r.nextDouble())*100.0)/100.0);
+			   				   	capacitaSerbatoio,
+			   				   	Math.round((0 + (capacitaSerbatoio - 0) * r.nextDouble())*100.0)/100.0);
 					
 					esito = GUIParcheggio.this.aggiornamento(v, p);
 					
@@ -372,8 +368,8 @@ public class GUIParcheggio extends JFrame{
 								"b",
 								nome.getText(),
 								cognome.getText(),
-								200 + (300 - 200) * r.nextDouble(),
-								0 + (300 - 0) * r.nextDouble());
+								capacitaSerbatoio,
+								Math.round((0 + (capacitaSerbatoio - 0) * r.nextDouble())*100.0)/100.0);
 					
 					esito = GUIParcheggio.this.aggiornamento(v, p);
 					
@@ -417,7 +413,6 @@ public class GUIParcheggio extends JFrame{
 		pulisci.addActionListener(new ActionListener(){  
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				targa.setText("");
 				codiceFiscale.setText("");
 				nome.setText("");
