@@ -74,6 +74,7 @@ public class GUIParcheggio extends JFrame{
 	private JComboBox<?> listaVeicoli = new JComboBox<Object>(veicoliDisponibili);
 	private JComboBox<?> listaAlimentazioni;
 	private JCheckBox    noleggiaMonopattino;
+	private JButton		 pulisci;
 	
 	private ArrayList<Posto>   posti;
 	private ArrayList<JButton> bottoniVeicoli = new ArrayList<JButton>();
@@ -323,6 +324,7 @@ public class GUIParcheggio extends JFrame{
 		gbcListaAlimentazioni.gridy              = 6;
 		panelInserimento.add(listaAlimentazioni, gbcListaAlimentazioni);
 		
+		
 		noleggiaMonopattino = new JCheckBox("Noleggia monopattino");
 		GridBagConstraints gbcNoleggiaMonopattino = new GridBagConstraints();
 		gbcNoleggiaMonopattino.insets = new Insets(0, 0, 5, 0);
@@ -403,6 +405,26 @@ public class GUIParcheggio extends JFrame{
 				}
 			}
 		});
+		
+		
+		pulisci = new JButton("Pulisci campi");
+		GridBagConstraints gbcPulisci = new GridBagConstraints();
+		gbcPulisci.gridx			  = 2;
+		gbcPulisci.gridy			  = 8;
+		panelInserimento.add(pulisci, gbcPulisci);
+		
+		pulisci.addActionListener(new ActionListener(){  
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				targa.setText("");
+				codiceFiscale.setText("");
+				nome.setText("");
+				cognome.setText("");
+			}  
+		});
+		
+		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
