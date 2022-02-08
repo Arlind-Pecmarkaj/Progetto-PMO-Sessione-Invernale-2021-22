@@ -28,6 +28,7 @@ import parcheggio.model.veicolo.Alimentazione;
 import parcheggio.model.veicolo.Auto;
 import parcheggio.model.veicolo.Moto;
 import parcheggio.model.veicolo.Veicolo;
+import parcheggio.model.veicolo.VeicoloInt;
 import parcheggio.model.posto.*;
 
 public class ParcheggioImpl implements Parcheggio{
@@ -139,7 +140,7 @@ public class ParcheggioImpl implements Parcheggio{
 	 * altrimenti viene lanciata un'eccezione.
 	 */
 	@Override
-	public Posto aggiungiVeicolo(Veicolo v){
+	public Posto aggiungiVeicolo(VeicoloInt v){
 		Posto posto = null;
 		
 		// controllo se la targa è stata inserita correttamente
@@ -148,7 +149,7 @@ public class ParcheggioImpl implements Parcheggio{
 		}
 		
 		// controllo di non inserire auto con targhe uguali
-		Optional<Veicolo> veicoloGiaPresente = this.listaVeicoliPresenti().stream()
+		Optional<VeicoloInt> veicoloGiaPresente = this.listaVeicoliPresenti().stream()
 								   										  .filter(ve -> ve.getTarga().equals(v.getTarga()))
 								   										  .findAny();
 		if(veicoloGiaPresente.isPresent()) {
@@ -201,7 +202,7 @@ public class ParcheggioImpl implements Parcheggio{
 	 * restituisce tutti i veicoli presenti nel parcheggio
 	 */
 	@Override
-	public Set<Veicolo> listaVeicoliPresenti() {
+	public Set<VeicoloInt> listaVeicoliPresenti() {
 		return this.postiDisponibili.stream()
 						            .filter(p -> p.isLibero() == false)
 						            .map(p -> ((AbstractPosto) p).getVeicolo().get())
@@ -318,7 +319,7 @@ public class ParcheggioImpl implements Parcheggio{
 	 * rispetto al limite consentito, viene lanciata un'eccezione (ALtezzaMassimaSuperata).
 	 * Non sono ammesse auto a metano in parcheggi sotterranei (lancio dell'eccezione AutoMetanoNonAmmesse)
 	 */
-	private Posto filtraAggiungi(Predicate<? super Posto> filtro, Veicolo v){
+	private Posto filtraAggiungi(Predicate<? super Posto> filtro, VeicoloInt v){
 		/* ottengo un posto libero presente nel parcheggio */
 		Optional<Posto> tmp = this.postiDisponibili.stream()
 				   								   .filter(p -> p.isLibero() == true)
@@ -338,7 +339,7 @@ public class ParcheggioImpl implements Parcheggio{
 						throw new AutoMetanoNonAmmessaException("Le auto a metano non possono parcheggiare in un parcheggio sotteraneo.");
 					}
 					// occupo il posto auto
-					tmp.get().occupaPosto(v);
+					tmp.get().occupaPosto((Veicolo) v);
 					return tmp.get();
 				} else {
 					//lancia eccezione per altezza non consentita
@@ -347,7 +348,7 @@ public class ParcheggioImpl implements Parcheggio{
 					
 			} else {
 				/* il veicolo e' una moto e non effettua il controllo dell'altezza */
-				tmp.get().occupaPosto(v);
+				tmp.get().occupaPosto((Veicolo) v);
 				return tmp.get();
 			}
 		// se il veicolo è elettrico e non sono piu' disponibili posti elettrici

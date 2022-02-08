@@ -8,7 +8,7 @@ import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.monopattino.Monopattino;
 import parcheggio.model.persona.Pers;
 import parcheggio.model.posto.Posto;
-import parcheggio.model.veicolo.Veicolo;
+import parcheggio.model.veicolo.VeicoloInt;
 
 /*
  * interfaccia per identificare un parcheggio
@@ -21,11 +21,11 @@ public interface Parcheggio {
 	
 	void setAbbonamenti(List<Abbonamento> lista);
 	
-	Posto aggiungiVeicolo(Veicolo v);
+	Posto aggiungiVeicolo(VeicoloInt v);
 	
 	double liberaPosto(Posto p);
 	
-	Set<Veicolo> listaVeicoliPresenti();
+	Set<VeicoloInt> listaVeicoliPresenti();
 	
 	Monopattino noleggiaMonopattino(Pers p);
 	
