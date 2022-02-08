@@ -194,7 +194,7 @@ public class ParcheggioImpl implements Parcheggio{
 			}
 		}
 		// approssimazione a due cifre decimali
-		return (Math.round(prezzo * 100)/100);
+		return (Math.round(prezzo * 100.0)/100.0);
 	}// end metodo liberaPosto()
 	
 	/*
@@ -267,7 +267,7 @@ public class ParcheggioImpl implements Parcheggio{
 							 .setDisponibile(true);
 		
 		// arrotondamento a due cifre decimali
-		return (Math.round(prezzo * 100)/100);
+		return (Math.round(prezzo * 100.0)/100.0);
 	}// end restituisciMonopattino()
 
 	@Override
