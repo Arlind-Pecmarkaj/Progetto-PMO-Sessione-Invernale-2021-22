@@ -357,7 +357,10 @@ public class GUIParcheggio extends JFrame{
 //			   				   	200 + (300 - 200) * r.nextDouble(),
 //			   				   	0 + (300 - 0) * r.nextDouble());
 			   				   	100 + (500 - 100) * r.nextDouble(),
-			   				   	300.4, 90.08);
+			   				   	Math.round((200 + (300 - 200) * r.nextDouble())*100.0)/100.0,
+			   				   	Math.round((0 + (300 - 0) * r.nextDouble())*100.0)/100.0);
+			   				   //	300.4, 90.08);
+					System.out.println(Math.round((100 + (500 - 100) * r.nextDouble())*100.0)/100.0);
 					
 					esito = GUIParcheggio.this.aggiornamento(v, p);
 					
