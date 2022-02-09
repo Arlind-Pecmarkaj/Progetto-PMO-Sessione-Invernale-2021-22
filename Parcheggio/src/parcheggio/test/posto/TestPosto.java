@@ -10,6 +10,7 @@ package parcheggio.test.posto;
 
 import static org.junit.Assert.*;
 import org.junit.*;
+import parcheggio.enumerations.Alimentazione;
 import parcheggio.model.posto.*;
 import parcheggio.model.veicolo.*;
 

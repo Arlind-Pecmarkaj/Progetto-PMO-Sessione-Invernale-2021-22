@@ -32,6 +32,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 //import parcheggio.enumerations.Alimentazione;
 import parcheggio.model.veicolo.*;
+import parcheggio.enumerations.Alimentazione;
 import parcheggio.exceptions.AltezzaMassimaConsentitaException;
 import parcheggio.exceptions.AutoMetanoNonAmmessaException;
 import parcheggio.exceptions.MonopattiniEsauritiException;
