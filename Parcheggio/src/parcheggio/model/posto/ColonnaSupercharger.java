@@ -47,8 +47,8 @@ public class ColonnaSupercharger implements Supercharger {
 		if(percentualeRaggiungere > 100) throw new IllegalChargerException("Attenzione! La batteria raggiunge al massimo il 100%");
 		
 		double percentualeRicaricare = percentualeRaggiungere - getPercentualeAttuale(veicoloElettrico); // 70% - 10% => ricarico 60%
-		double kWRicaricare = (veicoloElettrico.getCapienzaMassima() * percentualeRicaricare) / 100;
-		veicoloElettrico.setCarburanteAttuale(veicoloElettrico.getCarburanteAttuale() + kWRicaricare);
+		double kWRicaricare = (veicoloElettrico.getCapienzaMassima() * percentualeRicaricare) / 100; // ottengo quantità in kW
+		veicoloElettrico.setCarburanteAttuale(veicoloElettrico.getCarburanteAttuale() + kWRicaricare); // ricarico di tot kW
 		this.setTempoRicarica(kWRicaricare / this.getkWh()); // numero di ore di ricarica: 0,5 => 30 minuti
 	}
 	
