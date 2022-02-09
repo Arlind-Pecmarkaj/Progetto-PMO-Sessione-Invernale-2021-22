@@ -2,15 +2,21 @@ package parcheggio.test.posto;
 
 
 /**
- * 	@author tomma
  * 	
- * 	Classe per i test relativi alle funzionalità delle classi 
- * 	che implementano l'interfaccia IPosto
+ * 	Classe per i test relativi alle funzionalità
+ *  fornite dall'interfaccia Posto e Supercharger
+ * 
  */
 
 import static org.junit.Assert.*;
 import org.junit.*;
-import parcheggio.enumerations.Alimentazione;
+
+import static parcheggio.enumerations.Alimentazione.*;
+
+
+import parcheggio.exceptions.IllegalChargerException;
+import parcheggio.exceptions.NonElettricaException;
+
 import parcheggio.model.posto.*;
 import parcheggio.model.veicolo.*;
 
@@ -19,26 +25,41 @@ public class TestPosto {
 	
 	AbstractPosto postoMoto;
 	Moto moto;
+	
+	PostoElettrico postoElettrico;
+	Auto autoElettrica;
 
 	@Before
 	public void createData() {
 		postoMoto = new PostoMoto();
-		moto = new Moto("123", 1999, Alimentazione.BENZINA, "HONDA", "honda", "gianni", "fresca", 200.0, 0);
+		moto = new Moto("123", 1999, BENZINA, "HONDA", "honda", "gianni", "fresca", 200.0, 0);
+		
+		postoElettrico = new PostoElettrico();
+		autoElettrica = new Auto("targaAuto", 2020, ELETTRICA , "Tesla", "Model 3", "George", "Maggi", 1.60, 300.4, 90.08);
+		postoElettrico.occupaPosto(autoElettrica);
 	}
-	/*
+	
+	
+	
+	// ------------------------------------------------------------------------------------------------------------------------
+	
 	@Test
 	public void testTempleteMethodSetPosto() {
-		// controllo se viene settato il gisuto ID
-		assertEquals("M1", postoMoto.getId()); 	
-		// controllo se viene settata la giusta tariffa oraria
+		assertEquals("M0000", postoMoto.getId());
 		assertEquals(0.5, postoMoto.getCostoOrario(), 0);
 	}
-	*/
+	
 	
 	@Test
 	public void testOccupaPosto() {
 		postoMoto.occupaPosto(moto);
 		assertEquals(moto.getTarga(), postoMoto.getVeicolo().get().getTarga());
+	}
+	
+	@Test(expected = NonElettricaException.class)
+	public void testOccupaPostoException() {
+		AbstractPosto postoElettrico = new PostoElettrico();
+		postoElettrico.occupaPosto(moto);
 	}
 	
 	@Test
@@ -84,45 +105,57 @@ public class TestPosto {
 			System.out.println("Eccezione catturata");
 		}
 		postoMoto.liberaPosto();
-		assertEquals(postoMoto.costoOccupazione(), 1.0);
+		assertEquals(1.0, postoMoto.costoOccupazione(), 0.0);
 	}
-	/*
+	
+	
+	
+	// ------------------------------------------------------------------------------------------------------------------------
+	
 	@Test
 	public void testPrintOrari() {
+		postoMoto.occupaPosto(moto);
+		try {
+			// simulo 2 secondi di occupazione
+			Thread.sleep(2000); 
+		} catch (InterruptedException ex) {
+			System.out.println("Eccezione catturata");
+		}
+		postoMoto.liberaPosto();
 		System.out.println(postoMoto.getOrarioArrivo());
 		System.out.println(postoMoto.getOrarioUscita());
-//		System.out.println(postoMoto.tempoOccupazione());
 		System.out.println(postoMoto.orarioToString(true));
 		System.out.println(postoMoto.orarioToString(false));
 		System.out.println(postoMoto.elapsedToString());
 		
 	}
 	
+	
+	
+	// ------------------------------------------------------------------------------------------------------------------------
+	
 	@Test
-	public void testRicaricaAutoElettrica() {
-		PostoElettrico postoElettrico = new PostoElettrico();
-		postoElettrico.occupaPosto(new Auto("CIAO", 1999, Alimentazione.ELETTRICA,
-                    						"FIAT", "600", "Massimo", "Minimo", 1.40, 300.4, 90.08));
-		// ricarica fino al 70%
-//		postoElettrico.getColonnaSupercharger().ricaricaVeicolo(70, postoElettrico.getVeicolo().get()); 
-		// ricarica fino al 100%
-		
-		System.out.println(postoElettrico.getColonnaSupercharger().getPercentualeAttuale(postoElettrico.getVeicolo().get()));
-		
-		postoElettrico.getColonnaSupercharger().ricaricaVeicolo(100, postoElettrico.getVeicolo().get()); 
-		
-		System.out.println(postoElettrico.getColonnaSupercharger().getTempoRicarica());
-		System.out.println(postoElettrico.getColonnaSupercharger().getTempoRicaricaHR());
-		System.out.println(postoElettrico.getVeicolo().get().getCarburanteAttuale());
-		
+	public void testRicaricaVeicolo() {
+		assertEquals(30, Math.ceil(postoElettrico.getColonnaSupercharger().getPercentualeAttuale(postoElettrico.getVeicolo().get())), 0);
+		postoElettrico.getColonnaSupercharger().ricaricaVeicolo(70, postoElettrico.getVeicolo().get());
+		assertEquals(70, postoElettrico.getColonnaSupercharger().getPercentualeAttuale(autoElettrica), 0);
 	}
 	
-	/*@Test(expected = IllegalStateException.class)
-	public void testRicaricaAutoNONElettrica() {
-		AbstractPosto postoElettrico = new PostoElettrico();
-		postoElettrico.occupaPosto(new Auto("CIAO", 1999, Alimentazione.DIESEL,
-                    						"FIAT", "600", "Massimo", "Minimo", 1.40, 40.5, 12.0));
-		
-	}*/
+	@Test
+	public void testTempoRicaricaHR() {
+		postoElettrico.getColonnaSupercharger().ricaricaVeicolo(100, postoElettrico.getVeicolo().get());
+		assertEquals(postoElettrico.getColonnaSupercharger().getTempoRicaricaHR(), "169 min");
+		assertEquals(100, Math.ceil(postoElettrico.getColonnaSupercharger().getPercentualeAttuale(postoElettrico.getVeicolo().get())), 0);
+	}
+	
+	@Test(expected = IllegalChargerException.class)
+	public void testRicaricaVeicoloException() {
+		postoElettrico.getColonnaSupercharger().ricaricaVeicolo(10, postoElettrico.getVeicolo().get());
+		postoElettrico.getColonnaSupercharger().ricaricaVeicolo(200, postoElettrico.getVeicolo().get());
+	}
 
+	
+	
+
+	
 }
