@@ -21,7 +21,7 @@ public class PostoElettrico extends AbstractPosto {
 	private ColonnaSupercharger colonnaSupercharger;
 	
 	public PostoElettrico() { 
-		this("E0000", new SensoreCarburante());
+		this("0000", new SensoreCarburante());
 	}
 	
 	public PostoElettrico(String postoId) {

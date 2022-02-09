@@ -15,7 +15,7 @@ public class PostoMoto extends AbstractPosto {
 	
 	
 	public PostoMoto() {
-		this("M0000");
+		this("0000");
 	}
 	
 	public PostoMoto(String postoId) {

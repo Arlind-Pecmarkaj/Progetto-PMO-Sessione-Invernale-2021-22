@@ -18,11 +18,11 @@ public class PostoAuto extends AbstractPosto {
 	
 	
 	public PostoAuto() {
-		this("A0000", new SensoreCarburante());
+		this("0000", new SensoreCarburante());
 	};
 	
 	public PostoAuto(SensoreCarburante sensore) {
-		this("A0000", sensore);
+		this("0000", sensore);
 	}
 	
 	public PostoAuto(String postoId) {

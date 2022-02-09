@@ -3,7 +3,9 @@ package parcheggio.model.posto;
 import java.time.*;
 import java.time.format.*;
 import java.util.Optional;
+import parcheggio.exceptions.NonElettricaException;
 import parcheggio.model.veicolo.Veicolo;
+import parcheggio.model.veicolo.Alimentazione;
 
 
 /**
@@ -91,7 +93,9 @@ public abstract class AbstractPosto implements Posto {
 	 ****************************************************/
 	
 
-	public final void occupaPosto(Veicolo v) {
+	public final void occupaPosto(Veicolo v) throws NonElettricaException {
+		if(this instanceof PostoElettrico && v.getCarburante() != Alimentazione.ELETTRICA) throw new NonElettricaException("Possonon accedere solo veicoli elettrici.");
+		
 		setVeicolo(v);
 		setOrarioArrivo(Instant.now());
 	}
@@ -145,6 +149,7 @@ public abstract class AbstractPosto implements Posto {
 	}
 	
 	public String elapsedToString() {
+		tempoOccupazione();
 		return String.format("%02d:%02d:%02d", this.elapsedTime.toHours(), this.elapsedTime.toMinutes(), this.elapsedTime.toSeconds());
 	}
 }

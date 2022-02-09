@@ -42,7 +42,7 @@ public class ColonnaSupercharger implements Supercharger {
 	
 	
 	/************************************************************
-	 * 	METODI DELL'INTERFACCIA Supercharger DA IMPLEMENTARE	*
+	 * 	 METODI DELL'INTERFACCIA Supercharger DA IMPLEMENTARE	*
 	 ************************************************************/
 
 	public double getkWh() {
