@@ -1,4 +1,5 @@
 package parcheggio.model.veicolo;
+import parcheggio.enumerations.Alimentazione;
 
 public interface VeicoloInt {
 	String getTarga();
