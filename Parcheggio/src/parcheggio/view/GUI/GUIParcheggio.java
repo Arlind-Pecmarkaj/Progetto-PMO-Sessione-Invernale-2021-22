@@ -158,13 +158,13 @@ public class GUIParcheggio extends JFrame{
 //								ricaricaAutoForm.add(new JLabel("Ricarica auto"));
 								
 							}
-						}
-						
-						if(!(risposta == 0 && bottoniVeicoliElettrici.contains(jb))) {
-							double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
-							jb.setBackground(Color.green);
-							showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
-											  prezzoDaPagare + " euro");	
+							
+							else if((risposta != - 1 && bottoniVeicoliElettrici.contains(jb))) {
+								double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
+								jb.setBackground(Color.green);
+								showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
+												  prezzoDaPagare + " euro");	
+							}
 						}
 					}
 					else {
@@ -445,6 +445,7 @@ public class GUIParcheggio extends JFrame{
 					nome.setText("");
 					cognome.setText("");
 				}
+				
 					
 			}  
 		});
