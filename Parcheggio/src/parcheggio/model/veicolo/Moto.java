@@ -1,5 +1,7 @@
 package parcheggio.model.veicolo;
 
+import parcheggio.enumerations.Alimentazione;
+
 /**
  *
  * @author marti
