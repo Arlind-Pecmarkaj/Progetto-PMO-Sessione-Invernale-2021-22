@@ -1,5 +1,6 @@
 package parcheggio.model.veicolo;
 
+
 public class Veicolo implements VeicoloInt{
     /*--- Dichiarazione attributi ---*/
     private String targa;               //stringa alfanumerica identificativa del veicolo
