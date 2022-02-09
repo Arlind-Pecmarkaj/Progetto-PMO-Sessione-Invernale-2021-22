@@ -55,7 +55,7 @@ public class GUIParcheggio extends JFrame{
 	private JPanel contentPane;      // Panel principale del frame
 	private JPanel panelParcheggi;   // Panel in cui son visibili i parchegi
 	private JPanel panelMonopattini; // Panel in cui son visibili i monopattini
-	private JPanel panelInserimento; // Panel in cui è visibile il form di inserimento di un veicolo
+	private JPanel panelInserimento; // Panel in cui ï¿½ visibile il form di inserimento di un veicolo
 	
 	/* Label associate al gruppo di Field/Box qui sotto e aiutano nell'identificazione. */
 	private JLabel lblPanelInserimento;
@@ -135,7 +135,7 @@ public class GUIParcheggio extends JFrame{
 					if(!posti.get(bottoniVeicoli.lastIndexOf(jb)).isLibero()) {
 						int risposta = -1;
 						if(bottoniVeicoliElettrici.contains(jb)) {
-							/* se il posto è occupato posso ricare l'auto */
+							/* se il posto ï¿½ occupato posso ricare l'auto */
 							String[] opzioni = {"Ricarica auto", "Lascia parcheggio"};
 							risposta = JOptionPane.showOptionDialog(null, 
 																	"Che operazione ti interessa effettuare?",
@@ -162,7 +162,7 @@ public class GUIParcheggio extends JFrame{
 						}
 					}
 					else {
-						showMessageDialog(null,"Il posto auto è gia' libero!");
+						showMessageDialog(null,"Il posto auto e' gia' libero!");
 					}
 				}
 			});
@@ -191,7 +191,7 @@ public class GUIParcheggio extends JFrame{
 						showMessageDialog(null, "Monopattino restituito. \n" + 
 										 "Prezzo da pagare: " + costo);
 					} else {
-						showMessageDialog(null, "Il monopattino è già disponibile per il noleggio.");
+						showMessageDialog(null, "Il monopattino e' gia' disponibile per il noleggio.");
 					}
 				}
 				
@@ -395,7 +395,7 @@ public class GUIParcheggio extends JFrame{
 					} catch (MonopattiniEsauritiException m) {
 						showMessageDialog(null, "Attenzione! Monopattini esauriti");
 					} catch (PersonaSenzaAbbonamentoException m) {
-						showMessageDialog(null, "Attenzione! L'utente è sprovvisto di abbonamento. " +
+						showMessageDialog(null, "Attenzione! L'utente e' sprovvisto di abbonamento. " +
 									      "Monopattino non noleggiato");
 					} catch(IllegalArgumentException m) {
 						showMessageDialog(null, "Attenzione! I campi per l'utente non sono completi.");
@@ -459,15 +459,15 @@ public class GUIParcheggio extends JFrame{
 				esito = true;
 			}
 		}catch(PostiFinitiException e) {
-			showMessageDialog(null,"Attenzione! non è possibile parcheggiare, posti insufficienti");
+			showMessageDialog(null,"Attenzione! non e' possibile parcheggiare, posti insufficienti");
 		}catch(AltezzaMassimaConsentitaException e) {
 			showMessageDialog(null, "Attenzione! Altezza non consentita, veicolo non parcheggiato");
 		}catch(AutoMetanoNonAmmessaException e) {
 			showMessageDialog(null, "Attenzione! Le auto a metano non sono ammesse in un parcheggio sotterranneo");
 		}catch(TargheUgualiException e) {
-			showMessageDialog(null, "Attenzione! Un veicolo con la stessa targa è già parcheggio");
+			showMessageDialog(null, "Attenzione! Un veicolo con la stessa targa ï¿½ giï¿½ parcheggio");
 		}catch(TargaNonPresenteException e) {
-			showMessageDialog(null, "Attenzione! Non è stata inserita la targa");
+			showMessageDialog(null, "Attenzione! Non e' stata inserita la targa");
 		}
 		return esito;
 	}
