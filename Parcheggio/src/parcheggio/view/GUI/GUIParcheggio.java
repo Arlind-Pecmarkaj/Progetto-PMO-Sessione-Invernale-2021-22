@@ -100,7 +100,9 @@ public class GUIParcheggio extends JFrame{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		/* ------------------------------------ POSTI -------------------------- */
+		/*private JPanel panelInfo;		 // Panel per vedere le info dei posti  
+		 * ------------------------------------ POSTI -------------------------- */
+		
 		posti = ((ParcheggioImpl) p).getPostiDisponibili();
 		
 		this.panelParcheggi = new JPanel();	
@@ -123,6 +125,8 @@ public class GUIParcheggio extends JFrame{
 			
 			this.bottoniVeicoli.add(jb);
 			
+			/*********************************************************************/
+		
 			/* ottengo i bottoni per i posti dei veicoli elettrici */
 			this.bottoniVeicoliElettrici = (ArrayList<JButton>) this.bottoniVeicoli.stream().filter(b -> b.getText().equals("Posto Elettrica")).collect(Collectors.toList());
 			
@@ -135,7 +139,7 @@ public class GUIParcheggio extends JFrame{
 					if(!posti.get(bottoniVeicoli.lastIndexOf(jb)).isLibero()) {
 						int risposta = -1;
 						if(bottoniVeicoliElettrici.contains(jb)) {
-							/* se il posto � occupato posso ricare l'auto */
+							/* se il posto � occupato posso ricaricare l'auto */
 							String[] opzioni = {"Ricarica auto", "Lascia parcheggio"};
 							risposta = JOptionPane.showOptionDialog(null, 
 																	"Che operazione ti interessa effettuare?",
@@ -154,6 +158,7 @@ public class GUIParcheggio extends JFrame{
 								
 							}
 						}
+						
 						if(!(risposta == 0 && bottoniVeicoliElettrici.contains(jb))) {
 							double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
 							jb.setBackground(Color.green);
@@ -169,6 +174,8 @@ public class GUIParcheggio extends JFrame{
 			
 		    this.panelParcheggi.add(jb);
 		}
+		
+		/* --------------------- INFO ------------------------------------- */
 		
 		/* ---------------------- MONOPATTINI -------------------------- */
 		
@@ -421,8 +428,6 @@ public class GUIParcheggio extends JFrame{
 			}  
 		});
 		
-		
-		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -465,10 +470,11 @@ public class GUIParcheggio extends JFrame{
 		}catch(AutoMetanoNonAmmessaException e) {
 			showMessageDialog(null, "Attenzione! Le auto a metano non sono ammesse in un parcheggio sotterranneo");
 		}catch(TargheUgualiException e) {
-			showMessageDialog(null, "Attenzione! Un veicolo con la stessa targa � gi� parcheggio");
+			showMessageDialog(null, "Attenzione! Un veicolo con la stessa targa e' gia' parcheggio");
 		}catch(TargaNonPresenteException e) {
 			showMessageDialog(null, "Attenzione! Non e' stata inserita la targa");
 		}
 		return esito;
 	}
+	
 }
