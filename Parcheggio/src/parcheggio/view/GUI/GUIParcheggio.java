@@ -427,12 +427,32 @@ public class GUIParcheggio extends JFrame{
 		pulisci.addActionListener(new ActionListener(){  
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				targa.setText("");
-				codiceFiscale.setText("");
-				nome.setText("");
-				cognome.setText("");
+				
+				int sicuro = -1;
+				String[] opzioni = {"No", "Sì"};
+				sicuro = JOptionPane.showOptionDialog(null, 
+										     "Sei sicuro di volere pulire i campi?",
+											 " ", 
+											  JOptionPane.DEFAULT_OPTION, 
+											  JOptionPane.QUESTION_MESSAGE, 
+											  null, 
+											  opzioni, 
+											  null);
+				
+				if(sicuro != 0) {
+					targa.setText("");
+					codiceFiscale.setText("");
+					nome.setText("");
+					cognome.setText("");
+				}
+					
 			}  
 		});
+		
+		// infoPosto.addActionListener(new ActionListener() {
+			
+			
+		// });
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
