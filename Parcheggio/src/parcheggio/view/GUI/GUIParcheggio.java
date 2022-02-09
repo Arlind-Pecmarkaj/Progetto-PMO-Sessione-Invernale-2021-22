@@ -76,6 +76,7 @@ public class GUIParcheggio extends JFrame{
 	private JComboBox<?> listaAlimentazioni;
 	private JCheckBox    noleggiaMonopattino;
 	private JButton		 pulisci;
+	private JButton		 infoPosto;
 	
 	private ArrayList<Posto>   posti;
 	private ArrayList<JButton> bottoniVeicoli = new ArrayList<JButton>();
@@ -174,8 +175,6 @@ public class GUIParcheggio extends JFrame{
 			
 		    this.panelParcheggi.add(jb);
 		}
-		
-		/* --------------------- INFO ------------------------------------- */
 		
 		/* ---------------------- MONOPATTINI -------------------------- */
 		
@@ -344,6 +343,7 @@ public class GUIParcheggio extends JFrame{
 		gbcIn.gridx              = 1;
 		gbcIn.gridy              = 8;
 		panelInserimento.add(in, gbcIn);
+		
 		/*
 		 * implementazione dell'inserimento di un veicolo all'interno del parcheggio 
 		 */
@@ -418,6 +418,12 @@ public class GUIParcheggio extends JFrame{
 		gbcPulisci.gridy			  = 8;
 		panelInserimento.add(pulisci, gbcPulisci);
 		
+		infoPosto = new JButton("Info posti");
+		GridBagConstraints gbcInfo = new GridBagConstraints();
+		gbcInfo.gridx			  = 0;
+		gbcInfo.gridy			  = 8;
+		panelInserimento.add(infoPosto, gbcInfo);
+		
 		pulisci.addActionListener(new ActionListener(){  
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -475,6 +481,6 @@ public class GUIParcheggio extends JFrame{
 			showMessageDialog(null, "Attenzione! Non e' stata inserita la targa");
 		}
 		return esito;
+		
 	}
-	
 }
