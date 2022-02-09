@@ -5,8 +5,6 @@ import parcheggio.model.veicolo.Veicolo;
 
 /**
  * 
- * 	@author tomma
- * 
  * 	Interfaccia generica per rappresentare il concetto di "posto veicolo" inteso come spazio
  * 	disponibile per parcheggiare un veicolo. Tale interfaccia deve garantire le seguenti 
  * 	funzionalità fondamentali:

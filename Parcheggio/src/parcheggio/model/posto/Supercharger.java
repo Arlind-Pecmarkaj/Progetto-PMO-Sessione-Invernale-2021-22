@@ -1,8 +1,7 @@
 package parcheggio.model.posto;
 import parcheggio.model.veicolo.*;
+
 /**
- * 
- * 	@author tomma
  * 
  * 	Interfaccia per rappresentare il concetto di Supercharger, 
  * 	ossia un dispositivo di ricarica per auto elettriche.

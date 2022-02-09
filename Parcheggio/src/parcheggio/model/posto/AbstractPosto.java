@@ -7,7 +7,6 @@ import parcheggio.model.veicolo.Veicolo;
 
 
 /**
- * 	@author tomma
  * 	
  * 	Classe astratta generica che implementa il contratto definito dall'interfaccia Posto
  * 	e quindi si preoccupa di implementare tutti i metodi che saranno comuni alle sue sottoclassi
@@ -91,49 +90,28 @@ public abstract class AbstractPosto implements Posto {
 	 * 	METODI DELL'INTERFACCIA Posto DA IMPLEMENTARE	*
 	 ****************************************************/
 	
-	/**
-	 * 	Associa un veicolo ad un posto salvando l'orario di arrivo del veicolo
-	 */
+
 	public final void occupaPosto(Veicolo v) {
 		setVeicolo(v);
 		setOrarioArrivo(Instant.now());
 	}
-	
-	/**
-	 * 	Il veicolo viene disassociato dal posto che occupava
-	 */
+
 	public final void liberaPosto() {
 		this.veicolo = Optional.empty();
 		setOrarioUscita(Instant.now());
 	}
 	
-	/**
-	 * 	Verifica se un posto è libero o occupato.
-	 *
-	 * 	@return un valore booleano che mi dice se un posto è libero (true) o occupato (false)
-	 */
 	public final boolean isLibero() {
 		return !(this.veicolo.isPresent());
 	}
-	
-	/**
-	 * 	Calcola il tempo di occupazione del posto occupato
-	 * 
-	 * 	@return tempo di occupazione del posto
-	 */
+
 	public final Duration tempoOccupazione() throws NullPointerException {
 		if(getOrarioArrivo() == null || getOrarioUscita() == null) throw new NullPointerException();
 			
 		elapsedTime = Duration.between(getOrarioArrivo(), getOrarioUscita());		
 		return elapsedTime;
 	}
-	
-	/**
-	 *  Calcola importo totale dovuto per occupato il parcheggio
-	 *  
-	 *  @return importo
-	 * 
-	 */
+
 	public final double costoOccupazione() {
 		double daPagare = 0.0;
 		try {			

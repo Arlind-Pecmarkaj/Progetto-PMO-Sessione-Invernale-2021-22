@@ -3,6 +3,18 @@ package parcheggio.model.posto;
 import static parcheggio.enumerations.TassaParcheggio.*;
 import parcheggio.model.sensore.SensoreCarburante;
 
+/**
+ *  Questa classe specializza la tipologia del posto
+ *  in posto per sole Auto con motore elettrico.
+ *  
+ *  L'Id di questi posti inizia con 'E' per
+ *  contraddistinguerli da quelli delle altre tipologie.
+ *  
+ *  Dotato di un supercharger per dare la possibilità
+ *  di ricaricare il veicolo mentre è parcheggiato.
+ * 
+ */
+
 public class PostoElettrico extends AbstractPosto {
 
 	private SensoreCarburante sensoreCarburante;
@@ -29,6 +41,9 @@ public class PostoElettrico extends AbstractPosto {
 		return this.sensoreCarburante;
 	}
 	
+	/**
+	 * 	metodo getter per accedere al supercharger relativo ad un posto
+	 */
 	public ColonnaSupercharger getColonnaSupercharger() {
 		return this.colonnaSupercharger;
 	}
