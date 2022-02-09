@@ -1,5 +1,5 @@
 package parcheggio.model.veicolo;
-
+import parcheggio.enumerations.Alimentazione;
 
 public class Veicolo implements VeicoloInt{
     /*--- Dichiarazione attributi ---*/
