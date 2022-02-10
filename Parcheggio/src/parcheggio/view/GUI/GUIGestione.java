@@ -40,7 +40,7 @@ public class GUIGestione extends JFrame {
 	private JTextField   dataNascita;
 	private JTextField   nazionalita;
 	private JTextField         targa;
-
+	private JButton		     pulisci;
 
 	/**
 	 * Costruisco il frame
@@ -49,7 +49,7 @@ public class GUIGestione extends JFrame {
 		super("Gestionale parcheggi");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 810, 470); /* la finestra sara' di 810x470 px con il vertice superiore sinistro nella posizione (100,100). */
-		// JPanel principale che farà da contenitore per i due panel presenti sotto.
+		// JPanel principale che farï¿½ da contenitore per i due panel presenti sotto.
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5)); /* margini della finestra. */
 		contentPane.setBackground(Color.gray.brighter());
@@ -282,7 +282,7 @@ public class GUIGestione extends JFrame {
 					String tr = targa.getText();
 					String dr = durata.getSelectedItem().toString();
 					LocalDate na = LocalDate.parse(dataNascita.getText());
-					LocalDate end = null; // In questo caso è ammissibile poichè ad end viene comunque assegnato un valore.
+					LocalDate end = null; // In questo caso ï¿½ ammissibile poichï¿½ ad end viene comunque assegnato un valore.
 					if (dr.equals("mensile")) {
 						end = LocalDate.now().plusMonths(1);
 					} else if (dr.equals("trimestrale")) {
@@ -303,7 +303,7 @@ public class GUIGestione extends JFrame {
 					showMessageDialog(null, "ATTENZIONE: campi non compilati correttamente:\n" + il.getMessage(), 
 									  "Errore", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception ex) { // L'unica eccezione base viene lanciata dal ParseDate
-					showMessageDialog(null, "ATTENZIONE: campo data di nascita non compilato correttamente!\n Il formato è AAAA-MM-GG!", 
+					showMessageDialog(null, "ATTENZIONE: campo data di nascita non compilato correttamente!\n Il formato ï¿½ AAAA-MM-GG!", 
 							          "Errore", JOptionPane.ERROR_MESSAGE);
 				}
 				
@@ -325,12 +325,50 @@ public class GUIGestione extends JFrame {
 			}
 		});
 		
+		pulisci = new JButton("Pulisci campi");
+		GridBagConstraints gbcPulisci = new GridBagConstraints();
+		gbcPulisci.gridx			  = 2;
+		gbcPulisci.gridy			  = 7;
+		
+		panel_abbonamenti.add(pulisci, gbcPulisci);
+		
+		
 		GridBagConstraints gbc_help = new GridBagConstraints();
-		gbc_help.gridx 				= 2;
-		gbc_help.gridy 				= 7;
+		gbc_help.gridx 				= 3;
+		gbc_help.gridy 				= 8;
 		panel_abbonamenti.add(help, gbc_help);
 		
-		/* Alla chiusura del frame dovrò scrivere i dati */
+		pulisci.addActionListener(new ActionListener(){  
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				// chiedere se e' sicuro di volere pulire tutti i campi
+				// per sicurezza
+				int sicuro = -1;
+				String[] opzioni = {"No", "SÃ¬"};
+				sicuro = JOptionPane.showOptionDialog(null, 
+										     "Sei sicuro di volere pulire i campi?",
+											 " ", 
+											  JOptionPane.DEFAULT_OPTION, 
+											  JOptionPane.QUESTION_MESSAGE, 
+											  null, 
+											  opzioni, 
+											  null);
+				
+				if(sicuro != 0) {
+					codiceFiscale.setText("");
+					nome.setText("");
+					cognome.setText("");
+					dataNascita.setText("");
+					nazionalita.setText("");
+					targa.setText("");
+				}
+				
+					
+			}  
+		});
+		
+		/* Alla chiusura del frame dovrï¿½ scrivere i dati */
 		this.addWindowListener(new WindowAdapter() {
 		    @Override
 		    public void windowClosing(WindowEvent windowEvent) {
