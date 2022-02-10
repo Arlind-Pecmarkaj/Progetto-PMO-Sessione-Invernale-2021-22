@@ -53,9 +53,9 @@ import parcheggio.model.posto.PostoMoto;
 public class GUIParcheggio extends JFrame{
 
 	private JPanel contentPane;      // Panel principale del frame
-	private JPanel panelParcheggi;   // Panel in cui son visibili i parchegi
+	private JPanel panelParcheggi;   // Panel in cui son visibili i parcheggi
 	private JPanel panelMonopattini; // Panel in cui son visibili i monopattini
-	private JPanel panelInserimento; // Panel in cui � visibile il form di inserimento di un veicolo
+	private JPanel panelInserimento; // Panel in cui e' visibile il form di inserimento di un veicolo
 	
 	/* Label associate al gruppo di Field/Box qui sotto e aiutano nell'identificazione. */
 	private JLabel lblPanelInserimento;
@@ -491,10 +491,16 @@ public class GUIParcheggio extends JFrame{
 			}  
 		});
 		
-		// infoPosto.addActionListener(new ActionListener() {
+	    infoPosto.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				new GUIPosti();
+			}
 			
 			
-		// });
+		});
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
