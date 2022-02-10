@@ -76,7 +76,6 @@ public class GUIParcheggio extends JFrame{
 	private JComboBox<?> listaAlimentazioni;
 	private JCheckBox    noleggiaMonopattino;
 	private JButton		 pulisci;
-	private JButton		 infoPosto;
 	
 	private ArrayList<Posto>   posti;
 	private ArrayList<JButton> bottoniVeicoli = new ArrayList<JButton>();
@@ -456,12 +455,6 @@ public class GUIParcheggio extends JFrame{
 		gbcPulisci.gridy			  = 8;
 		panelInserimento.add(pulisci, gbcPulisci);
 		
-		infoPosto = new JButton("Info posti");
-		GridBagConstraints gbcInfo = new GridBagConstraints();
-		gbcInfo.gridx			  = 0;
-		gbcInfo.gridy			  = 8;
-		panelInserimento.add(infoPosto, gbcInfo);
-		
 		pulisci.addActionListener(new ActionListener(){  
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -489,18 +482,7 @@ public class GUIParcheggio extends JFrame{
 					
 			}  
 		});
-		
-	    infoPosto.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				new GUIPosti();
-			}
-			
-			
-		});
-		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
