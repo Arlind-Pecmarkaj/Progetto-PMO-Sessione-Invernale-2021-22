@@ -172,7 +172,7 @@ public class GUIParcheggio extends JFrame{
 															  null, 
 															  conferma, 
 															  null);
-								setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+								
 								if(sicuro != 0) {
 									double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
 									jb.setBackground(Color.green);
@@ -194,7 +194,6 @@ public class GUIParcheggio extends JFrame{
 														  null, 
 														  conferma, 
 														  null);
-							setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 							
 							if(sicuro != 0) {
 								double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
