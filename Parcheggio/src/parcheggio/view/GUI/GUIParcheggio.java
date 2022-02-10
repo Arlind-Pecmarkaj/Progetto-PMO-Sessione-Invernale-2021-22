@@ -140,7 +140,7 @@ public class GUIParcheggio extends JFrame{
 					if(!posti.get(bottoniVeicoli.lastIndexOf(jb)).isLibero()) {
 						int risposta = -1;
 						if(bottoniVeicoliElettrici.contains(jb)) {
-							/* se il posto � occupato posso ricaricare l'auto */
+							/* se il posto e' occupato posso ricaricare l'auto */
 							String[] opzioni = {"Ricarica auto", "Lascia parcheggio"};
 							risposta = JOptionPane.showOptionDialog(null, 
 																	"Che operazione ti interessa effettuare?",
@@ -166,7 +166,15 @@ public class GUIParcheggio extends JFrame{
 												  prezzoDaPagare + " euro");	
 							}
 						}
+						else {
+							double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
+							jb.setBackground(Color.green);
+							showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
+											  prezzoDaPagare + " euro");
+						}
+							
 					}
+					
 					else {
 						showMessageDialog(null,"Il posto auto e' gia' libero!");
 					}
