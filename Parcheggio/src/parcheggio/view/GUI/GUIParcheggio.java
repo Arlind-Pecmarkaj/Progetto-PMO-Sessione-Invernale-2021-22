@@ -162,7 +162,7 @@ public class GUIParcheggio extends JFrame{
 								
 								// chiedere se veramente si vuole liberare il posto
 								int sicuro = -1;
-								String[] conferma = {"No", "Sì"};
+								String[] conferma = {"No", "Si'"};
 								sicuro = JOptionPane.showOptionDialog(null, 
 														     "Liberare parcheggio?",
 															 " ", 
@@ -184,7 +184,7 @@ public class GUIParcheggio extends JFrame{
 						else {
 							
 							int sicuro = -1;
-							String[] conferma = {"No", "Sì"};
+							String[] conferma = {"No", "Si'"};
 							sicuro = JOptionPane.showOptionDialog(null, 
 													     "Liberare parcheggio?",
 														 " ", 
@@ -462,7 +462,7 @@ public class GUIParcheggio extends JFrame{
 				// chiedere se e' sicuro di volere pulire tutti i campi
 				// per sicurezza
 				int sicuro = -1;
-				String[] opzioni = {"No", "Sì"};
+				String[] opzioni = {"No", "Si'"};
 				sicuro = JOptionPane.showOptionDialog(null, 
 										     "Sei sicuro di volere pulire i campi?",
 											 " ", 

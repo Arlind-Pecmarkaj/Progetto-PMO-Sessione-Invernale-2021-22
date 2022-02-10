@@ -10,7 +10,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
 import parcheggio.enumerations.Alimentazione;
 import parcheggio.exceptions.AltezzaMassimaConsentitaException;
 import parcheggio.exceptions.AutoMetanoNonAmmessaException;
@@ -202,7 +201,6 @@ public class ParcheggioImpl implements Parcheggio{
 	/*
 	 * restituisce tutti i veicoli presenti nel parcheggio
 	 */
-	
 	@Override
 	public Set<VeicoloInt> listaVeicoliPresenti() {
 		
