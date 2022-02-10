@@ -160,17 +160,48 @@ public class GUIParcheggio extends JFrame{
 							}
 							
 							else if((risposta != - 1 && bottoniVeicoliElettrici.contains(jb))) {
-								double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
-								jb.setBackground(Color.green);
-								showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
-												  prezzoDaPagare + " euro");	
+								
+								// chiedere se veramente si vuole liberare il posto
+								int sicuro = -1;
+								String[] conferma = {"No", "Sì"};
+								sicuro = JOptionPane.showOptionDialog(null, 
+														     "Liberare parcheggio?",
+															 " ", 
+															  JOptionPane.DEFAULT_OPTION, 
+															  JOptionPane.QUESTION_MESSAGE, 
+															  null, 
+															  conferma, 
+															  null);
+								
+								
+								if(sicuro != 0) {
+									double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
+									jb.setBackground(Color.green);
+									showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
+													  prezzoDaPagare + " euro");
+								}
+									
 							}
 						}
 						else {
-							double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
-							jb.setBackground(Color.green);
-							showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
-											  prezzoDaPagare + " euro");
+							int sicuro = -1;
+							String[] conferma = {"No", "Sì"};
+							sicuro = JOptionPane.showOptionDialog(null, 
+													     "Liberare parcheggio?",
+														 " ", 
+														  JOptionPane.DEFAULT_OPTION, 
+														  JOptionPane.QUESTION_MESSAGE, 
+														  null, 
+														  conferma, 
+														  null);
+							
+							
+							if(sicuro != 0) {
+								double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
+								jb.setBackground(Color.green);
+								showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
+												  prezzoDaPagare + " euro");
+							}
 						}
 							
 					}
@@ -436,6 +467,8 @@ public class GUIParcheggio extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				// chiedere se e' sicuro di volere pulire tutti i campi
+				// per sicurezza
 				int sicuro = -1;
 				String[] opzioni = {"No", "Sì"};
 				sicuro = JOptionPane.showOptionDialog(null, 
@@ -495,7 +528,7 @@ public class GUIParcheggio extends JFrame{
 			Optional<Posto> postoOccupato = Optional.of(p.aggiungiVeicolo(v));
 			if(postoOccupato.isPresent()) {
 				bottoniVeicoli.get(posti.lastIndexOf(postoOccupato.get())).setBackground(Color.red);
-				showMessageDialog(null,"Il veicolo e' ora parcheggiato!");
+				showMessageDialog(null,"Veicolo parcheggiato!");
 				esito = true;
 			}
 		}catch(PostiFinitiException e) {
