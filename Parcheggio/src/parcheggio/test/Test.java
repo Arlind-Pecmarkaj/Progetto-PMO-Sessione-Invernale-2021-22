@@ -8,7 +8,7 @@ import parcheggio.model.GestioneParcheggio;
 import parcheggio.model.ParcheggioImpl;
 import parcheggio.model.abbonamento.Abbonamento;
 import parcheggio.model.persona.Persona;
-import parcheggio.model.veicolo.Alimentazione;
+import parcheggio.enumerations.Alimentazione;
 import parcheggio.model.veicolo.Auto;
 import parcheggio.model.veicolo.Moto;
 import parcheggio.view.GUI.GUIGestione;

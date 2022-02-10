@@ -32,6 +32,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 //import parcheggio.enumerations.Alimentazione;
 import parcheggio.model.veicolo.*;
+import parcheggio.enumerations.Alimentazione;
 import parcheggio.exceptions.AltezzaMassimaConsentitaException;
 import parcheggio.exceptions.AutoMetanoNonAmmessaException;
 import parcheggio.exceptions.MonopattiniEsauritiException;
@@ -52,9 +53,9 @@ import parcheggio.model.posto.PostoMoto;
 public class GUIParcheggio extends JFrame{
 
 	private JPanel contentPane;      // Panel principale del frame
-	private JPanel panelParcheggi;   // Panel in cui son visibili i parchegi
+	private JPanel panelParcheggi;   // Panel in cui son visibili i parcheggi
 	private JPanel panelMonopattini; // Panel in cui son visibili i monopattini
-	private JPanel panelInserimento; // Panel in cui è visibile il form di inserimento di un veicolo
+	private JPanel panelInserimento; // Panel in cui e' visibile il form di inserimento di un veicolo
 	
 	/* Label associate al gruppo di Field/Box qui sotto e aiutano nell'identificazione. */
 	private JLabel lblPanelInserimento;
@@ -75,6 +76,7 @@ public class GUIParcheggio extends JFrame{
 	private JComboBox<?> listaAlimentazioni;
 	private JCheckBox    noleggiaMonopattino;
 	private JButton		 pulisci;
+	private JButton		 infoPosto;
 	
 	private ArrayList<Posto>   posti;
 	private ArrayList<JButton> bottoniVeicoli = new ArrayList<JButton>();
@@ -99,7 +101,9 @@ public class GUIParcheggio extends JFrame{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		/* ------------------------------------ POSTI -------------------------- */
+		/*private JPanel panelInfo;		 // Panel per vedere le info dei posti  
+		 * ------------------------------------ POSTI -------------------------- */
+		
 		posti = ((ParcheggioImpl) p).getPostiDisponibili();
 		
 		this.panelParcheggi = new JPanel();	
@@ -122,6 +126,8 @@ public class GUIParcheggio extends JFrame{
 			
 			this.bottoniVeicoli.add(jb);
 			
+			/*********************************************************************/
+		
 			/* ottengo i bottoni per i posti dei veicoli elettrici */
 			this.bottoniVeicoliElettrici = (ArrayList<JButton>) this.bottoniVeicoli.stream().filter(b -> b.getText().equals("Posto Elettrica")).collect(Collectors.toList());
 			
@@ -134,7 +140,7 @@ public class GUIParcheggio extends JFrame{
 					if(!posti.get(bottoniVeicoli.lastIndexOf(jb)).isLibero()) {
 						int risposta = -1;
 						if(bottoniVeicoliElettrici.contains(jb)) {
-							/* se il posto è occupato posso ricare l'auto */
+							/* se il posto e' occupato posso ricaricare l'auto */
 							String[] opzioni = {"Ricarica auto", "Lascia parcheggio"};
 							risposta = JOptionPane.showOptionDialog(null, 
 																	"Che operazione ti interessa effettuare?",
@@ -152,16 +158,55 @@ public class GUIParcheggio extends JFrame{
 //								ricaricaAutoForm.add(new JLabel("Ricarica auto"));
 								
 							}
+							
+							else if((risposta != - 1 && bottoniVeicoliElettrici.contains(jb))) {
+								
+								// chiedere se veramente si vuole liberare il posto
+								int sicuro = -1;
+								String[] conferma = {"No", "SÃ¬"};
+								sicuro = JOptionPane.showOptionDialog(null, 
+														     "Liberare parcheggio?",
+															 " ", 
+															  JOptionPane.DEFAULT_OPTION, 
+															  JOptionPane.QUESTION_MESSAGE, 
+															  null, 
+															  conferma, 
+															  null);
+								
+								if(sicuro != 0) {
+									double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
+									jb.setBackground(Color.green);
+									showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
+													  prezzoDaPagare + " euro");
+								}
+									
+							}
 						}
-						if(!(risposta == 0 && bottoniVeicoliElettrici.contains(jb))) {
-							double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
-							jb.setBackground(Color.green);
-							showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
-											  prezzoDaPagare + " euro");	
+						else {
+							
+							int sicuro = -1;
+							String[] conferma = {"No", "SÃ¬"};
+							sicuro = JOptionPane.showOptionDialog(null, 
+													     "Liberare parcheggio?",
+														 " ", 
+														  JOptionPane.DEFAULT_OPTION, 
+														  JOptionPane.QUESTION_MESSAGE, 
+														  null, 
+														  conferma, 
+														  null);
+							
+							if(sicuro != 0) {
+								double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
+								jb.setBackground(Color.green);
+								showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
+												  prezzoDaPagare + " euro");
+							}
 						}
+							
 					}
+					
 					else {
-						showMessageDialog(null,"Il posto auto è gia' libero!");
+						showMessageDialog(null,"Il posto auto e' gia' libero!");
 					}
 				}
 			});
@@ -190,7 +235,7 @@ public class GUIParcheggio extends JFrame{
 						showMessageDialog(null, "Monopattino restituito. \n" + 
 										 "Prezzo da pagare: " + costo);
 					} else {
-						showMessageDialog(null, "Il monopattino è già disponibile per il noleggio.");
+						showMessageDialog(null, "Il monopattino e' gia' disponibile per il noleggio.");
 					}
 				}
 				
@@ -336,6 +381,7 @@ public class GUIParcheggio extends JFrame{
 		gbcIn.gridx              = 1;
 		gbcIn.gridy              = 8;
 		panelInserimento.add(in, gbcIn);
+		
 		/*
 		 * implementazione dell'inserimento di un veicolo all'interno del parcheggio 
 		 */
@@ -394,7 +440,7 @@ public class GUIParcheggio extends JFrame{
 					} catch (MonopattiniEsauritiException m) {
 						showMessageDialog(null, "Attenzione! Monopattini esauriti");
 					} catch (PersonaSenzaAbbonamentoException m) {
-						showMessageDialog(null, "Attenzione! L'utente è sprovvisto di abbonamento. " +
+						showMessageDialog(null, "Attenzione! L'utente e' sprovvisto di abbonamento. " +
 									      "Monopattino non noleggiato");
 					} catch(IllegalArgumentException m) {
 						showMessageDialog(null, "Attenzione! I campi per l'utente non sono completi.");
@@ -410,17 +456,50 @@ public class GUIParcheggio extends JFrame{
 		gbcPulisci.gridy			  = 8;
 		panelInserimento.add(pulisci, gbcPulisci);
 		
+		infoPosto = new JButton("Info posti");
+		GridBagConstraints gbcInfo = new GridBagConstraints();
+		gbcInfo.gridx			  = 0;
+		gbcInfo.gridy			  = 8;
+		panelInserimento.add(infoPosto, gbcInfo);
+		
 		pulisci.addActionListener(new ActionListener(){  
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				targa.setText("");
-				codiceFiscale.setText("");
-				nome.setText("");
-				cognome.setText("");
+				
+				// chiedere se e' sicuro di volere pulire tutti i campi
+				// per sicurezza
+				int sicuro = -1;
+				String[] opzioni = {"No", "SÃ¬"};
+				sicuro = JOptionPane.showOptionDialog(null, 
+										     "Sei sicuro di volere pulire i campi?",
+											 " ", 
+											  JOptionPane.DEFAULT_OPTION, 
+											  JOptionPane.QUESTION_MESSAGE, 
+											  null, 
+											  opzioni, 
+											  null);
+				
+				if(sicuro != 0) {
+					targa.setText("");
+					codiceFiscale.setText("");
+					nome.setText("");
+					cognome.setText("");
+				}
+				
+					
 			}  
 		});
 		
-		
+	    infoPosto.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				new GUIPosti();
+			}
+			
+			
+		});
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -454,20 +533,21 @@ public class GUIParcheggio extends JFrame{
 			Optional<Posto> postoOccupato = Optional.of(p.aggiungiVeicolo(v));
 			if(postoOccupato.isPresent()) {
 				bottoniVeicoli.get(posti.lastIndexOf(postoOccupato.get())).setBackground(Color.red);
-				showMessageDialog(null,"Il veicolo e' ora parcheggiato!");
+				showMessageDialog(null,"Veicolo parcheggiato!");
 				esito = true;
 			}
 		}catch(PostiFinitiException e) {
-			showMessageDialog(null,"Attenzione! non è possibile parcheggiare, posti insufficienti");
+			showMessageDialog(null,"Attenzione! non e' possibile parcheggiare, posti insufficienti");
 		}catch(AltezzaMassimaConsentitaException e) {
 			showMessageDialog(null, "Attenzione! Altezza non consentita, veicolo non parcheggiato");
 		}catch(AutoMetanoNonAmmessaException e) {
 			showMessageDialog(null, "Attenzione! Le auto a metano non sono ammesse in un parcheggio sotterranneo");
 		}catch(TargheUgualiException e) {
-			showMessageDialog(null, "Attenzione! Un veicolo con la stessa targa è già parcheggio");
+			showMessageDialog(null, "Attenzione! Un veicolo con la stessa targa e' gia' presente!");
 		}catch(TargaNonPresenteException e) {
-			showMessageDialog(null, "Attenzione! Non è stata inserita la targa");
+			showMessageDialog(null, "Attenzione! Non e' stata inserita la targa");
 		}
 		return esito;
+		
 	}
 }

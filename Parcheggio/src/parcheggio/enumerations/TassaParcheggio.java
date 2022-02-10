@@ -1,5 +1,12 @@
 package parcheggio.enumerations;
 
+/**
+ *  Questo tipo enumeratore mi definisce un coefficiente
+ *  che viene utilizzato per definire una tassa relativa 
+ *  alla tipologia di parcheggio
+ *  
+ */
+
 public enum TassaParcheggio {
 							// se la tassa fissa del parcheggio X è 1 euro...
 	TASSA_AUTO(0.8),		// => 1,25 euro all'ora			

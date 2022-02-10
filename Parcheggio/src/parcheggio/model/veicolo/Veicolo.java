@@ -1,10 +1,7 @@
 package parcheggio.model.veicolo;
+import parcheggio.enumerations.Alimentazione;
 
-/**
- *
- * @author marti
- */
-public class Veicolo {
+public class Veicolo implements VeicoloInt{
     /*--- Dichiarazione attributi ---*/
     private String targa;               //stringa alfanumerica identificativa del veicolo
     private int annoImm;                //anno di immatricolazione del veicolo

@@ -2,11 +2,20 @@ package parcheggio.model.posto;
 
 import static parcheggio.enumerations.TassaParcheggio.*;
 
+/**
+ *  Questa classe specializza la tipologia del posto
+ *  in posto per sole Moto.
+ *  
+ *  L'Id di questi posti inizia con 'M' per
+ *  contraddistinguerli da quelli delle altre tipologie.
+ * 
+ */
+
 public class PostoMoto extends AbstractPosto {
 	
 	
 	public PostoMoto() {
-		this("E0000");
+		this("0000");
 	}
 	
 	public PostoMoto(String postoId) {
@@ -17,10 +26,10 @@ public class PostoMoto extends AbstractPosto {
 	/**
 	 * 	Compone una parte variabile univoca con il codice "M"
 	 * 	che sta ad indicare che il posto è riservato alle Moto.
-	 * 	L'ID di un posto corrisponde con il numero suo numero.
+	 * 	L'Id di un posto corrisponde con il numero suo numero.
 	 * 	
 	 * 	@param postoMotoID
-	 * 	@return l'ID composto di un posto per moto
+	 * 	@return l'Id composto di un posto per moto
 	 */
 	@Override
 	protected String setId(String postoMotoId) {

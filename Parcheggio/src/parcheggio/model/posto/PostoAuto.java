@@ -3,18 +3,26 @@ package parcheggio.model.posto;
 import static parcheggio.enumerations.TassaParcheggio.*;
 import parcheggio.model.sensore.SensoreCarburante;
 
+/**
+ *  Questa classe specializza la tipologia del posto
+ *  in posto per sole Auto a combustione.
+ *  
+ *  L'Id di questi posti inizia con 'A' per
+ *  contraddistinguerli da quelli delle altre tipologie.
+ * 
+ */
+
 public class PostoAuto extends AbstractPosto {
 	
 	private SensoreCarburante sensoreCarburante;
 	
-//	costruttori per i test
 	
 	public PostoAuto() {
-		this("A0000", new SensoreCarburante());
+		this("0000", new SensoreCarburante());
 	};
 	
 	public PostoAuto(SensoreCarburante sensore) {
-		this("A0000", sensore);
+		this("0000", sensore);
 	}
 	
 	public PostoAuto(String postoId) {
@@ -37,10 +45,10 @@ public class PostoAuto extends AbstractPosto {
 	/**
 	 * 	Compone una parte variabile univoca con il codice "A"
 	 * 	che sta ad indicare che il posto è riservato alle auto.
-	 * 	L'ID di un posto corrisponde con il numero suo numero.
+	 * 	L'Id di un posto corrisponde con il numero suo numero.
 	 * 	
 	 * 	@param postoAutoID
-	 * 	@return l'ID composto di un posto per auto
+	 * 	@return l'Id composto di un posto per auto
 	 */
 	@Override
 	protected String setId(String postoAutoId) {
