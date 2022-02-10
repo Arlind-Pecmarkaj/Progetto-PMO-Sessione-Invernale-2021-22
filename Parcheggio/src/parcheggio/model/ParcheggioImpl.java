@@ -143,7 +143,7 @@ public class ParcheggioImpl implements Parcheggio{
 	public Posto aggiungiVeicolo(VeicoloInt v){
 		Posto posto = null;
 		
-		// controllo se la targa è stata inserita correttamente
+		// controllo se la targa ï¿½ stata inserita correttamente
 		if(v.getTarga().equals("")) {
 			throw new TargaNonPresenteException("Attenzione: non e' stata inserita la targa!");
 		}
@@ -201,8 +201,10 @@ public class ParcheggioImpl implements Parcheggio{
 	/*
 	 * restituisce tutti i veicoli presenti nel parcheggio
 	 */
+	
 	@Override
 	public Set<VeicoloInt> listaVeicoliPresenti() {
+		
 		return this.postiDisponibili.stream()
 						            .filter(p -> p.isLibero() == false)
 						            .map(p -> ((AbstractPosto) p).getVeicolo().get())
@@ -225,7 +227,7 @@ public class ParcheggioImpl implements Parcheggio{
 			Optional<Monopattino> tmp = this.postiMonopattino.stream()
 															 .filter(mo -> mo.getDisponibile())
 															 .findFirst();
-			// controllo se è disponibile almeno un monopattino
+			// controllo se ï¿½ disponibile almeno un monopattino
 			if(tmp.isPresent()) {
 				tmp.get().setDisponibile(false);
 				m = tmp.get();
@@ -351,7 +353,7 @@ public class ParcheggioImpl implements Parcheggio{
 				tmp.get().occupaPosto((Veicolo) v);
 				return tmp.get();
 			}
-		// se il veicolo è elettrico e non sono piu' disponibili posti elettrici
+		// se il veicolo ï¿½ elettrico e non sono piu' disponibili posti elettrici
 		// si controlla se sono disponibili o meno posti per auto normali
 		} else if(v.getCarburante().equals(Alimentazione.ELETTRICA)){
 			return this.filtraAggiungi(p -> p instanceof PostoAuto, v);

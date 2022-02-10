@@ -544,7 +544,7 @@ public class GUIParcheggio extends JFrame{
 		}catch(AutoMetanoNonAmmessaException e) {
 			showMessageDialog(null, "Attenzione! Le auto a metano non sono ammesse in un parcheggio sotterranneo");
 		}catch(TargheUgualiException e) {
-			showMessageDialog(null, "Attenzione! Un veicolo con la stessa targa e' gia' parcheggio");
+			showMessageDialog(null, "Attenzione! Un veicolo con la stessa targa e' gia' presente!");
 		}catch(TargaNonPresenteException e) {
 			showMessageDialog(null, "Attenzione! Non e' stata inserita la targa");
 		}
