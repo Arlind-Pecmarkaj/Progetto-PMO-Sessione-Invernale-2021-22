@@ -334,7 +334,7 @@ public class GUIGestione extends JFrame {
 		
 		
 		GridBagConstraints gbc_help = new GridBagConstraints();
-		gbc_help.gridx 				= 3;
+		gbc_help.gridx 				= 4;
 		gbc_help.gridy 				= 8;
 		panel_abbonamenti.add(help, gbc_help);
 		
