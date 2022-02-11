@@ -303,7 +303,7 @@ public class GUIGestione extends JFrame {
 					showMessageDialog(null, "ATTENZIONE: campi non compilati correttamente:\n" + il.getMessage(), 
 									  "Errore", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception ex) { // L'unica eccezione base viene lanciata dal ParseDate
-					showMessageDialog(null, "ATTENZIONE: campo data di nascita non compilato correttamente!\n Il formato � AAAA-MM-GG!", 
+					showMessageDialog(null, "ATTENZIONE: campo data di nascita non compilato correttamente!\n Il formato e' AAAA-MM-GG!", 
 							          "Errore", JOptionPane.ERROR_MESSAGE);
 				}
 				

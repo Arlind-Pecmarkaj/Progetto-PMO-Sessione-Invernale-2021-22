@@ -26,7 +26,7 @@ public class Test {
 		 * Funziona tutto
 		 * 
 		 * Aggiornamento del 08/01/2022:
-		 * Le istanze danno errore perchè ho aggiunto capienzaMassima e carburanteAttuale
+		 * Le istanze danno errore perchï¿½ ho aggiunto capienzaMassima e carburanteAttuale
 		 */
         Auto a1 = new Auto("ABC123ABC", 2021, Alimentazione.GPL, "Toyota", "Yaris", "Martin", "Berardi", 1.5, 50, 30);
         Moto m1 = new Moto("AAA999ZZZ", 1999, Alimentazione.BENZINA, "Honda", "SuHonda", "Radja", "Nainggolan", 300.0, 30.0);
@@ -103,7 +103,7 @@ public class Test {
 		 * Problemi: al 06/01/2022 nessuno.
 		 */
 		System.out.println("-------------------------------------------------------------------------------------------");
-		Persona pers = new Persona("PRRRR0001038", "Mario", "Verdi", LocalDate.of(1976, 4, 3), "Italia");
+		Persona pers = new Persona("PRRRR0001038AAAA", "Mario", "Verdi", LocalDate.of(1976, 4, 3), "Italia");
 		Abbonamento ab  = new Abbonamento(20221, "CC532FD", pers, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 12, 31));
 		Abbonamento ab2 = new Abbonamento(20222, "FG554AB", pers, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 12, 31), true);
 		g.aggiungiParcheggio(p);

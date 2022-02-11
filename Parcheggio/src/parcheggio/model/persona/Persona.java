@@ -4,20 +4,13 @@ import java.time.LocalDate;
 
 public class Persona implements Pers {
 	
-	/*
-	 * fields 
-	 */
-	
 	private final String    codFiscale;
 	private final String    nome;
 	private final String    cognome;
 	private final LocalDate dataNascita;
 	private final String    nazione;
 	
-	/*
-	 * constructor 
-	 */
-	
+	// costruttore 
 	public Persona(final String    codFiscale,
 				   final String    nome,
 				   final String    cognome,
@@ -33,13 +26,14 @@ public class Persona implements Pers {
 	
 	// illegal arguments 
 	public void illegalArgumentPersona() {
-		if(codFiscale.isBlank() || codFiscale.isEmpty()|| codFiscale == null ||
-		   nome.isBlank() || nome.isEmpty() || nome == null || 
-		   cognome.isBlank() || cognome.isEmpty() || cognome == null ||
-		   dataNascita == null || 
+		if(codFiscale.isBlank() || codFiscale.isEmpty()|| codFiscale == null || codFiscale.length() != 16 ||
+		   nome.isBlank() || nome.isEmpty() || nome == null || nome.length() <= 2 || 
+		   cognome.isBlank() || cognome.isEmpty() || cognome == null || cognome.length() <= 2 || 
+		   dataNascita == null || dataNascita.isAfter(LocalDate.now()) || 
 		   nazione.isBlank() || nazione.isEmpty() || nazione == null) {
 			throw new IllegalArgumentException();
 		}
+		
 	}
 	
 	/*
