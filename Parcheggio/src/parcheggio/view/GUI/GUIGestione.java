@@ -325,19 +325,14 @@ public class GUIGestione extends JFrame {
 			}
 		});
 		
-		pulisci = new JButton("Pulisci campi");
-		GridBagConstraints gbcPulisci = new GridBagConstraints();
-		gbcPulisci.gridx			  = 3;
-		gbcPulisci.gridy			  = 7;
-		
-		panel_abbonamenti.add(pulisci, gbcPulisci);
-		
-		
 		GridBagConstraints gbc_help = new GridBagConstraints();
 		gbc_help.gridx 				= 4;
 		gbc_help.gridy 				= 8;
 		panel_abbonamenti.add(help, gbc_help);
 		
+		pulisci = new JButton("Pulisci campi");
+		pulisci.setBackground(Color.gray.darker());
+		pulisci.setForeground(Color.white);
 		pulisci.addActionListener(new ActionListener(){  
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -345,7 +340,7 @@ public class GUIGestione extends JFrame {
 				// chiedere se e' sicuro di volere pulire tutti i campi
 				// per sicurezza
 				int sicuro = -1;
-				String[] opzioni = {"No", "Sì"};
+				String[] opzioni = {"No", "Si'"};
 				sicuro = JOptionPane.showOptionDialog(null, 
 										     "Sei sicuro di volere pulire i campi?",
 											 " ", 
@@ -367,6 +362,11 @@ public class GUIGestione extends JFrame {
 					
 			}  
 		});
+		
+		GridBagConstraints gbcPulisci = new GridBagConstraints();
+		gbcPulisci.gridx			  = 3;
+		gbcPulisci.gridy			  = 7;
+		panel_abbonamenti.add(pulisci, gbcPulisci);
 		
 		/* Alla chiusura del frame dovr� scrivere i dati */
 		this.addWindowListener(new WindowAdapter() {
