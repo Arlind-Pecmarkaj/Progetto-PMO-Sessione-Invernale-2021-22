@@ -26,14 +26,20 @@ public class Persona implements Pers {
 	
 	// illegal arguments 
 	public void illegalArgumentPersona() {
-		if(codFiscale.isBlank() || codFiscale.isEmpty()|| codFiscale == null || codFiscale.length() != 16 ||
-		   nome.isBlank() || nome.isEmpty() || nome == null || nome.length() <= 2 || 
-		   cognome.isBlank() || cognome.isEmpty() || cognome == null || cognome.length() <= 2 || 
-		   dataNascita == null || dataNascita.isAfter(LocalDate.now()) || 
-		   nazione.isBlank() || nazione.isEmpty() || nazione == null) {
-			throw new IllegalArgumentException();
-		}
+		if(codFiscale.isBlank() || codFiscale.isEmpty()|| codFiscale == null || codFiscale.length() != 16)
+				throw new IllegalArgumentException("Codice Fiscale");
 		
+		if(nome.isBlank() || nome.isEmpty() || nome == null || nome.length() <= 2)
+			throw new IllegalArgumentException("Nome");
+		
+		if(cognome.isBlank() || cognome.isEmpty() || cognome == null || cognome.length() <= 2)
+			throw new IllegalArgumentException("Cognome");
+		
+		if( dataNascita == null || dataNascita.isAfter(LocalDate.now()))
+			throw new IllegalArgumentException("Data di nascita");
+		
+		if( nazione.isBlank() || nazione.isEmpty() || nazione == null)
+			throw new IllegalArgumentException("Nazione");
 	}
 	
 	/*

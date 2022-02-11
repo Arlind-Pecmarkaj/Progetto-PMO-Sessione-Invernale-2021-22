@@ -300,7 +300,7 @@ public class GUIGestione extends JFrame {
 					g.aggiornaAbbonamenti(); // Aggiorno gli abbonamenti.
 					showMessageDialog(null, "Aggiunto abbonamento con successo: \n" + a, "Inserimento abbonamento", JOptionPane.DEFAULT_OPTION);
 				} catch (IllegalArgumentException il) { // Eccezione lanciata in caso i campi fossero vuoti.
-					showMessageDialog(null, "ATTENZIONE: campi non compilati correttamente:\n" + il.getMessage(), 
+					showMessageDialog(null, "ATTENZIONE:" + '\n' + "Campo non compilato correttamente:\n" + il.getMessage(), 
 									  "Errore", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception ex) { // L'unica eccezione base viene lanciata dal ParseDate
 					showMessageDialog(null, "ATTENZIONE: campo data di nascita non compilato correttamente!\n Il formato e' AAAA-MM-GG!", 
