@@ -327,7 +327,7 @@ public class GUIGestione extends JFrame {
 		
 		pulisci = new JButton("Pulisci campi");
 		GridBagConstraints gbcPulisci = new GridBagConstraints();
-		gbcPulisci.gridx			  = 2;
+		gbcPulisci.gridx			  = 3;
 		gbcPulisci.gridy			  = 7;
 		
 		panel_abbonamenti.add(pulisci, gbcPulisci);
