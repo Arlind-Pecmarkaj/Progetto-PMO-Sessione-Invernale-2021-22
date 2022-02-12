@@ -10,6 +10,9 @@ public interface abb {
 	 * methods 
 	 */
 	
+	// return id del veicolo
+	int getId();
+	
 	// return della targa veicolo 
 	String getTarga();
 	
@@ -21,4 +24,8 @@ public interface abb {
 	
 	// return della data di scadenza
 	LocalDate getDataFine();
+	
+	// return abbonamento premium
+	boolean isPremium();
+
 }
