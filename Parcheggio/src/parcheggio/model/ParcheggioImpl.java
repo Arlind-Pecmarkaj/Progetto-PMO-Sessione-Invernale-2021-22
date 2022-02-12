@@ -143,15 +143,15 @@ public class ParcheggioImpl implements Parcheggio{
 	public Posto aggiungiVeicolo(VeicoloInt v){
 		Posto posto = null;
 		
-		// controllo se la targa � stata inserita correttamente
+		// controllo se la targa e' stata inserita correttamente
 		if(v.getTarga().equals("")) {
 			throw new TargaNonPresenteException("Attenzione: non e' stata inserita la targa!");
 		}
 		
 		// controllo di non inserire auto con targhe uguali
 		Optional<VeicoloInt> veicoloGiaPresente = this.listaVeicoliPresenti().stream()
-								   										  .filter(ve -> ve.getTarga().equals(v.getTarga()))
-								   										  .findAny();
+								   										     .filter(ve -> ve.getTarga().equals(v.getTarga()))
+								   										     .findAny();
 		if(veicoloGiaPresente.isPresent()) {
 			throw new TargheUgualiException("Auto con la stessa targa presente!");
 		}
@@ -203,7 +203,6 @@ public class ParcheggioImpl implements Parcheggio{
 	 */
 	@Override
 	public Set<VeicoloInt> listaVeicoliPresenti() {
-		
 		return this.postiDisponibili.stream()
 						            .filter(p -> p.isLibero() == false)
 						            .map(p -> ((AbstractPosto) p).getVeicolo().get())
@@ -226,7 +225,7 @@ public class ParcheggioImpl implements Parcheggio{
 			Optional<Monopattino> tmp = this.postiMonopattino.stream()
 															 .filter(mo -> mo.getDisponibile())
 															 .findFirst();
-			// controllo se � disponibile almeno un monopattino
+			// controllo se e' disponibile almeno un monopattino
 			if(tmp.isPresent()) {
 				tmp.get().setDisponibile(false);
 				m = tmp.get();
@@ -315,6 +314,12 @@ public class ParcheggioImpl implements Parcheggio{
 		return true;
 	}// end equals()
 	
+	@Override
+	public String toString() {
+		return "ParcheggioImpl [id=" + id + ", name=" + name + ", postiDisponibili=" + postiDisponibili
+				+ ", postiMonopattino=" + postiMonopattino + "]";
+	}// end toString()
+
 	/* metodo per controllare se e' presente un posto libero, in caso contrario
 	 * lancia un'eccezione (PostiFiniti). Se il veicolo ha un'altezza maggiore
 	 * rispetto al limite consentito, viene lanciata un'eccezione (ALtezzaMassimaSuperata).
@@ -352,7 +357,7 @@ public class ParcheggioImpl implements Parcheggio{
 				tmp.get().occupaPosto((Veicolo) v);
 				return tmp.get();
 			}
-		// se il veicolo � elettrico e non sono piu' disponibili posti elettrici
+		// se il veicolo e' elettrico e non sono piu' disponibili posti elettrici
 		// si controlla se sono disponibili o meno posti per auto normali
 		} else if(v.getCarburante().equals(Alimentazione.ELETTRICA)){
 			return this.filtraAggiungi(p -> p instanceof PostoAuto, v);
