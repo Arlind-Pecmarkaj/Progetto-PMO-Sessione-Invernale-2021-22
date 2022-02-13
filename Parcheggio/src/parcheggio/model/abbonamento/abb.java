@@ -27,5 +27,8 @@ public interface abb {
 	
 	// return abbonamento premium
 	boolean isPremium();
+	
+	// metodo per illegal argument
+	void illegalArgumentAbbonamento();
 
 }

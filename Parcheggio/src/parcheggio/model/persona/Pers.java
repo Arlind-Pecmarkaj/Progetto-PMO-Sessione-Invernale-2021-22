@@ -22,4 +22,7 @@ public interface Pers {
 	
 	// return della nazione 
 	String getNazione();
+	
+	// metodo per illegal argument
+	void illegalArgumentPersona();
 }
