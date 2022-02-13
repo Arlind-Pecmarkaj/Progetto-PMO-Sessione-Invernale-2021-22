@@ -97,6 +97,7 @@ public class GUIParcheggio extends JFrame{
 		
 		setBounds(100, 100, 800, 550);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.gray.brighter());
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
@@ -106,6 +107,7 @@ public class GUIParcheggio extends JFrame{
 		posti = ((ParcheggioImpl) p).getPostiDisponibili();
 		
 		this.panelParcheggi = new JPanel();	
+		this.panelParcheggi.setBackground(Color.gray);
 		this.panelParcheggi.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		for (int i = 0; i < numeroPosti; i++) {
@@ -152,10 +154,6 @@ public class GUIParcheggio extends JFrame{
 							if(risposta == 0) {
 								/* sceglo di ricaricare auto */
 								new GUIRicaricaAuto((PostoElettrico) posti.get(bottoniVeicoli.lastIndexOf(jb)));
-//								JFrame ricaricaAutoForm = new JFrame("Ricarica Auto Elettrica");
-//								ricaricaAutoForm.setVisible(true);
-//								ricaricaAutoForm.add(new JLabel("Ricarica auto"));
-								
 							}
 							
 							else if((risposta != - 1 && bottoniVeicoliElettrici.contains(jb))) {
@@ -216,8 +214,10 @@ public class GUIParcheggio extends JFrame{
 		/* ---------------------- MONOPATTINI -------------------------- */
 		
 		this.panelMonopattini = new JPanel();
+		this.panelMonopattini.setBackground(Color.gray);
 		this.panelMonopattini.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		JLabel labelMonopattini = new JLabel("Monopattini disponibili");
+		labelMonopattini.setForeground(Color.white);
 		this.panelMonopattini.add(labelMonopattini);
 		
 		for (int i = 0; i < ((ParcheggioImpl)p).getPostiMonopattino().size(); i++) {
@@ -251,6 +251,7 @@ public class GUIParcheggio extends JFrame{
 	
 		/* ------------------------------------------ INSERIMENTO ----------------------------- */
 		panelInserimento = new JPanel();
+		panelInserimento.setBackground(Color.gray);
 		GridBagLayout gblPanelInserimento = new GridBagLayout();
 		gblPanelInserimento.columnWidths  = new int[]{0, 0, 0};
 		gblPanelInserimento.rowHeights    = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -260,6 +261,7 @@ public class GUIParcheggio extends JFrame{
 		
 		
 		lblPanelInserimento = new JLabel("Inserimento veicolo");
+		lblPanelInserimento.setForeground(Color.white);
 		GridBagConstraints gbcPanelInserimento = new GridBagConstraints();
 		gbcPanelInserimento.insets             = new Insets(0, 0, 5, 0);
 		gbcPanelInserimento.gridx              = 1;
@@ -267,6 +269,7 @@ public class GUIParcheggio extends JFrame{
 		panelInserimento.add(lblPanelInserimento, gbcPanelInserimento);
 		
 		lblTarga = new JLabel("Targa");
+		lblTarga.setForeground(Color.white);
 		GridBagConstraints gbcLblTarga = new GridBagConstraints();
 		gbcLblTarga.anchor             = GridBagConstraints.EAST;
 		gbcLblTarga.insets             = new Insets(0, 0, 5, 5);
@@ -284,6 +287,7 @@ public class GUIParcheggio extends JFrame{
 		targa.setColumns(10);
 		
 		lblCodiceFiscale = new JLabel("Codice Fiscale");
+		lblCodiceFiscale.setForeground(Color.white);
 		GridBagConstraints gbcLblCodiceFiscale = new GridBagConstraints();
 		gbcLblCodiceFiscale.anchor             = GridBagConstraints.EAST;
 		gbcLblCodiceFiscale.insets             = new Insets(0, 0, 5, 5);
@@ -301,6 +305,7 @@ public class GUIParcheggio extends JFrame{
 		codiceFiscale.setColumns(10);
 		
 		lblNome = new JLabel("Nome");
+		lblNome.setForeground(Color.white);
 		GridBagConstraints gbcLblNome = new GridBagConstraints();
 		gbcLblNome.insets             = new Insets(0, 0, 5, 5);
 		gbcLblNome.anchor             = GridBagConstraints.EAST;
@@ -319,6 +324,7 @@ public class GUIParcheggio extends JFrame{
 		
 		
 		lblCognome = new JLabel("Cognome");
+		lblCognome.setForeground(Color.white);
 		GridBagConstraints gbcLblCognome = new GridBagConstraints();
 		gbcLblCognome.anchor             = GridBagConstraints.EAST;
 		gbcLblCognome.insets             = new Insets(0, 0, 5, 5);
@@ -336,6 +342,7 @@ public class GUIParcheggio extends JFrame{
 		cognome.setColumns(10);
 		
 		lblTipoVeicolo = new JLabel("Tipo veicolo");
+		lblTipoVeicolo.setForeground(Color.white);
 		GridBagConstraints gbcLblTipoVeicolo = new GridBagConstraints();
 		gbcLblTipoVeicolo.anchor             = GridBagConstraints.NORTHEAST;
 		gbcLblTipoVeicolo.insets             = new Insets(0, 0, 5, 5);
@@ -352,6 +359,7 @@ public class GUIParcheggio extends JFrame{
 		panelInserimento.add(listaVeicoli, gbcListaVeicoli);
 		
 		lblCarburante = new JLabel("Carburante");
+		lblCarburante.setForeground(Color.white);
 		GridBagConstraints gbcLabelCarburante = new GridBagConstraints();
 		gbcLabelCarburante.anchor             = GridBagConstraints.NORTHEAST;
 		gbcLabelCarburante.insets             = new Insets(0, 0, 5, 5);
@@ -369,6 +377,8 @@ public class GUIParcheggio extends JFrame{
 		
 		
 		noleggiaMonopattino = new JCheckBox("Noleggia monopattino");
+		noleggiaMonopattino.setBackground(Color.gray.darker());
+		noleggiaMonopattino.setForeground(Color.white);
 		GridBagConstraints gbcNoleggiaMonopattino = new GridBagConstraints();
 		gbcNoleggiaMonopattino.insets = new Insets(0, 0, 5, 0);
 		gbcNoleggiaMonopattino.gridx = 1;
@@ -376,6 +386,8 @@ public class GUIParcheggio extends JFrame{
 		panelInserimento.add(noleggiaMonopattino, gbcNoleggiaMonopattino);
 		
 		in = new JButton("Inserisci");
+		in.setBackground(Color.gray.darker());
+		in.setForeground(Color.white);
 		GridBagConstraints gbcIn = new GridBagConstraints();
 		gbcIn.gridx              = 1;
 		gbcIn.gridy              = 8;
@@ -454,6 +466,9 @@ public class GUIParcheggio extends JFrame{
 		gbcPulisci.gridx			  = 2;
 		gbcPulisci.gridy			  = 8;
 		panelInserimento.add(pulisci, gbcPulisci);
+
+		pulisci.setBackground(Color.gray.darker());
+		pulisci.setForeground(Color.white);
 		
 		pulisci.addActionListener(new ActionListener(){  
 			@Override
