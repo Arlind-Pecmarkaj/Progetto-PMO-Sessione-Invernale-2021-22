@@ -411,7 +411,7 @@ public class GUIParcheggio extends JFrame{
 			   				   	"b",
 			   				   	nome.getText(),
 			   				   	cognome.getText(),
-			   				   	100 + (500 - 100) * r.nextDouble(),
+			   				   	100 + (250 - 100) * r.nextDouble(),
 			   				   	capacitaSerbatoio,
 			   				   	Math.round((0 + (capacitaSerbatoio - 0) * r.nextDouble())*100.0)/100.0);
 					
