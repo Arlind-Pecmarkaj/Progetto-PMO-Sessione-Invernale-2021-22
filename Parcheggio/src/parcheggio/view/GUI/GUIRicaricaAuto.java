@@ -2,6 +2,8 @@ package parcheggio.view.GUI;
 
 
 import javax.swing.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -54,7 +56,7 @@ public class GUIRicaricaAuto extends JFrame {
         this.lbl_tempoRicarica.setForeground(Color.white);
         this.form.add(lbl_tempoRicarica);
         
-        this.lbl_caricaAttuale = new JLabel("Carica attuale:" + (int) Math.ceil(pElettrico.getColonnaSupercharger().getPercentualeAttuale(pElettrico.getVeicolo().get())) + "%");
+        this.lbl_caricaAttuale = new JLabel("Carica attuale: " + (int) Math.ceil(pElettrico.getColonnaSupercharger().getPercentualeAttuale(pElettrico.getVeicolo().get())) + "%");
         this.lbl_caricaAttuale.setFont(bodyFont);
         this.lbl_caricaAttuale.setForeground(Color.white);
         this.form.add(lbl_caricaAttuale);
@@ -77,23 +79,23 @@ public class GUIRicaricaAuto extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					
-					pElettrico.getColonnaSupercharger().ricaricaVeicolo(Integer.parseInt(tx_percDaRicaricare.getText()), pElettrico.getVeicolo().get());
-					
-					lbl_tempoRicarica.setText("Tempo di ricarica: " + pElettrico.getColonnaSupercharger().getTempoRicaricaHR());
-					
-					lbl_caricaCompleta.setText("Carica completa");
-					
-					lbl_caricaAttuale.setText("Carica attuale:" + (int) Math.ceil(pElettrico.getColonnaSupercharger().getPercentualeAttuale(pElettrico.getVeicolo().get())) + "%");
-					
-				} catch(IllegalChargerException ex) {
-					
-					showMessageDialog(null, ex.getMessage() + " (" + tx_percDaRicaricare.getText() + "%)");
-					
+				String regEx = "[0-9]+";
+				Pattern pattern = Pattern.compile(regEx);
+				Matcher matcher = pattern.matcher(tx_percDaRicaricare.getText());
+				if(!(matcher.find() && matcher.group().equals(tx_percDaRicaricare.getText()))) {
+					showMessageDialog(null, "Inserisci prima la percentuale di ricarica che vuoi far raggiungere alla tua auto.");
 				}
-				
+				else {
+					try {
+						pElettrico.getColonnaSupercharger().ricaricaVeicolo(Integer.parseInt(tx_percDaRicaricare.getText()), pElettrico.getVeicolo().get());
+						lbl_tempoRicarica.setText("Tempo di ricarica: " + pElettrico.getColonnaSupercharger().getTempoRicaricaHR());
+						lbl_caricaCompleta.setText("Carica completa");
+						lbl_caricaAttuale.setText("Carica attuale: " + (int) Math.ceil(pElettrico.getColonnaSupercharger().getPercentualeAttuale(pElettrico.getVeicolo().get())) + "%");
+						
+					} catch(IllegalChargerException ex) {
+						showMessageDialog(null, ex.getMessage() + " (" + tx_percDaRicaricare.getText() + "%)");	
+					}					
+				}
 			}
         	
         });
