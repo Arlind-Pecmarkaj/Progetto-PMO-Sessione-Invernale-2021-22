@@ -35,27 +35,33 @@ public class GUIRicaricaAuto extends JFrame {
 		
 		this.container = getContentPane();
 		this.container.setLayout(new FlowLayout());
+		this.container.setBackground(Color.gray.brighter());
 		
 		this.title = new JLabel("Ricarica auto elettrica");
 		this.title.setFont(new Font("Arial", Font.PLAIN, 30));
+		this.title.setForeground(Color.white);
         this.title.setSize(300, 30);
         this.container.add(title);
         
         
         this.form = new JPanel(new GridLayout(6, 1));
+        this.form.setBackground(Color.gray);
         this.container.add(form);
         
         
         this.lbl_tempoRicarica = new JLabel("Tempo di ricarica: " + pElettrico.getColonnaSupercharger().getTempoRicaricaHR());
         this.lbl_tempoRicarica.setFont(bodyFont);
+        this.lbl_tempoRicarica.setForeground(Color.white);
         this.form.add(lbl_tempoRicarica);
         
         this.lbl_caricaAttuale = new JLabel("Carica attuale:" + (int) Math.ceil(pElettrico.getColonnaSupercharger().getPercentualeAttuale(pElettrico.getVeicolo().get())) + "%");
         this.lbl_caricaAttuale.setFont(bodyFont);
+        this.lbl_caricaAttuale.setForeground(Color.white);
         this.form.add(lbl_caricaAttuale);
 		
         this.lbl_percDaRicaricare = new JLabel("Inserisci percentuale da raggiungere: ");
         this.lbl_percDaRicaricare.setFont(bodyFont);
+        this.lbl_percDaRicaricare.setForeground(Color.white);
         this.form.add(this.lbl_percDaRicaricare);
         
         this.tx_percDaRicaricare = new JTextField();
@@ -65,6 +71,8 @@ public class GUIRicaricaAuto extends JFrame {
         
         this.btn_ricarica = new JButton("Avvia ricarica!");
         this.btn_ricarica.setFont(bodyFont);
+        this.btn_ricarica.setBackground(Color.gray.darker());
+        this.btn_ricarica.setForeground(Color.white);
         this.btn_ricarica.addActionListener(new ActionListener() {
 
 			@Override
@@ -94,6 +102,7 @@ public class GUIRicaricaAuto extends JFrame {
         
         this.lbl_caricaCompleta = new JLabel();
         this.lbl_caricaCompleta.setFont(bodyFont);
+        this.lbl_caricaCompleta.setForeground(Color.white);
         this.form.add(lbl_caricaCompleta);
         
         
