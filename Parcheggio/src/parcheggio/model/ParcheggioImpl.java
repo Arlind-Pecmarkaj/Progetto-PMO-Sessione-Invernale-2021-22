@@ -153,7 +153,7 @@ public class ParcheggioImpl implements Parcheggio{
 								   										     .filter(ve -> ve.getTarga().equals(v.getTarga()))
 								   										     .findAny();
 		if(veicoloGiaPresente.isPresent()) {
-			throw new TargheUgualiException("Auto con la stessa targa presente!");
+			throw new TargheUgualiException("Attenzione: auto con la stessa targa presente!");
 		}
 		
 		/* controllo se il veicolo e' un auto o una moto */
@@ -233,11 +233,11 @@ public class ParcheggioImpl implements Parcheggio{
 				m.setOraNoleggiato(Instant.now());
 			} else {
 				// lancia eccezione per mancanza di monopattini
-				throw new MonopattiniEsauritiException("Eccezione: Monopattini non disponibili!");
+				throw new MonopattiniEsauritiException("Attenzione: Monopattini non disponibili!");
 			}
 		} else {
 			// lancia eccezione in quanto la persona non ha l'abbonamento
-			throw new PersonaSenzaAbbonamentoException("Eccezione: L'utente e' senza abbonamento!");
+			throw new PersonaSenzaAbbonamentoException("Attenzione: L'utente e' senza abbonamento!");
 		}
 		
 		return m;
@@ -321,9 +321,9 @@ public class ParcheggioImpl implements Parcheggio{
 	}// end toString()
 
 	/* metodo per controllare se e' presente un posto libero, in caso contrario
-	 * lancia un'eccezione (PostiFiniti). Se il veicolo ha un'altezza maggiore
-	 * rispetto al limite consentito, viene lanciata un'eccezione (ALtezzaMassimaSuperata).
-	 * Non sono ammesse auto a metano in parcheggi sotterranei (lancio dell'eccezione AutoMetanoNonAmmesse)
+	 * lancia un'eccezione (PostiFinitiException). Se il veicolo ha un'altezza maggiore
+	 * rispetto al limite consentito, viene lanciata un'eccezione (AltezzaMassimaConsentitaException).
+	 * Non sono ammesse auto a metano in parcheggi sotterranei (lancio dell'eccezione AutoMetanoNonAmmessaException)
 	 */
 	private Posto filtraAggiungi(Predicate<? super Posto> filtro, VeicoloInt v){
 		/* ottengo un posto libero presente nel parcheggio */
@@ -342,14 +342,14 @@ public class ParcheggioImpl implements Parcheggio{
 					   !(tmp.get() instanceof PostoElettrico) &&
 					   ((PostoAuto) tmp.get()).getSensoreCarburante().effettuaRilevamento((Auto)v).equals(Alimentazione.METANO)) {
 						// lancio eccezione per l'alimentazione non consentita
-						throw new AutoMetanoNonAmmessaException("Le auto a metano non possono parcheggiare in un parcheggio sotteraneo.");
+						throw new AutoMetanoNonAmmessaException("Attenzione: Le auto a metano non possono parcheggiare in un parcheggio sotteraneo.");
 					}
 					// occupo il posto auto
 					tmp.get().occupaPosto((Veicolo) v);
 					return tmp.get();
 				} else {
 					//lancia eccezione per altezza non consentita
-					throw new AltezzaMassimaConsentitaException("Eccezione: L'altezza del veicolo ha superato il limite massimo consentito!");
+					throw new AltezzaMassimaConsentitaException("Attenzione: L'altezza del veicolo ha superato il limite massimo consentito!");
 				}
 					
 			} else {
@@ -363,7 +363,7 @@ public class ParcheggioImpl implements Parcheggio{
 			return this.filtraAggiungi(p -> p instanceof PostoAuto, v);
 		} else {
 			//lancia eccezione per posti finiti
-			throw new PostiFinitiException("Eccezione: I posti sono finiti");
+			throw new PostiFinitiException("Attenzione: I posti sono finiti");
 		}
 	}// end metodo filtraAggiungi()
 

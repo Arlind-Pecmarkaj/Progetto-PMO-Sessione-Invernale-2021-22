@@ -449,9 +449,9 @@ public class GUIParcheggio extends JFrame{
 															 .setBackground(Color.red);
 						
 					} catch (MonopattiniEsauritiException m) {
-						showMessageDialog(null, "Attenzione! Monopattini esauriti");
+						showMessageDialog(null, m.getMessage());
 					} catch (PersonaSenzaAbbonamentoException m) {
-						showMessageDialog(null, "Attenzione! L'utente e' sprovvisto di abbonamento. " +
+						showMessageDialog(null, m.getMessage() +
 									      "Monopattino non noleggiato");
 					} catch(IllegalArgumentException m) {
 						showMessageDialog(null, "Attenzione! I campi per l'utente non sono completi o corretti.");
@@ -534,15 +534,15 @@ public class GUIParcheggio extends JFrame{
 				esito = true;
 			}
 		}catch(PostiFinitiException e) {
-			showMessageDialog(null,"Attenzione! non e' possibile parcheggiare, posti insufficienti");
+			showMessageDialog(null, e.getMessage());
 		}catch(AltezzaMassimaConsentitaException e) {
-			showMessageDialog(null, "Attenzione! Altezza non consentita, veicolo non parcheggiato");
+			showMessageDialog(null, e.getMessage());
 		}catch(AutoMetanoNonAmmessaException e) {
-			showMessageDialog(null, "Attenzione! Le auto a metano non sono ammesse in un parcheggio sotterranneo");
+			showMessageDialog(null, e.getMessage());
 		}catch(TargheUgualiException e) {
-			showMessageDialog(null, "Attenzione! Un veicolo con la stessa targa e' gia' presente!");
+			showMessageDialog(null, e.getMessage());
 		}catch(TargaNonPresenteException e) {
-			showMessageDialog(null, "Attenzione! Non e' stata inserita la targa");
+			showMessageDialog(null, e.getMessage());
 		}
 		return esito;
 		
