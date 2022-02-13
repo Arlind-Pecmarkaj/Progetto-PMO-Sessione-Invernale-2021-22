@@ -377,7 +377,7 @@ public class GUIParcheggio extends JFrame{
 		
 		
 		noleggiaMonopattino = new JCheckBox("Noleggia monopattino");
-		noleggiaMonopattino.setBackground(Color.gray.darker());
+		noleggiaMonopattino.setBackground(Color.gray);
 		noleggiaMonopattino.setForeground(Color.white);
 		GridBagConstraints gbcNoleggiaMonopattino = new GridBagConstraints();
 		gbcNoleggiaMonopattino.insets = new Insets(0, 0, 5, 0);
