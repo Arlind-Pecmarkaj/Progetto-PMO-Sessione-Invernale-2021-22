@@ -454,7 +454,7 @@ public class GUIParcheggio extends JFrame{
 						showMessageDialog(null, m.getMessage() +
 									      " Monopattino non noleggiato");
 					} catch(IllegalArgumentException m) {
-						showMessageDialog(null, "Attenzione! I campi per l'utente non sono completi o corretti.");
+						showMessageDialog(null, "Attenzione! I campi non sono compilati correttamente: "+ m.getMessage());
 					}
 				}
 			}
