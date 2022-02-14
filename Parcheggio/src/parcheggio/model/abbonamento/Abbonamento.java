@@ -49,9 +49,6 @@ public class Abbonamento implements abb {
 		if(targa.isBlank() || targa.isEmpty() || targa == null ||
 		   dataInizio == null || dataFine == null)
 			throw new IllegalArgumentException("campi vuoti!");
-		
-		if(targa.length() != 7)
-			throw new IllegalArgumentException("Targa");
 	}
 	
 	/*
