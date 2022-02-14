@@ -160,7 +160,7 @@ public class GUIParcheggio extends JFrame{
 								
 								// chiedere se veramente si vuole liberare il posto
 								int sicuro = -1;
-								String[] conferma = {"No", "Si'"};
+								String[] conferma = {"Si'", "No"};
 								sicuro = JOptionPane.showOptionDialog(null, 
 														     "Liberare parcheggio?",
 															 " ", 
@@ -170,7 +170,7 @@ public class GUIParcheggio extends JFrame{
 															  conferma, 
 															  null);
 								
-								if(sicuro != 0) {
+								if(sicuro == 0) {
 									double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
 									jb.setBackground(Color.green);
 									showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
