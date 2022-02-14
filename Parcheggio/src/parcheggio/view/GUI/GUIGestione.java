@@ -340,7 +340,7 @@ public class GUIGestione extends JFrame {
 				// chiedere se e' sicuro di volere pulire tutti i campi
 				// per sicurezza
 				int sicuro = -1;
-				String[] opzioni = {"No", "Si'"};
+				String[] opzioni = {"Si'", "No"};
 				sicuro = JOptionPane.showOptionDialog(null, 
 										     "Sei sicuro di volere pulire i campi?",
 											 " ", 
@@ -350,7 +350,7 @@ public class GUIGestione extends JFrame {
 											  opzioni, 
 											  null);
 				
-				if(sicuro != 0) {
+				if(sicuro == 0) {
 					codiceFiscale.setText("");
 					nome.setText("");
 					cognome.setText("");
