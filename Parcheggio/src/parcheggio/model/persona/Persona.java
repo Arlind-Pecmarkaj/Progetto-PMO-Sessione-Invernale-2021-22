@@ -35,10 +35,10 @@ public class Persona implements Pers {
 		if(cognome.isBlank() || cognome.isEmpty() || cognome == null || cognome.length() <= 2)
 			throw new IllegalArgumentException("Cognome");
 		
-		if( dataNascita == null || dataNascita.isAfter(LocalDate.now()))
+		if(dataNascita == null || dataNascita.isAfter(LocalDate.now()))
 			throw new IllegalArgumentException("Data di nascita");
 		
-		if( nazione.isBlank() || nazione.isEmpty() || nazione == null)
+		if(nazione.isBlank() || nazione.isEmpty() || nazione == null)
 			throw new IllegalArgumentException("Nazione");
 	}
 	
