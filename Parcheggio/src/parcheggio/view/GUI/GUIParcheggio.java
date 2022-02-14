@@ -203,7 +203,7 @@ public class GUIParcheggio extends JFrame{
 					}
 					
 					else {
-						showMessageDialog(null,"Il posto auto e' gia' libero!");
+						showMessageDialog(null,"Il posto e' gia' libero!");
 					}
 				}
 			});
