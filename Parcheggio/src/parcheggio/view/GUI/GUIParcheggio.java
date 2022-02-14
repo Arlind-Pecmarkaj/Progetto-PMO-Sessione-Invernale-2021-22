@@ -182,7 +182,7 @@ public class GUIParcheggio extends JFrame{
 						else {
 							
 							int sicuro = -1;
-							String[] conferma = {"No", "Si'"};
+							String[] conferma = {"Si'", "No"};
 							sicuro = JOptionPane.showOptionDialog(null, 
 													     "Liberare parcheggio?",
 														 " ", 
@@ -192,7 +192,7 @@ public class GUIParcheggio extends JFrame{
 														  conferma, 
 														  null);
 							
-							if(sicuro != 0) {
+							if (sicuro == 0) {
 								double prezzoDaPagare = p.liberaPosto(posti.get(bottoniVeicoli.lastIndexOf(jb)));
 								jb.setBackground(Color.green);
 								showMessageDialog(null,"Posto liberato con successo!\n Costo: " + 
@@ -452,7 +452,7 @@ public class GUIParcheggio extends JFrame{
 						showMessageDialog(null, m.getMessage());
 					} catch (PersonaSenzaAbbonamentoException m) {
 						showMessageDialog(null, m.getMessage() +
-									      "Monopattino non noleggiato");
+									      " Monopattino non noleggiato");
 					} catch(IllegalArgumentException m) {
 						showMessageDialog(null, "Attenzione! I campi per l'utente non sono completi o corretti.");
 					}
@@ -477,7 +477,7 @@ public class GUIParcheggio extends JFrame{
 				// chiedere se e' sicuro di volere pulire tutti i campi
 				// per sicurezza
 				int sicuro = -1;
-				String[] opzioni = {"No", "Si'"};
+				String[] opzioni = {"Si'", "No"};
 				sicuro = JOptionPane.showOptionDialog(null, 
 										     "Sei sicuro di volere pulire i campi?",
 											 " ", 
@@ -487,7 +487,7 @@ public class GUIParcheggio extends JFrame{
 											  opzioni, 
 											  null);
 				
-				if(sicuro != 0) {
+				if (sicuro == 0) {
 					targa.setText("");
 					codiceFiscale.setText("");
 					nome.setText("");
