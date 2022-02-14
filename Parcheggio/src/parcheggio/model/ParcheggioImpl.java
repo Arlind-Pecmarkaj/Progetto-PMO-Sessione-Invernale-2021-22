@@ -175,7 +175,9 @@ public class ParcheggioImpl implements Parcheggio{
 	@Override
 	public double liberaPosto(Posto p) {
 		double prezzo = 0;
-		/* controllo se e' presente o meno il posto da liberare */
+		/* controllo se e' presente o meno il posto da liberare.
+		 * Se e' presente, ottengo la referenza rispetto alla collezione.
+		 */
 		Optional<Posto> postoDaLiberare = this.postiDisponibili.stream()
 															   .filter(x -> x.equals(p))
 															   .findAny();
